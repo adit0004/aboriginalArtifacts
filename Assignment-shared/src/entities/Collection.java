@@ -28,7 +28,7 @@ public class Collection implements Serializable {
     private String collectionCurator;
     private String collectionCategory;
     private String collectionImagePath;
-    private Set<Exhibition> collectionExhibitions;
+    private Set<Exhibition> collectionExhibition;
     private Set<Artifact> collectionArtifacts;
     private Museum collectionMuseum;
 
@@ -40,7 +40,7 @@ public class Collection implements Serializable {
         collectionImagePath = null;
         collectionArtifacts = null;
         collectionMuseum = null;
-        collectionExhibitions = null;
+        collectionExhibition = null;
     }
     public Collection(int collectionID, String collectionName, String collectionDescription, String collectionCurator, String collectionCategory, String collectionImagePath, Set<Artifact> collectionArtifacts, Museum collectionMuseum, Set<Exhibition> collectionExhibition) {
         this.collectionID = collectionID;
@@ -51,7 +51,7 @@ public class Collection implements Serializable {
         this.collectionImagePath = collectionImagePath;
         this.collectionArtifacts = collectionArtifacts;
         this.collectionMuseum = collectionMuseum;
-        this.collectionExhibitions = collectionExhibition;
+        this.collectionExhibition = collectionExhibition;
     }
 
     @Id
@@ -130,13 +130,14 @@ public class Collection implements Serializable {
     }
 
     @OneToMany(mappedBy = "exhibitionCollection")
-    public Set<Exhibition> getCollectionExhibitions() {
-        return collectionExhibitions;
-    } 
-    
-    public void setCollectionExhibition(Set<Exhibition> collectionExhibitions) {
-        this.collectionExhibitions = collectionExhibitions;
+    public Set<Exhibition> getCollectionExhibition() {
+        return collectionExhibition;
     }
+
+    public void setCollectionExhibition(Set<Exhibition> collectionExhibition) {
+        this.collectionExhibition = collectionExhibition;
+    }
+    
     
     @Override
     public String toString() {

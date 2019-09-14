@@ -31,7 +31,7 @@ public class Exhibition implements Serializable{
     private Date exhibitionEndDate;
     private Collection exhibitionCollection;
     private Museum exhibitionMuseum;
-    private Set<Ticket> exhibitionTickets;
+    private Ticket exhibitionTicket;
 
     public Exhibition() {
         exhibitionName = "New Exhibition";
@@ -40,9 +40,9 @@ public class Exhibition implements Serializable{
         exhibitionEndDate = null;
         exhibitionCollection = null;
         exhibitionMuseum = null;
-        exhibitionTickets = null;
+        exhibitionTicket = null;
     }
-    public Exhibition(int exhibitionId, String exhibitionName, String exhibitionDescription, Date exhibitionStartDate, Date exhibitionEndDate, Collection exhibitionCollection, Museum exhibitionMuseum, Set<Ticket> exhibitionTickets) {
+    public Exhibition(int exhibitionId, String exhibitionName, String exhibitionDescription, Date exhibitionStartDate, Date exhibitionEndDate, Collection exhibitionCollection, Museum exhibitionMuseum, Ticket exhibitionTicket) {
         this.exhibitionId = exhibitionId;
         this.exhibitionName = exhibitionName;
         this.exhibitionDescription = exhibitionDescription;
@@ -50,7 +50,7 @@ public class Exhibition implements Serializable{
         this.exhibitionEndDate = exhibitionEndDate;
         this.exhibitionCollection = exhibitionCollection;
         this.exhibitionMuseum = exhibitionMuseum;
-        this.exhibitionTickets = exhibitionTickets;
+        this.exhibitionTicket = exhibitionTicket;
     }
 
     @Id
@@ -123,16 +123,16 @@ public class Exhibition implements Serializable{
     }
 
     @Embedded
-    public Set<Ticket> getExhibitionTickets() {
-        return exhibitionTickets;
+    public Ticket getExhibitionTicket() {
+        return exhibitionTicket;
     }
 
-    public void setExhibitionTickets(Set<Ticket> exhibitionTickets) {
-        this.exhibitionTickets = exhibitionTickets;
+    public void setExhibitionTicket(Ticket exhibitionTicket) {
+        this.exhibitionTicket = exhibitionTicket;
     }
 
     @Override
     public String toString() {
-        return "Exhibition{" + "exhibitionId=" + exhibitionId + ", exhibitionName=" + exhibitionName + ", exhibitionDescription=" + exhibitionDescription + ", exhibitionStartDate=" + exhibitionStartDate + ", exhibitionEndDate=" + exhibitionEndDate + ", exhibitionCollection=" + exhibitionCollection + ", exhibitionMuseum=" + exhibitionMuseum + ", exhibitionTickets=" + exhibitionTickets + '}';
+        return "Exhibition{" + "exhibitionId=" + exhibitionId + ", exhibitionName=" + exhibitionName + ", exhibitionDescription=" + exhibitionDescription + ", exhibitionStartDate=" + exhibitionStartDate + ", exhibitionEndDate=" + exhibitionEndDate + ", exhibitionCollection=" + exhibitionCollection + ", exhibitionMuseum=" + exhibitionMuseum + ", exhibitionTickets=" + exhibitionTicket + '}';
     }
 }
