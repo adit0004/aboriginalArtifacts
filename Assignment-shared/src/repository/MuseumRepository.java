@@ -31,7 +31,7 @@ public interface MuseumRepository {
      * @param museumId The ID for the museum to return
      * @throws Exception
      */
-    public void getMuseumById(int museumId) throws Exception;
+    public Museum getMuseumById(int museumId) throws Exception;
     
     /**
      * Delete a museum from the repository

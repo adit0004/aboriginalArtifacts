@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * This is the base class for Artifact. An artifact is any piece in any museum, under any collection
@@ -87,6 +89,8 @@ public class Artifact implements Serializable {
         this.artifactImagePath = artifactImagePath;
     }
 
+    @ManyToOne()
+    @JoinColumn(name = "collection_id", nullable = false)
     public Collection getArtifactCollection() {
         return artifactCollection;
     }

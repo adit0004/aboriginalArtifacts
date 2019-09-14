@@ -9,9 +9,14 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
 /**
  * This class stores information about which collection is currently on exhibition at which museum
@@ -78,6 +83,7 @@ public class Exhibition implements Serializable{
     }
 
     @Column(name = "exhibition_start_date")
+    @Temporal(javax.persistence.TemporalType.DATE)
     public Date getExhibitionStartDate() {
         return exhibitionStartDate;
     }
@@ -87,6 +93,7 @@ public class Exhibition implements Serializable{
     }
 
     @Column(name = "exhibition_end_date")
+    @Temporal(javax.persistence.TemporalType.DATE)
     public Date getExhibitionEndDate() {
         return exhibitionEndDate;
     }
@@ -94,7 +101,9 @@ public class Exhibition implements Serializable{
     public void setExhibitionEndDate(Date exhibitionEndDate) {
         this.exhibitionEndDate = exhibitionEndDate;
     }
-
+    
+    @ManyToOne()
+    @JoinColumn(name = "collection_id", nullable = false)
     public Collection getExhibitionCollection() {
         return exhibitionCollection;
     }
@@ -103,6 +112,8 @@ public class Exhibition implements Serializable{
         this.exhibitionCollection = exhibitionCollection;
     }
 
+    @ManyToOne()
+    @JoinColumn(name = "museum_id", nullable = false)
     public Museum getExhibitionMuseum() {
         return exhibitionMuseum;
     }
@@ -111,6 +122,7 @@ public class Exhibition implements Serializable{
         this.exhibitionMuseum = exhibitionMuseum;
     }
 
+    @Embedded
     public Set<Ticket> getExhibitionTickets() {
         return exhibitionTickets;
     }

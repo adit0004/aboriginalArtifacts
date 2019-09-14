@@ -5,10 +5,14 @@
  */
 package repository;
 
+import entities.Exhibition;
+import entities.Ticket;
+
 /**
  *
  * @author Aditya
  */
 public interface ExhibitionRepository {
-    
+    public void addExhibition(Exhibition exhibition) throws Exception;
+    public void addTicketToExhibition(Ticket ticket) throws Exception;
 }

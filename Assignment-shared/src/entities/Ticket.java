@@ -6,7 +6,11 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Set;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,26 +19,25 @@ import javax.persistence.Id;
  * This class stores details of tickets for each exhibition. This is not a simple attribute because each exhibition may have several types of tickets - e.g. "Gold", "Silver", "Collector's", "Premium" etc.
  * @author Aditya
  */
-@Entity
+
+@Embeddable
+@Access(AccessType.PROPERTY)
 public class Ticket implements Serializable {
     private int ticketId;
     private String ticketName;
     private double ticketPrice;
     private String ticketDescription;
-    private Exhibition ticketExhibition;
-
+    
     public Ticket () {
         ticketName = "New ticket";
         ticketPrice = 0.0;
         ticketDescription = null;
-        ticketExhibition = null;
     }
-    public Ticket(int ticketId, String ticketName, double ticketPrice, String ticketDescription, Exhibition ticketExhibition) {
+    public Ticket(int ticketId, String ticketName, double ticketPrice, String ticketDescription) {
         this.ticketId = ticketId;
         this.ticketName = ticketName;
         this.ticketPrice = ticketPrice;
         this.ticketDescription = ticketDescription;
-        this.ticketExhibition = ticketExhibition;
     }
 
     @Id
@@ -74,17 +77,9 @@ public class Ticket implements Serializable {
     public void setTicketDescription(String ticketDescription) {
         this.ticketDescription = ticketDescription;
     }
-
-    public Exhibition getTicketExhibition() {
-        return ticketExhibition;
-    }
-
-    public void setTicketExhibition(Exhibition ticketExhibition) {
-        this.ticketExhibition = ticketExhibition;
-    }
-
+    
     @Override
     public String toString() {
-        return "Ticket{" + "ticketId=" + ticketId + ", ticketName=" + ticketName + ", ticketPrice=" + ticketPrice + ", ticketDescription=" + ticketDescription + ", ticketExhibition=" + ticketExhibition + '}';
+        return "Ticket{" + "ticketId=" + ticketId + ", ticketName=" + ticketName + ", ticketPrice=" + ticketPrice + ", ticketDescription=" + ticketDescription +'}';
     }
 }

@@ -12,6 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * This class contains information about a collection of artifacts. Artifacts at a museum are usually grouped together under a collection, e.g. "Egyptian ruins"
@@ -25,6 +28,7 @@ public class Collection implements Serializable {
     private String collectionCurator;
     private String collectionCategory;
     private String collectionImagePath;
+    private Set<Exhibition> collectionExhibitions;
     private Set<Artifact> collectionArtifacts;
     private Museum collectionMuseum;
 
@@ -36,8 +40,9 @@ public class Collection implements Serializable {
         collectionImagePath = null;
         collectionArtifacts = null;
         collectionMuseum = null;
+        collectionExhibitions = null;
     }
-    public Collection(int collectionID, String collectionName, String collectionDescription, String collectionCurator, String collectionCategory, String collectionImagePath, Set<Artifact> collectionArtifacts, Museum collectionMuseum) {
+    public Collection(int collectionID, String collectionName, String collectionDescription, String collectionCurator, String collectionCategory, String collectionImagePath, Set<Artifact> collectionArtifacts, Museum collectionMuseum, Set<Exhibition> collectionExhibition) {
         this.collectionID = collectionID;
         this.collectionName = collectionName;
         this.collectionDescription = collectionDescription;
@@ -46,6 +51,7 @@ public class Collection implements Serializable {
         this.collectionImagePath = collectionImagePath;
         this.collectionArtifacts = collectionArtifacts;
         this.collectionMuseum = collectionMuseum;
+        this.collectionExhibitions = collectionExhibition;
     }
 
     @Id
@@ -104,6 +110,7 @@ public class Collection implements Serializable {
         this.collectionImagePath = collectionImagePath;
     }
 
+    @OneToMany(mappedBy = "artifactCollection")
     public Set<Artifact> getCollectionArtifacts() {
         return collectionArtifacts;
     }
@@ -112,6 +119,8 @@ public class Collection implements Serializable {
         this.collectionArtifacts = collectionArtifacts;
     }
 
+    @ManyToOne()
+    @JoinColumn(name = "museum_id", nullable = false)
     public Museum getCollectionMuseum() {
         return collectionMuseum;
     }
@@ -120,6 +129,15 @@ public class Collection implements Serializable {
         this.collectionMuseum = collectionMuseum;
     }
 
+    @OneToMany(mappedBy = "exhibitionCollection")
+    public Set<Exhibition> getCollectionExhibitions() {
+        return collectionExhibitions;
+    } 
+    
+    public void setCollectionExhibition(Set<Exhibition> collectionExhibitions) {
+        this.collectionExhibitions = collectionExhibitions;
+    }
+    
     @Override
     public String toString() {
         return "Collection{" + "collectionID=" + collectionID + ", collectionName=" + collectionName + ", collectionDescription=" + collectionDescription + ", collectionCurator=" + collectionCurator + ", collectionCategory=" + collectionCategory + ", collectionImagePath=" + collectionImagePath + ", collectionArtifacts=" + collectionArtifacts + ", collectionMuseum=" + collectionMuseum + '}';

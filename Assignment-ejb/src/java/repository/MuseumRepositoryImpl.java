@@ -25,22 +25,27 @@ public class MuseumRepositoryImpl implements MuseumRepository {
     
     @Override
     public void addMuseum(Museum museum) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        entityManager.persist(museum);
     }
 
     @Override
-    public void getMuseumById(int museumId) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Museum getMuseumById(int museumId) throws Exception {
+        Museum museum = entityManager.find(Museum.class, museumId);
+        return museum;
     }
 
     @Override
     public void removeMuseum(int museumId) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Museum museum = this.getMuseumById(museumId);
+
+        if (museum != null) {
+            entityManager.remove(museum);
+        }
     }
 
     @Override
     public void editMuseum(Museum museum) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        entityManager.merge(museum);
     }
 
     @Override

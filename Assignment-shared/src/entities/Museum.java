@@ -13,11 +13,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  * This class stores details about each individual museum location for this chain.
  * @author Aditya
  */
+
+@NamedQueries ({
+    @NamedQuery (name = "Museum.getAll", query = "Select m from Museum m"),
+    @NamedQuery (name = "Museum.getAllCollections", query = "Select m.museumCollections from Museum m"),
+    @NamedQuery (name = "Museum.getAllExhibitions", query = "Select m.museumExhibitions from Museum m")
+})
+
 @Entity
 public class Museum implements Serializable {
     private int museumId;
@@ -94,6 +104,7 @@ public class Museum implements Serializable {
         this.museumChiefCurator = museumChiefCurator;
     }
 
+    @OneToMany(mappedBy = "exhibitionMuseum")
     public Set<Exhibition> getMuseumExhibitions() {
         return museumExhibitions;
     }
@@ -102,6 +113,7 @@ public class Museum implements Serializable {
         this.museumExhibitions = museumExhibitions;
     }
 
+    @OneToMany(mappedBy = "collectionMuseum")
     public Set<Collection> getMuseumCollections() {
         return museumCollections;
     }
