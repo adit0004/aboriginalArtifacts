@@ -6,14 +6,10 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Set;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  * This class stores details of tickets for each exhibition. This is not a simple attribute because each exhibition may have several types of tickets - e.g. "Gold", "Silver", "Collector's", "Premium" etc.
@@ -40,8 +36,6 @@ public class Ticket implements Serializable {
         this.ticketDescription = ticketDescription;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "ticket_id")
     public int getTicketId() {
         return ticketId;

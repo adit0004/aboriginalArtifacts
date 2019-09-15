@@ -7,7 +7,6 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -103,7 +102,7 @@ public class Exhibition implements Serializable{
     }
     
     @ManyToOne()
-    @JoinColumn(name = "collection_id", nullable = false)
+    @JoinColumn(name = "collection_id", nullable = true)
     public Collection getExhibitionCollection() {
         return exhibitionCollection;
     }

@@ -23,13 +23,16 @@ import javax.persistence.OneToMany;
  */
 
 @NamedQueries ({
-    @NamedQuery (name = "Museum.getAll", query = "Select m from Museum m"),
+    @NamedQuery (name = Museum.GET_ALL_QUERY_NAME, query = "Select m from Museum m"),
     @NamedQuery (name = "Museum.getAllCollections", query = "Select m.museumCollections from Museum m"),
     @NamedQuery (name = "Museum.getAllExhibitions", query = "Select m.museumExhibitions from Museum m")
 })
 
 @Entity
 public class Museum implements Serializable {
+    
+    public static final String GET_ALL_QUERY_NAME = "Museum.getAll";
+    
     private int museumId;
     private String museumLocation;
     private Address museumAddress;

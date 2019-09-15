@@ -8,7 +8,9 @@ package repository;
 import entities.Collection;
 import entities.Exhibition;
 import entities.Museum;
+import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -50,7 +52,7 @@ public class MuseumRepositoryImpl implements MuseumRepository {
 
     @Override
     public List<Museum> getAllMuseums() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return entityManager.createNamedQuery(Museum.GET_ALL_QUERY_NAME).getResultList();
     }
 
     @Override
