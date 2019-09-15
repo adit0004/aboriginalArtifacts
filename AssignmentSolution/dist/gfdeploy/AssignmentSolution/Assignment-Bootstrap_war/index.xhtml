@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Test</title> 
+    </h:head>
+    <h:body>
+        <ui:repeat id="Myrepeat" value="#{museumApplication.museums}"  var="museumA" varStatus="status">
+            #{museumApplication.museums.get(status.index).museumId}
+            Asadsfsdf
+        </ui:repeat>
+        guyuyguyguyguyguyguyguyg
+    </h:body>
+
+</html>

@@ -1,0 +1,43 @@
+.nav-link{
+	text-transform: 
+}
+li..active{
+	outline-bottom: 4px solid #000;
+}
+.navbar-brand{
+	height:100%;
+}
+.navbar-brand img{
+	max-height:50px;
+}
+.orange-line{
+	display: block;
+	height:6px;
+	width:40%;
+}
+.fixed-height{
+	height:500px;
+	overflow: hidden;
+}
+.img-container{
+  position:relative;
+  display:inline-block;
+}
+.img-container .overlay{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+}
+.img-container img{
+	width:100%;
+}
+.overlay span{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  color:#fff;
+}
