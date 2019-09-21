@@ -69,36 +69,9 @@ public interface MuseumRepository {
      * @throws Exception
      */
     public List<Collection> getCollectionsAtMuseum(Museum museum) throws Exception;
-
-    /**
-     * Add a collection to a museum
-     * @param museum The museum to add the collection to 
-     * @param collection The collection to add
-     * @throws Exception
-     */
-    public void addCollectionToMuseum(Museum museum, Collection collection) throws Exception;
-
-    /**
-     * Add an exhibition to a museum
-     * @param museum The museum to add the exhibition to
-     * @param exhibition The exhibition to add
-     * @throws Exception
-     */
-    public void addExhibitionToMuseum(Museum museum, Exhibition exhibition) throws Exception;
-
-    /**
-     * Remove a collection from a museum
-     * @param museum The museum to remove the collection from
-     * @param collection The collection to remove
-     * @throws Exception
-     */
-    public void removeCollectionFromMuseum(Museum museum, Collection collection) throws Exception;
-
-    /**
-     * Remove an exhibition from a museum
-     * @param museum The museum to remove the exhibition from
-     * @param exhibition The exhibition to remove
-     * @throws Exception
-     */
-    public void removeExhibitionFromMuseum(Museum museum, Exhibition exhibition) throws Exception;
+    
+    
+    public void addExhibition(Exhibition exhibition) throws Exception;
+    public List<Exhibition> getAllExhibitions() throws Exception;
+    public List<Exhibition> getExhibitionsForMuseum(int museumId) throws Exception;
 }

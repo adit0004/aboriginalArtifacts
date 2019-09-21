@@ -4,10 +4,9 @@
     <jta-data-source>jdbc/assignment</jta-data-source>
     <class>entities.Artifact</class>
     <class>entities.Collection</class>
-    <class>entities.Museum</class>
     <class>entities.Exhibition</class>
+    <class>entities.Museum</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
-    <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>

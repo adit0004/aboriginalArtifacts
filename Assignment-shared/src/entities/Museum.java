@@ -7,6 +7,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -24,14 +25,16 @@ import javax.persistence.OneToMany;
 
 @NamedQueries ({
     @NamedQuery (name = Museum.GET_ALL_QUERY_NAME, query = "Select m from Museum m"),
-    @NamedQuery (name = "Museum.getAllCollections", query = "Select m.museumCollections from Museum m"),
-    @NamedQuery (name = "Museum.getAllExhibitions", query = "Select m.museumExhibitions from Museum m")
+    @NamedQuery (name = Museum.GET_COLLECTIONS_FOR_MUSEUM_QUERY, query = "Select m.museumCollections from Museum m"),
+    @NamedQuery (name = Museum.GET_EXHIBITIONS_FOR_MUSEUM_QUERY, query = "Select m.museumExhibitions from Museum m")
 })
 
 @Entity
 public class Museum implements Serializable {
     
     public static final String GET_ALL_QUERY_NAME = "Museum.getAll";
+    public static final String GET_COLLECTIONS_FOR_MUSEUM_QUERY = "Museum.getAllCollectionsForMuseum";
+    public static final String GET_EXHIBITIONS_FOR_MUSEUM_QUERY = "Museum.getAllExhibitionsForMuseum";
     
     private int museumId;
     private String museumLocation;
@@ -40,6 +43,7 @@ public class Museum implements Serializable {
     private String museumChiefCurator;
     private Set<Exhibition> museumExhibitions;
     private Set<Collection> museumCollections;
+    private String museumImagePath;
 
     public Museum () {
         museumLocation = "New Museum";
@@ -48,9 +52,10 @@ public class Museum implements Serializable {
         museumChiefCurator = null;
         museumExhibitions = null;
         museumCollections = null;
+        museumImagePath = null;
     }
     
-    public Museum(int museumId, String museumLocation, Address museumAddress, String museumContactNumber, String museumChiefCurator, Set<Exhibition> museumExhibitions, Set<Collection> museumCollections) {
+    public Museum(int museumId, String museumLocation, Address museumAddress, String museumContactNumber, String museumChiefCurator, Set<Exhibition> museumExhibitions, Set<Collection> museumCollections, String museumImagePath) {
         this.museumId = museumId;
         this.museumLocation = museumLocation;
         this.museumAddress = museumAddress;
@@ -58,6 +63,7 @@ public class Museum implements Serializable {
         this.museumChiefCurator = museumChiefCurator;
         this.museumExhibitions = museumExhibitions;
         this.museumCollections = museumCollections;
+        this.museumImagePath = museumImagePath;
     }
     
     @Id
@@ -107,7 +113,7 @@ public class Museum implements Serializable {
         this.museumChiefCurator = museumChiefCurator;
     }
 
-    @OneToMany(mappedBy = "exhibitionMuseum")
+    @OneToMany(mappedBy = "exhibitionMuseum", cascade=CascadeType.ALL)
     public Set<Exhibition> getMuseumExhibitions() {
         return museumExhibitions;
     }
@@ -116,7 +122,7 @@ public class Museum implements Serializable {
         this.museumExhibitions = museumExhibitions;
     }
 
-    @OneToMany(mappedBy = "collectionMuseum")
+    @OneToMany(mappedBy = "collectionMuseum", cascade=CascadeType.ALL)
     public Set<Collection> getMuseumCollections() {
         return museumCollections;
     }
@@ -125,8 +131,16 @@ public class Museum implements Serializable {
         this.museumCollections = museumCollections;
     }
 
+    public String getMuseumImagePath() {
+        return museumImagePath;
+    }
+
+    public void setMuseumImagePath(String museumImagePath) {
+        this.museumImagePath = museumImagePath;
+    }
+
     @Override
     public String toString() {
-        return "Museum{" + "museumId=" + museumId + ", museumLocation=" + museumLocation + ", museumAddress=" + museumAddress + ", museumContactNumber=" + museumContactNumber + ", museumChiefCurator=" + museumChiefCurator + ", museumExhibitions=" + museumExhibitions + ", museumCollections=" + museumCollections + '}';
+        return "Museum{" + "museumId=" + museumId + ", museumLocation=" + museumLocation + ", museumAddress=" + museumAddress + ", museumContactNumber=" + museumContactNumber + ", museumChiefCurator=" + museumChiefCurator + ", museumExhibitions=" + museumExhibitions + ", museumCollections=" + museumCollections + ", museumImagePath=" + museumImagePath + '}';
     }
 }

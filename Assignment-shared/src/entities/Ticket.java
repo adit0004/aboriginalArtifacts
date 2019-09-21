@@ -19,7 +19,6 @@ import javax.persistence.Embeddable;
 @Embeddable
 @Access(AccessType.PROPERTY)
 public class Ticket implements Serializable {
-    private int ticketId;
     private String ticketName;
     private double ticketPrice;
     private String ticketDescription;
@@ -30,19 +29,9 @@ public class Ticket implements Serializable {
         ticketDescription = null;
     }
     public Ticket(int ticketId, String ticketName, double ticketPrice, String ticketDescription) {
-        this.ticketId = ticketId;
         this.ticketName = ticketName;
         this.ticketPrice = ticketPrice;
         this.ticketDescription = ticketDescription;
-    }
-
-    @Column(name = "ticket_id")
-    public int getTicketId() {
-        return ticketId;
-    }
-
-    public void setTicketId(int ticketId) {
-        this.ticketId = ticketId;
     }
 
     @Column(name = "ticket_name")
@@ -74,6 +63,6 @@ public class Ticket implements Serializable {
     
     @Override
     public String toString() {
-        return "Ticket{" + "ticketId=" + ticketId + ", ticketName=" + ticketName + ", ticketPrice=" + ticketPrice + ", ticketDescription=" + ticketDescription +'}';
+        return "Ticket{" + "ticketName=" + ticketName + ", ticketPrice=" + ticketPrice + ", ticketDescription=" + ticketDescription +'}';
     }
 }

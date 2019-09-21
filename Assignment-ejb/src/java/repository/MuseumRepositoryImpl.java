@@ -14,6 +14,7 @@ import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -57,32 +58,28 @@ public class MuseumRepositoryImpl implements MuseumRepository {
 
     @Override
     public List<Exhibition> getExhibitionsAtMuseum(Museum museum) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return entityManager.createNamedQuery(Museum.GET_EXHIBITIONS_FOR_MUSEUM_QUERY).getResultList();
     }
 
     @Override
     public List<Collection> getCollectionsAtMuseum(Museum museum) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return entityManager.createNamedQuery(Museum.GET_COLLECTIONS_FOR_MUSEUM_QUERY).getResultList();
+    }
+
+        @Override
+    public void addExhibition(Exhibition exhibition) {
+        entityManager.persist(exhibition);
     }
 
     @Override
-    public void addCollectionToMuseum(Museum museum, Collection collection) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<Exhibition> getAllExhibitions() throws Exception {
+        return (ArrayList<Exhibition>) entityManager.createNamedQuery(Exhibition.GET_ALL_QUERY_NAME).getResultList();
     }
 
     @Override
-    public void addExhibitionToMuseum(Museum museum, Exhibition exhibition) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Exhibition> getExhibitionsForMuseum(int museumId) throws Exception {
+        Query query = entityManager.createNamedQuery(Exhibition.GET_EXHIBITIONS_FOR_MUSEUM);
+        query.setParameter("museumId", museumId);
+        return query.getResultList();
     }
-
-    @Override
-    public void removeCollectionFromMuseum(Museum museum, Collection collection) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void removeExhibitionFromMuseum(Museum museum, Exhibition exhibition) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-        
 }

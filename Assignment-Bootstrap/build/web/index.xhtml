@@ -1,17 +1,62 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
-        <title>Test</title> 
-    </h:head>
-    <h:body>
-        <ui:repeat id="Myrepeat" value="#{museumApplication.museums}"  var="museumA" varStatus="status">
-            #{museumApplication.museums.get(status.index).museumId}
-            Asadsfsdf
-        </ui:repeat>
-        guyuyguyguyguyguyguyguyg
-    </h:body>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <meta charset="utf-8" />
+        <title>Artifacts Unearthed</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" href="css/custom.css" />
+        <style>
+            .image{
+                position: relative;
+            }
+            .image>h2{
+                position:absolute;
+                top:100px;
+            }
+            .image>a{
+                position:absolute;
+                top:300px;
+            }
+            .with-bg>img{
+                max-width: 100%;
+            }
+            .splash-container{
+                overflow: hidden;
+            }
+            .splash-container img {
+                margin-left:-50%;
+                max-height: 400px!important;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="jumbotron">
+            <h1 class="display-3">Hi, there!</h1>
+            <p class="lead">Before we can show you what we have in store for you, we need you to pick your journey!</p>
+            <hr class="my-4" />
+            <p>Please select the museum that you are interested in</p>
+        </div>
+        <div class="container">
+            <div class="row">
 
+                <ui:repeat value="#{museumApplication.museums}" var="individualMuseum" varStatus="status">
+                    <div class="col-12 col-md-4 m-0 p-0">
+                        <h:link outcome="museum_landing">
+                            <f:param name="museumId" value="#{individualMuseum.museumId}" />
+                            <div class="card" style="border-radius:7px!important;">
+                                <img src="#{individualMuseum.museumImagePath}" class="card-img-top" alt="#{individualMuseum.museumLocation}" />
+                                <div class="card-body">
+                                    <h5 class="card-title">#{individualMuseum.museumLocation}</h5>
+                                </div>
+                            </div>
+                        </h:link>
+                    </div>
+                </ui:repeat>
+            </div>
+        </div>
+    </body>
 </html>

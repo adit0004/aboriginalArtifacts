@@ -15,14 +15,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 
 /**
  * This class stores information about which collection is currently on exhibition at which museum
  * @author Aditya
  */
+
+@NamedQueries ({
+    @NamedQuery (name = Exhibition.GET_ALL_QUERY_NAME, query = "Select e from Exhibition e"),
+    @NamedQuery (name = Exhibition.GET_EXHIBITIONS_FOR_MUSEUM, query = "Select e from Exhibition e WHERE e.exhibitionMuseum.museumId = :museumId")
+})
+
 @Entity
 public class Exhibition implements Serializable{
+    
+    public static final String GET_ALL_QUERY_NAME = "Exhibition.getAll";
+    public static final String GET_EXHIBITIONS_FOR_MUSEUM = "Exhibition.getAllForMuseum";
+    
     private int exhibitionId;
     private String exhibitionName;
     private String exhibitionDescription;
