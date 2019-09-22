@@ -1,212 +1,271 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-<head>
-	<meta charset="utf-8" />
-	<title>Artifacts Unearthed</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<link rel="stylesheet" href="css/bootstrap.css" media="screen" />
-	<link rel="stylesheet" href="css/custom.css" />
-	<style>
-		.image{
-			position: relative;
-		}
-		.image>h2{
-			position:absolute;
-			top:100px;
-		}
-		.image>a{
-			position:absolute;
-			top:300px;
-		}
-		.with-bg>img{
-			max-width: 100%;
-		}
-		.splash-container{
-			overflow: hidden;
-		}
-		.splash-container img {
-			margin-left:-50%;
-			max-height: 400px!important;
-		}
-	</style>
-</head>
-<body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-		<a class="navbar-brand p-0" href="index.html"><img src="img/logo.png" /></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <head>
+        <meta charset="utf-8" />
+        <title>Artifacts Unearthed</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" href="css/custom.css" />
+        <style>
+            .image{
+                position: relative;
+            }
+            .image>h2{
+                position:absolute;
+                top:100px;
+            }
+            .image>a{
+                position:absolute;
+                top:300px;
+            }
+            .with-bg>img{
+                max-width: 100%;
+            }
+            .splash-container{
+                overflow: hidden;
+            }
+            .splash-container img {
+                margin-left:-50%;
+                max-height: 400px!important;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand p-0" href="index.html"><img src="img/logo.png" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-		<div class="collapse navbar-collapse" id="navbarColor02">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active">
-					<a class="btn btn-primary nav-link" href="#!">Home <span class="sr-only">(current)</span></a>
-				</li>
-				<li class="nav-item">
-					<a class="btn btn-primary nav-link" href="#">About</a>
-				</li>
-				<li class="nav-item">
-					<a class="btn btn-primary nav-link" href="collections.html">Collections</a>
-				</li>
-				<li class="nav-item">
-					<a class="btn btn-primary nav-link" href="#">Exhibitions</a>
-				</li>
-				<li class="nav-item">
-					<a class="btn btn-primary nav-link" href="#">Tickets</a>
-				</li>
-				<li class="nav-item">
-					<a class="btn btn-primary nav-link" href="#">Contact</a>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">John Doe</a>
-					<div class="dropdown-menu dropdown-menu-right" x-placement="static">
-						<a class="dropdown-item" href="#">My Profile</a>
-						<a class="dropdown-item" href="#">View Bookings</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Logout</a>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</nav>
-	<div class="container my-3">
-		<div class="row">
-			<div class="col-12 image">
-				<img src="img/index-banner.jpg" style="float:right;max-width:70%;" />
-                                <h2 class="ml-5 bg-primary p-5" id="welcomeBox"><span class="text-white">Welcome to the <br />Museum of Aboriginal Artifacts<br />#{museumController.selectedMuseum.museumLocation}</span></h2>
-				<a href="#!" class="ml-5 btn btn-lg btn-outline-primary px-5">Take the tour</a>
-			</div>
-		</div>
-	</div>
-	<div class="container">
-		<div class="orange-line bg-secondary my-5"></div>
-		<div class="row">
-			<div class="col-12 text-center">
-				<h1>Collections</h1>
-				<p class="lead text-primary">Hand-designed Artifacts by Australian Aboriginals Exhibited in the Museums</p>
-			</div>
-		</div>
-		<div class="row mt-3">
-			<div class="col-4 offset-2 p-0 fixed-height">
-				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-primary">&larr;</button>
-					<button type="button" class="btn btn-secondary">&rarr;</button>
-				</div>
-				<div class="bg-primary p-4 text-white" style="height: 100%;">
-					<p class="text-secondary small lead" style="font-weight:900">Category</p>
-					<h3>Name of thing</h3>
-					<p class="text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean suscipit auctor erat, vel porta est iaculis nec. Phasellus volutpat turpis est, vitae blandit velit ullamcorper vitae. Etiam quis facilisis diam. Mauris fringilla vitae arcu nec consequat. Vivamus convallis suscipit magna. Integer ullamcorper enim sed aliquet ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce ultricies, erat in sagittis fermentum, odio dui tincidunt purus, eu accumsan neque massa id libero. Praesent quis rutrum tellus.</p>
-				</div>
-			</div>
-			<div class="col-4 p-0 fixed-height">
-				<img src="img/splash.jpg" />
-			</div>
-		</div>
-		<div class="row justify-content-end">
-			<div class="orange-line bg-secondary my-5"></div>
-		</div>
-		<div class="row">
-			<div class="col-12 text-center">
-				<h1>All Exhibitions</h1>
-				<a href="#!">Explore &rarr;</a>
-			</div>
-			<div class="col-12 mt-5">
-				<div class="row">
-					<div class="col-4 px-1">
-						<a href="#!">
-							<div class="img-container">
-								<img src="img/shield.jpg" />
-								<div class="overlay">
-									<span><h2>Name</h2></span>
-								</div>
-							</div>
-						</a>
-						<a href="#!">
-							<div class="img-container mt-2">
-								<img src="img/boomerang.jpg" />
-								<div class="overlay">
-									<span><h2>Name</h2></span>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="col-4 px-1">
-						<a href="#!">
-							<div class="img-container">
-								<img src="img/snakes.jpg" />
-								<div class="overlay">
-									<span><h2>Name</h2></span>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="col-4 px-1">
-						<a href="#!">
-							<div class="img-container">
-								<img src="img/bullroarer.jpg" />
-								<div class="overlay">
-									<span><h2>Name</h2></span>
-								</div>
-							</div>
-						</a>
-						<a href="#!">
-							<div class="img-container mt-2">
-								<img src="img/basket.jpg" />
-								<div class="overlay">
-									<span><h2>Name</h2></span>
-								</div>
-							</div>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="orange-line bg-secondary my-5"></div>
-		<div class="row">
-			<div class="col-12 text-center">
-				<h1>Learn about Aboriginal Culture</h1>
-				<p class="lead">A number of practices and ceremonies, based on a belief in the Dreamtime</p>
-			</div>
-			<div class="col-12">
-				<div class="row">
-					<div class="col-6 splash-container">
-						<img src="img/splash_learn_more.jpg" />
-					</div>
-					<div class="col-6 bg-primary text-white p-5">
-						<h3>Heading</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eu egestas sem. Nulla quis magna vel lacus iaculis lacinia. Quisque viverra metus nunc, sit amet egestas eros dapibus in. Pellentesque vestibulum semper neque. Donec ipsum risus, sodales ac suscipit et, viverra at nisi. Aenean sollicitudin ipsum ex, eu semper arcu vehicula et. Nulla facilisi. Donec commodo imperdiet auctor. Quisque vitae nibh erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In nec eros ut urna placerat lacinia. Duis ut ornare nisi. Phasellus vitae est facilisis, porta dui vel, tempor libero.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<footer class="bg-secondary text-center p-3 mt-5 text-white">
-		Museum of Aboriginal Artifacts. Licensed under Creative Commons. All attributions provided in the about page. 
-	</footer>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script>
-		$(function(){
-			
-			// Apply a margin top on "Take the tour" button
-			var boxHeight = $("#welcomeBox").outerHeight();
-			$(".image a").css('top',(boxHeight+105)+'px');
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="btn btn-primary nav-link" href="#!">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="collections.html">Collections</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">Exhibitions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">Tickets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">Contact</a>
+                    </li>
+                    <c:if test="#{museumApplication.userLoggedIn eq true}">
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">John Doe</a>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="static">
+                                <a class="dropdown-item" href="#">My Profile</a>
+                                <a class="dropdown-item" href="#">View Bookings</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Logout</a>
+                            </div>
+                        </li>
+                    </c:if>
+                    <c:if test="#{museumApplication.userLoggedIn eq false}">
+                        <li class="nav-item">
+                            <a class="btn btn-light nav-link text-dark py-2 px-3 my-2" href="login.xhtml">Login / Sign-up</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </div>
+        </nav>
+        <div class="container my-3">
+            <div class="row">
+                <div class="col-12 image">
+                    <img src="img/index-banner.jpg" style="float:right;max-width:70%;" />
+                    <h2 class="ml-5 bg-primary p-5" id="welcomeBox"><span class="text-white">Welcome to the <br />#{museumController.selectedMuseum.museumName}</span></h2>
+                    <a href="#!" class="ml-5 btn btn-lg btn-outline-primary px-5">Take the tour</a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="orange-line bg-secondary my-5"></div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1>Collections</h1>
+                    <p class="lead text-primary">#{museumController.selectedMuseum.collectionDescription}</p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-4 offset-2 p-0 fixed-height">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-primary" id="backButton">&larr;</button>
+                        <button type="button" class="btn btn-secondary" id="forwardButton">&rarr;</button>
+                    </div>
+                    <div class="bg-primary p-4 text-white" style="height: 100%;">
+                        <p class="text-secondary small lead" style="font-weight:900" id="categoryLabel">Category</p>
+                        <h3 id="nameLabel">Name of thing</h3>
+                        <p class="text-white" id="descriptionLabel">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean suscipit auctor erat, vel porta est iaculis nec. Phasellus volutpat turpis est, vitae blandit velit ullamcorper vitae. Etiam quis facilisis diam. Mauris fringilla vitae arcu nec consequat. Vivamus convallis suscipit magna. Integer ullamcorper enim sed aliquet ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce ultricies, erat in sagittis fermentum, odio dui tincidunt purus, eu accumsan neque massa id libero. Praesent quis rutrum tellus.</p>
+                        
+                    </div>
+                </div>
+                <div class="col-4 p-0 fixed-height" id="imageBounding">
+                    <img src="img/splash.jpg" id="categoryImage" style='height: 100%; width: 100%; object-fit: cover'/>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="orange-line bg-secondary my-5"></div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1>All Exhibitions</h1>
+                    <a href="#!">Explore &rarr;</a>
+                </div>
+                <div class="col-12 mt-5">
+                    <div class="row">
+                        <div class="col-4 px-1">
+                            <a href="#!">
+                                <div class="img-container">
+                                    <img src="#{museumApplication.exhibitionsForMuseum.get(0).getImagePath()}"/>
+                                    <div class="overlay">
+                                        <span><h2>#{museumApplication.exhibitionsForMuseum.get(0).getExhibitionName()}</h2></span>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#!">
+                                <div class="img-container mt-2">
+                                    <img src="#{museumApplication.exhibitionsForMuseum.get(1).getImagePath()}"/>
+                                    <div class="overlay">
+                                        <span><h2>#{museumApplication.exhibitionsForMuseum.get(1).getExhibitionName()}</h2></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-4 px-1">
+                            <a href="#!">
+                                <div class="img-container">
+                                    <img src="#{museumApplication.exhibitionsForMuseum.get(2).getImagePath()}" />
+                                    <div class="overlay">
+                                        <span><h2>#{museumApplication.exhibitionsForMuseum.get(2).getExhibitionName()}</h2></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-4 px-1">
+                            <a href="#!">
+                                <div class="img-container">
+                                    <img src="#{museumApplication.exhibitionsForMuseum.get(3).getImagePath()}" />
+                                    <div class="overlay">
+                                        <span><h2>#{museumApplication.exhibitionsForMuseum.get(3).getExhibitionName()}</h2></span>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#!">
+                                <div class="img-container mt-2">
+                                    <img src="#{museumApplication.exhibitionsForMuseum.get(4).getImagePath()}" />
+                                    <div class="overlay">
+                                        <span><h2>#{museumApplication.exhibitionsForMuseum.get(4).getExhibitionName()}</h2></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="orange-line bg-secondary my-5"></div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1>#{museumController.selectedMuseum.learnMoreTitle}</h1>
+                    <p class="lead">#{museumController.selectedMuseum.learnMoreLeading}</p>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6 splash-container">
+                            <img src="img/splash_learn_more.jpg" />
+                        </div>
+                        <div class="col-6 bg-primary text-white p-5">
+                            <h3>#{museumController.selectedMuseum.learnMoreHeading}</h3>
+                            <p>#{museumController.selectedMuseum.learnMoreBody}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-secondary text-center p-3 mt-5 text-white">
+            Museum of Aboriginal Artifacts. Licensed under Creative Commons. All attributions provided in the about page. 
+        </footer>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script>
+            $(function () {
 
-			// Fix the height for the display box
-			// Find the image proportions
-			$(".fixed-height").find('img').each(function(){
-				// Calculate aspect ratio
-				var aspRat = $(this).width / $(this).height()
-				$(this).css('height', '500px');
-				$(this).css('width', (aspRat*$(this).height)+'px');
-				$(this).css('margin-left',((aspRat*$(this).height)/2)+'px');
-			})
-		})
-	</script>
-</body>
+                // Apply a margin top on "Take the tour" button
+                var boxHeight = $("#welcomeBox").outerHeight();
+                $(".image a").css('top', (boxHeight + 105) + 'px');
+
+
+                var currentCollection = 0;
+
+                var collections = #{museumApplication.getCollectionsForMuseum()}
+
+                $("#categoryLabel").html(collections[0].category);
+                $("#nameLabel").html(collections[0].name);
+                $("#descriptionLabel").html(collections[0].description);
+                $("#categoryImage").attr('src', collections[0].image);
+
+                $("#backButton").on('click', function () {
+                    
+                    $("#categoryLabel").fadeOut();
+                    $("#nameLabel").fadeOut();
+                    $("#descriptionLabel").fadeOut();
+                    $("#categoryImage").fadeOut(function () {
+                        // If this is 0, go to last, else just go to previous
+                        if (currentCollection === 0) {
+                            currentCollection = collections.length - 1;
+                        } else {
+                            currentCollection -= 1;
+                        }
+                        $("#categoryLabel").html(collections[currentCollection].category);
+                        $("#nameLabel").html(collections[currentCollection].name);
+                        $("#descriptionLabel").html(collections[currentCollection].description);
+                        $("#categoryImage").attr('src', collections[currentCollection].image);
+                        $("#categoryLabel").fadeIn();
+                        $("#nameLabel").fadeIn();
+                        $("#descriptionLabel").fadeIn();
+                        $("#categoryImage").fadeIn(function () {
+                            
+                        });
+                    });
+                })
+
+                $("#forwardButton").on('click', function () {
+                    $("#categoryLabel").fadeOut();
+                    $("#nameLabel").fadeOut();
+                    $("#descriptionLabel").fadeOut();
+                    $("#categoryImage").fadeOut(function () {
+
+                        // If this is last, go to 0, else just go to previous
+                        if (currentCollection === (collections.length - 1)) {
+                            currentCollection = 0;
+                        } else {
+                            currentCollection += 1;
+                        }
+                        $("#categoryLabel").html(collections[currentCollection].category);
+                        $("#nameLabel").html(collections[currentCollection].name);
+                        $("#descriptionLabel").html(collections[currentCollection].description);
+                        $("#categoryImage").attr('src', collections[currentCollection].image);
+                        $("#categoryLabel").fadeIn();
+                        $("#nameLabel").fadeIn();
+                        $("#descriptionLabel").fadeIn();
+                        $("#categoryImage").fadeIn(function () {
+                        });
+                    });
+                });
+            });
+        </script>
+    </body>
 </html>
 

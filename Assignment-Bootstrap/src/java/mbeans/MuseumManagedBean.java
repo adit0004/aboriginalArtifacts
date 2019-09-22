@@ -16,6 +16,7 @@ import repository.MuseumRepository;
 import entities.Museum;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Set;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -29,10 +30,21 @@ public class MuseumManagedBean implements Serializable{
     @EJB
     MuseumRepository museumRepository;
     
+    private int currentLoggedInUser;
     public MuseumManagedBean() {
-        
+        currentLoggedInUser = -1;
+    }
+
+    public int getCurrentLoggedInUser() {
+        return currentLoggedInUser;
+    }
+
+    public void setCurrentLoggedInUser(int currentLoggedInUser) {
+        this.currentLoggedInUser = currentLoggedInUser;
     }
    
+    
+    
     public List<Museum> getAllMuseums() {
         try {
             List<Museum> museums = museumRepository.getAllMuseums();
@@ -43,13 +55,11 @@ public class MuseumManagedBean implements Serializable{
         return null;
     }
     
-    public List<Collection> getCollectionsForMuseum(int museumId) {
+    public Set<Collection> getCollectionsForMuseum(int museumId) {
         try {
-            for (Museum museum : getAllMuseums()) {
-                if (museum.getMuseumId() == museumId) {
-                    return museumRepository.getCollectionsAtMuseum(museum);
-                }
-            }
+            Museum museum = museumRepository.getMuseumById(museumId);
+            Set<Collection> collections = museum.getMuseumCollections();
+            return collections;
         } catch (Exception e) {
             Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -68,7 +78,9 @@ public class MuseumManagedBean implements Serializable{
     
     public List<Exhibition> getExhibitionsForMuseum(int museumId) {
         try {
-            return museumRepository.getExhibitionsForMuseum(museumId);
+            Museum museum = museumRepository.getMuseumById(museumId);
+            List<Exhibition> exhibitions = museum.getMuseumExhibitions();
+            return exhibitions;
         } catch (Exception e) {
             Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, e);
         }

@@ -68,8 +68,6 @@ public interface MuseumRepository {
      * @return A list of Collection objects
      * @throws Exception
      */
-    public List<Collection> getCollectionsAtMuseum(Museum museum) throws Exception;
-    
     
     public void addExhibition(Exhibition exhibition) throws Exception;
     public List<Exhibition> getAllExhibitions() throws Exception;

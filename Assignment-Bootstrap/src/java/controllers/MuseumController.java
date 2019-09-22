@@ -5,14 +5,24 @@
  */
 package controllers;
 
+import entities.Collection;
 import entities.Museum;
+import java.io.Serializable;
+import java.util.Set;
 
 import javax.el.ELContext;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import javax.persistence.Transient;
 /**
  *
  * @author Aditya
@@ -53,6 +63,4 @@ public class MuseumController{
     public void setSelectedMuseum(Museum selectedMuseum) {
         this.selectedMuseum = selectedMuseum;
     }
-    
-    
 }

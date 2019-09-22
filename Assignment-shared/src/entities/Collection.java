@@ -9,19 +9,29 @@ import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
  * This class contains information about a collection of artifacts. Artifacts at a museum are usually grouped together under a collection, e.g. "Egyptian ruins"
  * @author Aditya
  */
+
+
+@NamedQueries ({
+    @NamedQuery (name = Collection.GET_COLLECTION_FOR_MUSEUM, query = "Select c from Collection c WHERE c.collectionMuseum.museumId = :museumId")
+})
+
 @Entity
 public class Collection implements Serializable {
+    public static final String GET_COLLECTION_FOR_MUSEUM = "Collection.getCollectionForMuseum";
     private int collectionID;
     private String collectionName;
     private String collectionDescription;
@@ -110,7 +120,7 @@ public class Collection implements Serializable {
         this.collectionImagePath = collectionImagePath;
     }
 
-    @OneToMany(mappedBy = "artifactCollection")
+    @OneToMany(mappedBy = "artifactCollection", fetch = FetchType.EAGER)
     public Set<Artifact> getCollectionArtifacts() {
         return collectionArtifacts;
     }
@@ -119,7 +129,7 @@ public class Collection implements Serializable {
         this.collectionArtifacts = collectionArtifacts;
     }
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "museum_id", nullable = false)
     public Museum getCollectionMuseum() {
         return collectionMuseum;
@@ -129,7 +139,7 @@ public class Collection implements Serializable {
         this.collectionMuseum = collectionMuseum;
     }
 
-    @OneToMany(mappedBy = "exhibitionCollection")
+    @OneToMany(mappedBy = "exhibitionCollection",  fetch = FetchType.EAGER)
     public Set<Exhibition> getCollectionExhibition() {
         return collectionExhibition;
     }
@@ -141,6 +151,6 @@ public class Collection implements Serializable {
     
     @Override
     public String toString() {
-        return "Collection{" + "collectionID=" + collectionID + ", collectionName=" + collectionName + ", collectionDescription=" + collectionDescription + ", collectionCurator=" + collectionCurator + ", collectionCategory=" + collectionCategory + ", collectionImagePath=" + collectionImagePath + ", collectionArtifacts=" + collectionArtifacts + ", collectionMuseum=" + collectionMuseum + '}';
-    }    
+        return "Collection{" + "collectionID=" + collectionID + ", collectionName=" + collectionName + ", collectionDescription=" + collectionDescription + ", collectionCurator=" + collectionCurator + ", collectionCategory=" + collectionCategory + ", collectionImagePath=" + collectionImagePath + '}';
+    }
 }

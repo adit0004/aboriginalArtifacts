@@ -10,7 +10,7 @@ import entities.Exhibition;
 import entities.Museum;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.Stateful;
+import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,6 +34,11 @@ public class MuseumRepositoryImpl implements MuseumRepository {
     @Override
     public Museum getMuseumById(int museumId) throws Exception {
         Museum museum = entityManager.find(Museum.class, museumId);
+        museum.getMuseumCollections().size();
+        museum.getMuseumExhibitions().size();
+        Set<Collection> collections = museum.getMuseumCollections();
+        collections.size();
+        entityManager.refresh(museum);
         return museum;
     }
 
@@ -60,11 +65,8 @@ public class MuseumRepositoryImpl implements MuseumRepository {
     public List<Exhibition> getExhibitionsAtMuseum(Museum museum) throws Exception {
         return entityManager.createNamedQuery(Museum.GET_EXHIBITIONS_FOR_MUSEUM_QUERY).getResultList();
     }
-
-    @Override
-    public List<Collection> getCollectionsAtMuseum(Museum museum) throws Exception {
-        return entityManager.createNamedQuery(Museum.GET_COLLECTIONS_FOR_MUSEUM_QUERY).getResultList();
-    }
+    
+    
 
         @Override
     public void addExhibition(Exhibition exhibition) {

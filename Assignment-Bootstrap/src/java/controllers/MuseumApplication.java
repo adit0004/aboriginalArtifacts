@@ -16,6 +16,13 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import mbeans.MuseumManagedBean;
 
+import entities.Collection;
+import java.util.Set;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+
 /**
  *
  * @author adity
@@ -58,15 +65,56 @@ public class MuseumApplication {
         this.museums = museums;
     }
     
-    public List<Exhibition> getExhibitionsForMuseum(int museumId) {
-        return museumManagedBean.getExhibitionsForMuseum(museumId);
-    }
-    
     public Museum getMuseumById(int museumId) {
         for (Museum museum : museums) {
             if (museum.getMuseumId() == museumId)
                 return museum;
         }
         return null;
+    }
+    
+    public String getCollectionsForMuseum(){
+        int selectedMuseumId = Integer.valueOf(FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap()
+                .get("museumId"));
+        Set<Collection> collections = museumManagedBean.getCollectionsForMuseum(selectedMuseumId);
+        
+        // Attempt to manually create json
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        for (Collection temp : collections) {
+            JsonObject collectionObject = Json.createObjectBuilder().add("id", temp.getCollectionID()).add("category", temp.getCollectionCategory()).add("curator", temp.getCollectionCurator()).add("description", temp.getCollectionDescription()).add("image", temp.getCollectionImagePath()).add("name", temp.getCollectionName()).build();
+            arrayBuilder.add(collectionObject);
+        }
+        JsonArray collectionArray = arrayBuilder.build();
+        String retStr = collectionArray.toString();
+        return retStr;
+    }
+    
+    public boolean isUserLoggedIn() {
+        if(museumManagedBean.getCurrentLoggedInUser() == -1)
+            return false;
+        return true;
+    }
+    
+    public List<Exhibition> getExhibitionsForMuseum(){
+        int selectedMuseumId = Integer.valueOf(FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap()
+                .get("museumId"));
+        List<Exhibition> exhibitions = museumManagedBean.getExhibitionsForMuseum(selectedMuseumId);
+//        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+//        for (Exhibition temp : exhibitions) {
+//            JsonObject collectionObject = Json.createObjectBuilder()
+//                    .add("id", temp.getExhibitionId())
+//                    .add("name", temp.getExhibitionName())
+//                    .add("image", temp.getImagePath())
+//                    .build();
+//            arrayBuilder.add(collectionObject);
+//        }
+//        JsonArray collectionArray = arrayBuilder.build();
+//        String retStr = collectionArray.toString();
+//        return retStr;
+        return exhibitions;
     }
 }

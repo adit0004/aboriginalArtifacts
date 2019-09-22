@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,6 +44,7 @@ public class Exhibition implements Serializable{
     private Collection exhibitionCollection;
     private Museum exhibitionMuseum;
     private Ticket exhibitionTicket;
+    private String imagePath;
 
     public Exhibition() {
         exhibitionName = "New Exhibition";
@@ -52,8 +54,9 @@ public class Exhibition implements Serializable{
         exhibitionCollection = null;
         exhibitionMuseum = null;
         exhibitionTicket = null;
+        imagePath = null;
     }
-    public Exhibition(int exhibitionId, String exhibitionName, String exhibitionDescription, Date exhibitionStartDate, Date exhibitionEndDate, Collection exhibitionCollection, Museum exhibitionMuseum, Ticket exhibitionTicket) {
+    public Exhibition(int exhibitionId, String exhibitionName, String exhibitionDescription, Date exhibitionStartDate, Date exhibitionEndDate, Collection exhibitionCollection, Museum exhibitionMuseum, Ticket exhibitionTicket, String imagePath){
         this.exhibitionId = exhibitionId;
         this.exhibitionName = exhibitionName;
         this.exhibitionDescription = exhibitionDescription;
@@ -62,6 +65,7 @@ public class Exhibition implements Serializable{
         this.exhibitionCollection = exhibitionCollection;
         this.exhibitionMuseum = exhibitionMuseum;
         this.exhibitionTicket = exhibitionTicket;
+        this.imagePath = imagePath;
     }
 
     @Id
@@ -113,7 +117,7 @@ public class Exhibition implements Serializable{
         this.exhibitionEndDate = exhibitionEndDate;
     }
     
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "collection_id", nullable = true)
     public Collection getExhibitionCollection() {
         return exhibitionCollection;
@@ -142,6 +146,15 @@ public class Exhibition implements Serializable{
         this.exhibitionTicket = exhibitionTicket;
     }
 
+    @Column(name = "image_path")
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+    
     @Override
     public String toString() {
         return "Exhibition{" + "exhibitionId=" + exhibitionId + ", exhibitionName=" + exhibitionName + ", exhibitionDescription=" + exhibitionDescription + ", exhibitionStartDate=" + exhibitionStartDate + ", exhibitionEndDate=" + exhibitionEndDate + ", exhibitionCollection=" + exhibitionCollection + ", exhibitionMuseum=" + exhibitionMuseum + ", exhibitionTickets=" + exhibitionTicket + '}';
