@@ -6,6 +6,8 @@
     <class>entities.Collection</class>
     <class>entities.Exhibition</class>
     <class>entities.Museum</class>
+    <class>entities.TicketRecord</class>
+    <class>entities.UserData</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

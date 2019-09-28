@@ -7,6 +7,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -51,7 +52,7 @@ public class Museum implements Serializable {
     private String learnMoreLeading;
     private String learnMoreHeading;
     private String learnMoreBody;
-    private ArrayList<Exhibition> museumExhibitions;
+    private List<Exhibition> museumExhibitions;
     private Set<Collection> museumCollections;
     private String museumImagePath;
 
@@ -71,7 +72,7 @@ public class Museum implements Serializable {
         learnMoreBody = null;
     }
 
-    public Museum(int museumId, String museumName, Address museumAddress, String museumContactNumber, String museumChiefCurator, String collectionDescription, String learnMoreTitle, String learnMoreLeading, String learnMoreHeading, String learnMoreBody, ArrayList<Exhibition> museumExhibitions, Set<Collection> museumCollections, String museumImagePath) {
+    public Museum(int museumId, String museumName, Address museumAddress, String museumContactNumber, String museumChiefCurator, String collectionDescription, String learnMoreTitle, String learnMoreLeading, String learnMoreHeading, String learnMoreBody, List<Exhibition> museumExhibitions, Set<Collection> museumCollections, String museumImagePath) {
         this.museumId = museumId;
         this.museumName = museumName;
         this.museumAddress = museumAddress;
@@ -135,11 +136,11 @@ public class Museum implements Serializable {
     }
 
     @OneToMany(mappedBy = "exhibitionMuseum", cascade=CascadeType.ALL)
-    public ArrayList<Exhibition> getMuseumExhibitions() {
+    public List<Exhibition> getMuseumExhibitions() {
         return museumExhibitions;
     }
 
-    public void setMuseumExhibitions(ArrayList<Exhibition> museumExhibitions) {
+    public void setMuseumExhibitions(List<Exhibition> museumExhibitions) {
         this.museumExhibitions = museumExhibitions;
     }
 

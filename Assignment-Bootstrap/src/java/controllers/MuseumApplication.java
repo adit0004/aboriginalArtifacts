@@ -17,11 +17,13 @@ import javax.inject.Named;
 import mbeans.MuseumManagedBean;
 
 import entities.Collection;
+import java.security.Principal;
 import java.util.Set;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import mbeans.UserManagedBean;
 
 /**
  *
@@ -35,11 +37,15 @@ public class MuseumApplication {
     @ManagedProperty(value = "#{museumManagedBean}")
     MuseumManagedBean museumManagedBean;
     
+    @ManagedProperty(value = "#{userManagedBean}")
+    UserManagedBean userManagedBean;
+    
     private ArrayList<Museum> museums = new ArrayList<>();
     
     public MuseumApplication() {
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
         museumManagedBean = (MuseumManagedBean) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext, null, "museumManagedBean");
+        userManagedBean = (UserManagedBean) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext, null, "userManagedBean");
         updateMuseumList();
     }
     
@@ -92,7 +98,8 @@ public class MuseumApplication {
     }
     
     public boolean isUserLoggedIn() {
-        if(museumManagedBean.getCurrentLoggedInUser() == -1)
+        userManagedBean.setCurrentLoggedInUserName(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
+        if(userManagedBean.getCurrentLoggedInUserName() == null)
             return false;
         return true;
     }
@@ -117,4 +124,22 @@ public class MuseumApplication {
 //        return retStr;
         return exhibitions;
     }
+
+    public MuseumManagedBean getMuseumManagedBean() {
+        return museumManagedBean;
+    }
+
+    public void setMuseumManagedBean(MuseumManagedBean museumManagedBean) {
+        this.museumManagedBean = museumManagedBean;
+    }
+
+    public UserManagedBean getUserManagedBean() {
+        return userManagedBean;
+    }
+
+    public void setUserManagedBean(UserManagedBean userManagedBean) {
+        this.userManagedBean = userManagedBean;
+    }
+    
+    
 }

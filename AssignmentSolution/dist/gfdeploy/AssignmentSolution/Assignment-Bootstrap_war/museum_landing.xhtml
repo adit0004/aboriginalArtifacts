@@ -64,7 +64,7 @@
                     </li>
                     <c:if test="#{museumApplication.userLoggedIn eq true}">
                         <li class="nav-item dropdown">
-                            <a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">John Doe</a>
+                            <a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#{museumApplication.userManagedBean.currentLoggedInUser.firstName} #{museumApplication.userManagedBean.currentLoggedInUser.lastName} </a>
                             <div class="dropdown-menu dropdown-menu-right" x-placement="static">
                                 <a class="dropdown-item" href="#">My Profile</a>
                                 <a class="dropdown-item" href="#">View Bookings</a>

@@ -30,20 +30,8 @@ public class MuseumManagedBean implements Serializable{
     @EJB
     MuseumRepository museumRepository;
     
-    private int currentLoggedInUser;
     public MuseumManagedBean() {
-        currentLoggedInUser = -1;
     }
-
-    public int getCurrentLoggedInUser() {
-        return currentLoggedInUser;
-    }
-
-    public void setCurrentLoggedInUser(int currentLoggedInUser) {
-        this.currentLoggedInUser = currentLoggedInUser;
-    }
-   
-    
     
     public List<Museum> getAllMuseums() {
         try {
