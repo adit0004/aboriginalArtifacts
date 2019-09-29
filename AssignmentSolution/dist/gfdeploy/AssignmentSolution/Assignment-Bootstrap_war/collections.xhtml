@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <head>
+        <meta charset="utf-8" />
+        <title>Artifacts Unearthed</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" href="css/custom.css" />
+        <style>
+            .image{
+                position: relative;
+            }
+            .image>h2{
+                position:absolute;
+                top:100px;
+            }
+            .image>a{
+                position:absolute;
+                top:300px;
+            }
+            .with-bg>img{
+                max-width: 100%;
+            }
+            .splash-container{
+                overflow: hidden;
+            }
+            .splash-container img {
+                margin-left:-50%;
+                max-height: 400px!important;
+            }
+            .card-img-top {
+                width: 100%;
+                height: 15vw;
+                object-fit: cover;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand p-0" href="index.html"><img src="img/logo.png" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="index.xhtml">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="btn btn-primary nav-link" href="#">Collections</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">Exhibitions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">Tickets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">Contact</a>
+                    </li>
+                    <c:if test="#{museumApplication.userLoggedIn eq true}">
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#{museumApplication.userManagedBean.currentLoggedInUser.firstName} #{museumApplication.userManagedBean.currentLoggedInUser.lastName} </a>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="static">
+                                <a class="dropdown-item" href="#">My Profile</a>
+                                <a class="dropdown-item" href="#">View Bookings</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Logout</a>
+                            </div>
+                        </li>
+                    </c:if>
+                    <c:if test="#{museumApplication.userLoggedIn eq false}">
+                        <li class="nav-item">
+                            <a class="btn btn-light nav-link text-dark py-2 px-3 my-2" href="login.xhtml">Login / Sign-up</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <h1>Collections</h1>
+                    <p class="lead text-primary">#{museumController.selectedMuseum.collectionDescription}</p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-md-3">
+                    <h4>Categories</h4>
+                    <div class="list-group" id="list-tab" role="tablist">
+
+                        <h:link outcome="collections" styleClass="list-group-item list-group-item-action active" id="list-home-list" value="All" rendered="#{museumController.selectedCategory.toString() eq 'all'}">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                        <h:link outcome="collections" styleClass="list-group-item list-group-item-action" id="list-home-list" value="All" rendered="#{museumController.selectedCategory.toString() ne 'all'}">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                        <ui:repeat value="#{museumApplication.categoriesForMuseum}" var="category" varStatus="status">
+                            <h:link outcome="collections" id="list-home-list" styleClass="list-group-item list-group-item-action active" value="#{category}" rendered="#{museumController.selectedCategory.toString() eq category.toString().toLowerCase()}">
+                                <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                                <f:param name="categoryName" value="#{category}" />
+                            </h:link>
+                            <h:link outcome="collections" id="list-home-list" styleClass="list-group-item list-group-item-action" value="#{category}" rendered="#{museumController.selectedCategory.toString() ne category.toString().toLowerCase()}">
+                                <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                                <f:param name="categoryName" value="#{category}" />
+                            </h:link>
+                        </ui:repeat>
+                    </div>
+                </div>
+                <div class="col-12 col-md-9">
+                    <div class="row">
+                        <div class="card-group">
+                            <ui:repeat value="#{museumApplication.collectionsArrayForMuseum}" var="collection" varStatus="status">
+                                <div class="card col-md-4">
+                                    <img src="#{collection.collectionImagePath}" class="card-img-top" />
+                                    <div class="card-body">
+                                        <h5 class="card-title">#{collection.collectionName}</h5>
+                                        <p class="card-text">#{collection.collectionDescription}</p>
+                                        <h:link outcome="single_collection" value="Preview &rarr;" styleClass="btn btn-primary">
+                                            <f:param name="collectionId" value="#{collection.collectionID}" />
+                                        </h:link>
+                                    </div>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-secondary text-center p-3 mt-5 text-white">
+            Museum of Aboriginal Artifacts. Licensed under Creative Commons. All attributions provided in the about page. 
+        </footer>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </body>
+</html>
+

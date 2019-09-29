@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <head>
+        <meta charset="utf-8" />
+        <title>Artifacts Unearthed</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" href="css/custom.css" />
+        <style>
+            .image{
+                position: relative;
+            }
+            .image>h2{
+                position:absolute;
+                top:100px;
+            }
+            .image>a{
+                position:absolute;
+                top:300px;
+            }
+            .with-bg>img{
+                max-width: 100%;
+            }
+            .splash-container{
+                overflow: hidden;
+            }
+            .splash-container img {
+                margin-left:-50%;
+                max-height: 400px!important;
+            }
+            .card-img-top {
+                width: 100%;
+                height: 15vw;
+                object-fit: cover;
+            }
+            .modal-body img{
+                width:100%;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand p-0" href="index.html"><img src="img/logo.png" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="index.xhtml">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="btn btn-primary nav-link" href="#">Collections</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">Exhibitions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">Tickets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">Contact</a>
+                    </li>
+                    <c:if test="#{museumApplication.userLoggedIn eq true}">
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#{museumApplication.userManagedBean.currentLoggedInUser.firstName} #{museumApplication.userManagedBean.currentLoggedInUser.lastName} </a>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="static">
+                                <a class="dropdown-item" href="#">My Profile</a>
+                                <a class="dropdown-item" href="#">View Bookings</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Logout</a>
+                            </div>
+                        </li>
+                    </c:if>
+                    <c:if test="#{museumApplication.userLoggedIn eq false}">
+                        <li class="nav-item">
+                            <a class="btn btn-light nav-link text-dark py-2 px-3 my-2" href="login.xhtml">Login / Sign-up</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <h1>#{collectionController.selectedCollection.collectionName}</h1>
+                    <p class="lead text-primary">#{collectionController.selectedCollection.collectionDescription}</p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="card-group">
+                    <ui:repeat value="#{collectionController.artifactsForCollection}" var="artifact" varStatus="status">
+                        <div class="col-12 col-md-4 mt-5">
+                            <div class="card">
+                                <img src="#{artifact.artifactImagePath}" class="card-img-top" />
+                                <div class="card-body">
+                                    <h5 class="card-title">#{artifact.artifactName}</h5>
+                                </div>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_#{artifact.artifactId}">
+                                    Details &rarr;
+                                </button>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="modal_#{artifact.artifactId}" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">#{artifact.artifactName}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6">
+                                                <img src="#{artifact.artifactImagePath}" />
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <h3>Year:</h3>
+                                                <p>#{artifact.artifactEstimatedTimePeriod}</p>                                                
+                                                <h3>Category</h3>
+                                                <p>#{artifact.artifactCategory}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col-12">
+                                                <h3>Description</h3>
+                                                <p>#{artifact.artifactDescription}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-secondary text-center p-3 mt-5 text-white">
+            Museum of Aboriginal Artifacts. Licensed under Creative Commons. All attributions provided in the about page. 
+        </footer>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </body>
+</html>
+

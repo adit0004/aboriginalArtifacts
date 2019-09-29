@@ -75,4 +75,24 @@ public class MuseumManagedBean implements Serializable{
         return null;
     }
     
+    public List<String> getCategoriesForMuseum(int museumId) {
+        try {
+            List<String> categories = museumRepository.getCollectionCategoriesForMuseum(museumId);
+            return categories;
+        } catch (Exception e) {
+            Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
+    }
+    
+    public Collection getCollectionById(int collectionId) {
+        try {
+            Collection collection = museumRepository.getCollectionById(collectionId);
+            return collection;
+        } catch (Exception e) {
+            Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
+    }
+    
 }

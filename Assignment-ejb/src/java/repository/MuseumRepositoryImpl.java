@@ -5,6 +5,7 @@
  */
 package repository;
 
+import entities.Artifact;
 import entities.Collection;
 import entities.Exhibition;
 import entities.Museum;
@@ -36,8 +37,7 @@ public class MuseumRepositoryImpl implements MuseumRepository {
         Museum museum = entityManager.find(Museum.class, museumId);
         museum.getMuseumCollections().size();
         museum.getMuseumExhibitions().size();
-        Set<Collection> collections = museum.getMuseumCollections();
-        collections.size();
+        museum.getMuseumCollections().iterator().next().getCollectionArtifacts().size();
         entityManager.refresh(museum);
         return museum;
     }
@@ -83,5 +83,20 @@ public class MuseumRepositoryImpl implements MuseumRepository {
         Query query = entityManager.createNamedQuery(Exhibition.GET_EXHIBITIONS_FOR_MUSEUM);
         query.setParameter("museumId", museumId);
         return query.getResultList();
+    }
+
+    @Override
+    public List<String> getCollectionCategoriesForMuseum(int museumId) throws Exception {
+        Query query = entityManager.createNamedQuery(Collection.GET_CATEGORY_LIST_FOR_MUSEUM);
+        query.setParameter("museumId", museumId);
+        return query.getResultList();
+    }
+    
+    @Override
+    public Collection getCollectionById(int collectionId) throws Exception {
+        Collection collection = entityManager.find(Collection.class, collectionId);
+        collection.getCollectionArtifacts().size();
+        entityManager.refresh(collection);
+        return collection;
     }
 }

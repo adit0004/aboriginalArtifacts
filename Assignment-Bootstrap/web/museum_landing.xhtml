@@ -51,7 +51,9 @@
                         <a class="btn btn-primary nav-link" href="#">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-primary nav-link" href="collections.html">Collections</a>
+                        <h:link outcome="collections" styleClass="btn btn-primary nav-link" value="Collections">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
                     </li>
                     <li class="nav-item">
                         <a class="btn btn-primary nav-link" href="#">Exhibitions</a>

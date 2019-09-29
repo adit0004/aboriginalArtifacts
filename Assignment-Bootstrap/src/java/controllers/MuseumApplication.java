@@ -79,6 +79,11 @@ public class MuseumApplication {
         return null;
     }
     
+    public Collection getCollectionById(int collectionId) {
+        Collection collection = museumManagedBean.getCollectionById(collectionId);
+        return collection;
+    }
+    
     public String getCollectionsForMuseum(){
         int selectedMuseumId = Integer.valueOf(FacesContext.getCurrentInstance()
                 .getExternalContext()
@@ -95,6 +100,24 @@ public class MuseumApplication {
         JsonArray collectionArray = arrayBuilder.build();
         String retStr = collectionArray.toString();
         return retStr;
+    }
+    
+    public List<Collection> getCollectionsArrayForMuseum() {
+        int selectedMuseumId = Integer.valueOf(FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap()
+                .get("museumId"));
+        Set<Collection> collections = museumManagedBean.getCollectionsForMuseum(selectedMuseumId);
+        return new ArrayList<Collection>(collections);
+    }
+    
+    public List<String> getCategoriesForMuseum() {
+        int selectedMuseumId = Integer.valueOf(FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap()
+                .get("museumId"));
+        List<String> categories = museumManagedBean.getCategoriesForMuseum(selectedMuseumId);
+        return categories;
     }
     
     public boolean isUserLoggedIn() {
@@ -141,5 +164,13 @@ public class MuseumApplication {
         this.userManagedBean = userManagedBean;
     }
     
+    public boolean checkLoginError() {
+        String error = FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap()
+                .get("error");
+        if (error == null) return false;
+        return error.equals("true");
+    }
     
 }

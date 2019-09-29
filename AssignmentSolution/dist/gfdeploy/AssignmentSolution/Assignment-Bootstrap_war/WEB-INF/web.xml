@@ -39,7 +39,7 @@
         <realm-name>JDBCAuthentication</realm-name>
         <form-login-config>
             <form-login-page>/faces/login.xhtml</form-login-page>
-            <form-error-page>/faces/error.xhtml</form-error-page>
+            <form-error-page>/faces/login.xhtml?error=true</form-error-page>
         </form-login-config>
     </login-config>
     <security-role>

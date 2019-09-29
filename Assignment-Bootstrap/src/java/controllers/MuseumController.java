@@ -63,4 +63,16 @@ public class MuseumController{
     public void setSelectedMuseum(Museum selectedMuseum) {
         this.selectedMuseum = selectedMuseum;
     }
+    
+    public String getSelectedCategory() {
+        String selectedCategory = FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap()
+                .get("categoryName");
+        if (selectedCategory == null) {
+            return "all";
+        }
+        else return selectedCategory.toLowerCase();
+    }
+    
 }

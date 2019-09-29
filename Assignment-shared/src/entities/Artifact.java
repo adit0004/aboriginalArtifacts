@@ -72,7 +72,7 @@ public class Artifact implements Serializable {
         this.artifactName = artifactName;
     }
 
-    @Column(name = "artifact_description")
+    @Column(name = "artifact_description", length = 1024)
     public String getArtifactDescription() {
         return artifactDescription;
     }

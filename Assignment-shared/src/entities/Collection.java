@@ -26,12 +26,14 @@ import javax.persistence.OneToMany;
 
 
 @NamedQueries ({
-    @NamedQuery (name = Collection.GET_COLLECTION_FOR_MUSEUM, query = "Select c from Collection c WHERE c.collectionMuseum.museumId = :museumId")
+    @NamedQuery (name = Collection.GET_COLLECTION_FOR_MUSEUM, query = "Select c from Collection c WHERE c.collectionMuseum.museumId = :museumId"),
+    @NamedQuery (name = Collection.GET_CATEGORY_LIST_FOR_MUSEUM, query = "SELECT c.collectionCategory FROM Collection c WHERE c.collectionMuseum.museumId = :museumId ORDER BY c.collectionCategory asc")
 })
 
 @Entity
 public class Collection implements Serializable {
     public static final String GET_COLLECTION_FOR_MUSEUM = "Collection.getCollectionForMuseum";
+    public static final String GET_CATEGORY_LIST_FOR_MUSEUM = "Collection.getCategoriesForMuseumCollection";
     private int collectionID;
     private String collectionName;
     private String collectionDescription;
