@@ -107,7 +107,22 @@ public class MuseumApplication {
                 .getExternalContext()
                 .getRequestParameterMap()
                 .get("museumId"));
-        Set<Collection> collections = museumManagedBean.getCollectionsForMuseum(selectedMuseumId);
+        String selectedCategory = FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap()
+                .get("categoryName");
+        Set<Collection> collections = museumManagedBean.getCollectionsForMuseum(selectedMuseumId);;
+        List<Collection> collectionsToRemove = new ArrayList<Collection>();
+        if (selectedCategory != null){
+            for(Collection temp : collections) {
+                if (!temp.getCollectionCategory().equals(selectedCategory)) {
+                    collectionsToRemove.add(temp);
+                }
+            }
+            for(Collection temp : collectionsToRemove) {
+                collections.remove(temp);
+            }
+        }
         return new ArrayList<Collection>(collections);
     }
     

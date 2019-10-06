@@ -57,13 +57,14 @@
                         <a class="btn btn-primary nav-link" href="#">About</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="btn btn-primary nav-link" href="#">Collections</a>
+                        <h:link outcome="collections" styleClass="btn btn-primary nav-link" value="Collections">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-primary nav-link" href="#">Exhibitions</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-primary nav-link" href="#">Tickets</a>
+                        <h:link outcome="exhibitions" styleClass="btn btn-primary nav-link" value="Exhibitions">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
                     </li>
                     <li class="nav-item">
                         <a class="btn btn-primary nav-link" href="#">Contact</a>
@@ -118,10 +119,9 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-9">
-                    <div class="row">
-                        <div class="card-group">
+                        <div class="card-group row">
                             <ui:repeat value="#{museumApplication.collectionsArrayForMuseum}" var="collection" varStatus="status">
-                                <div class="card col-md-4">
+                                <div class="card col-6 col-md-4">
                                     <img src="#{collection.collectionImagePath}" class="card-img-top" />
                                     <div class="card-body">
                                         <h5 class="card-title">#{collection.collectionName}</h5>
@@ -133,7 +133,6 @@
                                 </div>
                             </ui:repeat>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

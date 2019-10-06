@@ -27,7 +27,8 @@ import javax.persistence.Temporal;
 
 @NamedQueries ({
     @NamedQuery (name = Exhibition.GET_ALL_QUERY_NAME, query = "Select e from Exhibition e"),
-    @NamedQuery (name = Exhibition.GET_EXHIBITIONS_FOR_MUSEUM, query = "Select e from Exhibition e WHERE e.exhibitionMuseum.museumId = :museumId")
+    @NamedQuery (name = Exhibition.GET_EXHIBITIONS_FOR_MUSEUM, query = "Select e from Exhibition e WHERE e.exhibitionMuseum.museumId = :museumId"),
+    @NamedQuery (name = Exhibition.GET_FILTERED_EXHIBITIONS, query = "SELECT e FROM Exhibition e WHERE e.exhibitionMuseum.museumId = :museumId AND e.exhibitionCollection.collectionCategory = :category")
 })
 
 @Entity
@@ -35,6 +36,7 @@ public class Exhibition implements Serializable{
     
     public static final String GET_ALL_QUERY_NAME = "Exhibition.getAll";
     public static final String GET_EXHIBITIONS_FOR_MUSEUM = "Exhibition.getAllForMuseum";
+    public static final String GET_FILTERED_EXHIBITIONS = "Exhibition.getFilteredExhibitions";
     
     private int exhibitionId;
     private String exhibitionName;

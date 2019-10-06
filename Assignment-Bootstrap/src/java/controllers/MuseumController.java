@@ -28,8 +28,8 @@ import javax.persistence.Transient;
  * @author Aditya
  */
 @Named(value = "museumController")
-@RequestScoped
-public class MuseumController{
+@SessionScoped
+public class MuseumController implements Serializable{
     static @ManagedProperty(value = "#{museumApplication}")
     MuseumApplication museumApplication;
     

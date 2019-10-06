@@ -77,4 +77,5 @@ public interface MuseumRepository {
     public List<String> getCollectionCategoriesForMuseum(int museumId) throws Exception;
     
     public Collection getCollectionById(int collectionId) throws Exception;
+    
 }

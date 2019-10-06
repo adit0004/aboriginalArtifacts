@@ -39,9 +39,6 @@
                 height: 15vw;
                 object-fit: cover;
             }
-            .modal-body img{
-                width:100%;
-            }
         </style>
     </head>
     <body>
@@ -52,19 +49,19 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarColor02">
-                                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="btn btn-primary nav-link" href="index.xhtml">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="btn btn-primary nav-link" href="#">About</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <h:link outcome="collections" styleClass="btn btn-primary nav-link" value="Collections">
                             <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
                         </h:link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <h:link outcome="exhibitions" styleClass="btn btn-primary nav-link" value="Exhibitions">
                             <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
                         </h:link>
@@ -94,59 +91,57 @@
         <div class="container">
             <div class="row mt-3">
                 <div class="col-12 text-center">
-                    <h1>#{collectionController.selectedCollection.collectionName}</h1>
-                    <p class="lead text-primary">#{collectionController.selectedCollection.collectionDescription}</p>
+                    <h1>Exhibitions</h1>
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="card-group">
-                    <ui:repeat value="#{collectionController.artifactsForCollection}" var="artifact" varStatus="status">
-                        <div class="col-12 col-md-4 mt-5">
-                            <div class="card">
-                                <img src="#{artifact.artifactImagePath}" class="card-img-top" />
+                <div class="col-12 col-md-3">
+                    <h4>Filters</h4>
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <h:link outcome="exhibitions" styleClass="list-group-item list-group-item-action" id="list-home-list" value="Current">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                            <f:param name="display" value="current" />
+                        </h:link>
+
+                        <h:link outcome="exhibitions" styleClass="list-group-item list-group-item-action" id="list-home-list" value="Upcoming">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                            <f:param name="display" value="upcoming" />
+                        </h:link>
+
+                        <h:link outcome="exhibitions" styleClass="list-group-item list-group-item-action" id="list-home-list" value="Past">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                            <f:param name="display" value="past" />
+                        </h:link>
+                        
+                        <h:link outcome="exhibitions" styleClass="list-group-item list-group-item-action" id="list-home-list" value="All">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                            <f:param name="display" value="all" />
+                        </h:link>
+                    </div>
+                </div>
+                <div class="col-12 col-md-9">
+                    <div class="row">
+                        <ui:repeat value="#{museumApplication.exhibitionsForMuseum}" var="exhibition" varStatus="status">
+                            <div class="card col-md-4">
+                                <img src="#{exhibition.imagePath}" class="card-img-top" />
                                 <div class="card-body">
-                                    <h5 class="card-title">#{artifact.artifactName}</h5>
-                                </div>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_#{artifact.artifactId}">
-                                    Details &rarr;
-                                </button>
-                            </div>
-                        </div>
-                        <div class="modal fade" id="modal_#{artifact.artifactId}" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">#{artifact.artifactName}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-12 col-md-6">
-                                                <img src="#{artifact.artifactImagePath}" />
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <h3>Year:</h3>
-                                                <p>#{artifact.artifactEstimatedTimePeriod}</p>                                                
-                                                <h3>Category</h3>
-                                                <p>#{artifact.artifactCategory}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row mt-5">
-                                            <div class="col-12">
-                                                <h3>Description</h3>
-                                                <p>#{artifact.artifactDescription}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
+                                    <h5 class="card-title">#{exhibition.exhibitionName}</h5>
+                                    <p class="card-text">#{exhibition.exhibitionDescription}</p>
+                                    <hr />
+                                    <h:outputText value="#{exhibition.exhibitionStartDate}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText> - 
+                                    <h:outputText value="#{exhibition.exhibitionEndDate}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                    <h:link outcome="single_exhibition" value="Preview &rarr;" styleClass="btn btn-primary">
+                                        <f:param name="exhibitionId" value="#{exhibition.exhibitionId}" />
+                                    </h:link>
                                 </div>
                             </div>
-                        </div>
-                    </ui:repeat>
+                        </ui:repeat>
+
+                    </div>
                 </div>
             </div>
         </div>
