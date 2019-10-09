@@ -52,7 +52,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarColor02">
-                                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="btn btn-primary nav-link" href="index.xhtml">Home <span class="sr-only">(current)</span></a>
                     </li>
@@ -76,16 +76,18 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#{museumApplication.userManagedBean.currentLoggedInUser.firstName} #{museumApplication.userManagedBean.currentLoggedInUser.lastName} </a>
                             <div class="dropdown-menu dropdown-menu-right" x-placement="static">
-                                <a class="dropdown-item" href="#">My Profile</a>
-                                <a class="dropdown-item" href="#">View Bookings</a>
+                                <h:link outcome="user/profile" value="My Profile" styleClass="dropdown-item" />
+                                <h:link outcome="user/bookings" value="View Bookings" styleClass="dropdown-item"/>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Logout</a>
+                                <h:form>
+                                    <h:commandLink value="Logout" action="#{museumApplication.logout()}" styleClass="dropdown-item" />
+                                </h:form>
                             </div>
                         </li>
                     </c:if>
                     <c:if test="#{museumApplication.userLoggedIn eq false}">
                         <li class="nav-item">
-                            <a class="btn btn-light nav-link text-dark py-2 px-3 my-2" href="login.xhtml">Login / Sign-up</a>
+                            <a class="btn btn-light nav-link text-dark py-2 px-3 my-2" href="login_direct.xhtml">Login / Sign-up</a>
                         </li>
                     </c:if>
                 </ul>

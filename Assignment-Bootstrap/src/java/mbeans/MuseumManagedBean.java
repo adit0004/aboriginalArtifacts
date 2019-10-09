@@ -95,4 +95,12 @@ public class MuseumManagedBean implements Serializable{
         return null;
     }
     
+    public Exhibition getExhibitionById(int exhibitionId) {
+        try {
+            return museumRepository.getExhibitionById(exhibitionId);
+        } catch(Exception e) {
+            Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
+    }
 }

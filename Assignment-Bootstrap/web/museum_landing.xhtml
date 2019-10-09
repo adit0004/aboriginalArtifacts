@@ -67,16 +67,18 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#{museumApplication.userManagedBean.currentLoggedInUser.firstName} #{museumApplication.userManagedBean.currentLoggedInUser.lastName} </a>
                             <div class="dropdown-menu dropdown-menu-right" x-placement="static">
-                                <a class="dropdown-item" href="#">My Profile</a>
-                                <a class="dropdown-item" href="#">View Bookings</a>
+                                <h:link outcome="user/profile" value="My Profile" styleClass="dropdown-item" />
+                                <h:link outcome="user/bookings" value="View Bookings" styleClass="dropdown-item"/>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Logout</a>
+                                <h:form>
+                                    <h:commandLink value="Logout" action="#{museumApplication.logout()}" styleClass="dropdown-item" />
+                                </h:form>
                             </div>
                         </li>
                     </c:if>
                     <c:if test="#{museumApplication.userLoggedIn eq false}">
                         <li class="nav-item">
-                            <a class="btn btn-light nav-link text-dark py-2 px-3 my-2" href="login.xhtml">Login / Sign-up</a>
+                            <a class="btn btn-light nav-link text-dark py-2 px-3 my-2" href="login_direct.xhtml">Login / Sign-up</a>
                         </li>
                     </c:if>
                 </ul>
@@ -109,7 +111,7 @@
                         <p class="text-secondary small lead" style="font-weight:900" id="categoryLabel">Category</p>
                         <h3 id="nameLabel">Name of thing</h3>
                         <p class="text-white" id="descriptionLabel">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean suscipit auctor erat, vel porta est iaculis nec. Phasellus volutpat turpis est, vitae blandit velit ullamcorper vitae. Etiam quis facilisis diam. Mauris fringilla vitae arcu nec consequat. Vivamus convallis suscipit magna. Integer ullamcorper enim sed aliquet ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce ultricies, erat in sagittis fermentum, odio dui tincidunt purus, eu accumsan neque massa id libero. Praesent quis rutrum tellus.</p>
-                        
+
                     </div>
                 </div>
                 <div class="col-4 p-0 fixed-height" id="imageBounding">
@@ -218,7 +220,7 @@
                 $("#categoryImage").attr('src', collections[0].image);
 
                 $("#backButton").on('click', function () {
-                    
+
                     $("#categoryLabel").fadeOut();
                     $("#nameLabel").fadeOut();
                     $("#descriptionLabel").fadeOut();
@@ -237,7 +239,7 @@
                         $("#nameLabel").fadeIn();
                         $("#descriptionLabel").fadeIn();
                         $("#categoryImage").fadeIn(function () {
-                            
+
                         });
                     });
                 })

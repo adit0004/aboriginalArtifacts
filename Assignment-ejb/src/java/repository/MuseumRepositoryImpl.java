@@ -102,4 +102,14 @@ public class MuseumRepositoryImpl implements MuseumRepository {
         entityManager.refresh(collection);
         return collection;
     }
+
+    @Override
+    public Exhibition getExhibitionById(int exhibitionId) throws Exception {
+        Exhibition exhibition = entityManager.find(Exhibition.class, exhibitionId);
+        exhibition.getExhibitionCollection().getCollectionName();
+        entityManager.refresh(exhibition);
+        return exhibition;
+    }
+    
+    
 }

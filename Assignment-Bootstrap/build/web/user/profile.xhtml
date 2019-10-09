@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <head>
+        <meta charset="utf-8" />
+        <title>Artifacts Unearthed</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="../css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" href="../css/custom.css" />
+        <style>
+            .image{
+                position: relative;
+            }
+            .image>h2{
+                position:absolute;
+                top:100px;
+            }
+            .image>a{
+                position:absolute;
+                top:300px;
+            }
+            .with-bg>img{
+                max-width: 100%;
+            }
+            .splash-container{
+                overflow: hidden;
+            }
+            .splash-container img {
+                margin-left:-50%;
+                max-height: 400px!important;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand p-0" href="../index.xhtml"><img src="../img/logo.png" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="btn btn-primary nav-link" href="../index.xhtml">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="/collections" styleClass="btn btn-primary nav-link" value="Collections">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="/exhibitions" styleClass="btn btn-primary nav-link" value="Exhibitions">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">Contact</a>
+                    </li>
+                    <c:if test="#{museumApplication.userLoggedIn eq true}">
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#{museumApplication.userManagedBean.currentLoggedInUser.firstName} #{museumApplication.userManagedBean.currentLoggedInUser.lastName} </a>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="static">
+                                <h:link outcome="profile" value="My Profile" styleClass="dropdown-item" />
+                                <h:link outcome="view_booking" value="View Bookings" styleClass="dropdown-item"/>
+                                <div class="dropdown-divider"></div>
+                                <h:form>
+                                    <h:commandLink value="Logout" action="#{museumApplication.logout()}" styleClass="dropdown-item" />
+                                </h:form>
+                            </div>
+                        </li>
+                    </c:if>
+                    <c:if test="#{museumApplication.userLoggedIn eq false}">
+                        <li class="nav-item">
+                            <a class="btn btn-light nav-link text-dark py-2 px-3 my-2" href="../login_direct.xhtml">Login / Sign-up</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </div>
+        </nav>
+        <div class="container my-3">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Profile</h3>
+                </div>
+            </div>
+            <div class="orange-line bg-secondary my-5"></div>
+            <h:form>
+                <div class="row">
+                    <div class="col-3">First Name</div>
+                    <div class="col-9">
+                        <h:inputText value="#{userController.user.firstName}" styleClass="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">Last Name</div>
+                    <div class="col-9">
+                        <h:inputText value="#{userController.user.lastName}" styleClass="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">Email</div>
+                    <div class="col-9">
+                        <h:inputText value="#{userController.user.email}" styleClass="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">Phone Number</div>
+                    <div class="col-9">
+                        <h:inputText value="#{userController.user.phoneNumber}" styleClass="form-control" />
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <h:commandLink styleClass="btn btn-primary btn-lg float-right" value="Save"/>
+                    </div>
+                </div>
+                <!-- Add update button -->
+            </h:form>
+            <div class="orange-line bg-secondary my-5"></div>
+            <div class="row">
+                <div class="col-12">
+                    <h3>Change password</h3>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-secondary text-center p-3 mt-5 text-white">
+            Museum of Aboriginal Artifacts. Licensed under Creative Commons. All attributions provided in the about page. 
+        </footer>
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/popper.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+    </body>
+</html>
+

@@ -73,9 +73,7 @@ public interface MuseumRepository {
     public void addExhibition(Exhibition exhibition) throws Exception;
     public List<Exhibition> getAllExhibitions() throws Exception;
     public List<Exhibition> getExhibitionsForMuseum(int museumId) throws Exception;
-    
     public List<String> getCollectionCategoriesForMuseum(int museumId) throws Exception;
-    
     public Collection getCollectionById(int collectionId) throws Exception;
-    
+    public Exhibition getExhibitionById(int exhibitionId) throws Exception;
 }

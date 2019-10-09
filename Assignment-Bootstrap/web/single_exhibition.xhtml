@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <head>
+        <meta charset="utf-8" />
+        <title>Artifacts Unearthed</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" href="css/custom.css" />
+        <style>
+            .image{
+                position: relative;
+            }
+            .image>h2{
+                position:absolute;
+                top:100px;
+            }
+            .image>a{
+                position:absolute;
+                top:300px;
+            }
+            .with-bg>img{
+                max-width: 100%;
+            }
+            .splash-container{
+                overflow: hidden;
+            }
+            .splash-container img {
+                margin-left:-50%;
+                max-height: 400px!important;
+            }
+            .card-img-top {
+                width: 100%;
+                height: 15vw;
+                object-fit: cover;
+            }
+            .modal-body img{
+                width:100%;
+            }
+            tr>td:first-child{
+                background-color:#9c0f2c!important;
+                color:white!important;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand p-0" href="index.html"><img src="img/logo.png" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="index.xhtml">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="collections" styleClass="btn btn-primary nav-link" value="Collections">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                    </li>
+                    <li class="nav-item active">
+                        <h:link outcome="exhibitions" styleClass="btn btn-primary nav-link" value="Exhibitions">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">Contact</a>
+                    </li>
+                    <c:if test="#{museumApplication.userLoggedIn eq true}">
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#{museumApplication.userManagedBean.currentLoggedInUser.firstName} #{museumApplication.userManagedBean.currentLoggedInUser.lastName} </a>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="static">
+                                <h:link outcome="user/profile" value="My Profile" styleClass="dropdown-item" />
+                                <h:link outcome="user/bookings" value="View Bookings" styleClass="dropdown-item"/>
+                                <div class="dropdown-divider"></div>
+                                <h:form>
+                                    <h:commandLink value="Logout" action="#{museumApplication.logout()}" styleClass="dropdown-item" />
+                                </h:form>
+                            </div>
+                        </li>
+                    </c:if>
+                    <c:if test="#{museumApplication.userLoggedIn eq false}">
+                        <li class="nav-item">
+                            <a class="btn btn-light nav-link text-dark py-2 px-3 my-2" href="login_direct.xhtml">Login / Sign-up</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <h1>#{exhibitionController.selectedExhibition.exhibitionName}</h1>
+                    <p class="lead text-primary">#{exhibitionController.selectedExhibition.exhibitionDescription}</p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-md-4 order-md-last">
+                    <img src="#{exhibitionController.selectedExhibition.imagePath}" style="max-width:100%;"/>
+                </div>
+                <div class="col-12 col-md-8 order-md-first">
+                    <h3 class="text-center">Exhibition Details</h3>
+                    <table class="table table-bordered">
+                        <thead class="bg-primary text-white">
+                            <tr>
+                                <th colspan="2">Event details</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>Collection</td>
+                            <td>#{exhibitionController.selectedExhibition.exhibitionCollection.collectionName}</td>
+                        </tr>
+                        <tr>
+                            <td>Exhibition Starts</td>
+                            <td>
+                                <h:outputText value="#{exhibitionController.selectedExhibition.exhibitionStartDate}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Exhibition Ends</td>
+                            <td>
+                                <h:outputText value="#{exhibitionController.selectedExhibition.exhibitionEndDate}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Venue</td>
+                            <td>
+                                <address>
+                                    <strong>#{exhibitionController.selectedExhibition.exhibitionMuseum.museumName}</strong><br />
+                                    #{exhibitionController.selectedExhibition.exhibitionMuseum.museumAddress.streetNumber} #{exhibitionController.selectedExhibition.exhibitionMuseum.museumAddress.streetAddress}, <br />
+                                    #{exhibitionController.selectedExhibition.exhibitionMuseum.museumAddress.suburb} #{exhibitionController.selectedExhibition.exhibitionMuseum.museumAddress.state} #{exhibitionController.selectedExhibition.exhibitionMuseum.museumAddress.postcode}
+                                </address>
+                            </td>
+                        </tr>
+                        <thead class="bg-primary text-white">
+                            <tr>
+                                <th colspan="2">Ticket details</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>Ticket type</td>
+                            <td>#{exhibitionController.selectedExhibition.exhibitionTicket.ticketName}</td>
+                        </tr>
+                        <tr>
+                            <td>Ticket details</td>
+                            <td>#{exhibitionController.selectedExhibition.exhibitionTicket.ticketDescription}</td>
+                        </tr>
+                        <tr>
+                            <td>Ticket price</td>
+                            <td>
+                                <h:outputText value="#{exhibitionController.selectedExhibition.exhibitionTicket.ticketPrice}">
+                                    <f:convertNumber type="currency" currencySymbol="$" locale="en_US" />
+                                </h:outputText>
+                                <c:if test="#{exhibitionController.checkUserHasBooking() eq true}">
+                                    <h:link outcome="user/view_booking" styleClass="btn btn-outline-primary ml-3" value="View Booking" />
+                                </c:if>
+                                <c:if test="#{exhibitionController.checkUserHasBooking() eq false}">
+                                    <h:link outcome="user/booking" styleClass="btn btn-outline-primary ml-3" value="Book now!" />
+                                </c:if>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-secondary text-center p-3 mt-5 text-white">
+            Museum of Aboriginal Artifacts. Licensed under Creative Commons. All attributions provided in the about page. 
+        </footer>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </body>
+</html>

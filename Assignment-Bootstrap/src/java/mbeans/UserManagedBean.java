@@ -26,7 +26,6 @@ public class UserManagedBean implements Serializable {
     @EJB
     UserRepository userRepository;
     
-    
     // Only need this for the name in the navbar, don't need to access object all the time
     private String currentLoggedInUserName;
     private UserData currentLoggedInUser;

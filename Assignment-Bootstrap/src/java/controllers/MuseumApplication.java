@@ -23,6 +23,7 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.servlet.http.HttpSession;
 import mbeans.UserManagedBean;
 
 /**
@@ -186,6 +187,19 @@ public class MuseumApplication {
                 .get("error");
         if (error == null) return false;
         return error.equals("true");
+    }
+    
+    public Exhibition getExhibitionById(int exhibitionId) {
+        return museumManagedBean.getExhibitionById(exhibitionId);
+    }
+    
+    // Reference: https://stackoverflow.com/questions/2499317/how-to-implement-logout-process-in-jsf-application
+    public String logout() {
+        ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
+        // Also set currently logged in user to null
+        userManagedBean.setCurrentLoggedInUser(null);
+        userManagedBean.setCurrentLoggedInUserName(null);
+        return "index";
     }
     
 }
