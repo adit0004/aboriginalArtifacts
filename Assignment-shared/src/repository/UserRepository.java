@@ -5,6 +5,7 @@
  */
 package repository;
 
+import entities.TicketRecord;
 import entities.UserData;
 import javax.ejb.Remote;
 
@@ -18,4 +19,5 @@ public interface UserRepository {
     public UserData getUserById(int userId) throws Exception;
     public void updateUser(UserData user) throws Exception;
     public UserData getUserByEmail(String userEmail) throws Exception;
+    public TicketRecord getTicketById(int userId, int exhibitionId) throws Exception;
 }

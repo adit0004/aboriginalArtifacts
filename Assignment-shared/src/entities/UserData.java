@@ -1,11 +1,15 @@
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,6 +27,8 @@ import javax.persistence.OneToMany;
 })
 
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
+@JsonIgnoreProperties(value = { "password" })
 @Access(AccessType.PROPERTY)
 public class UserData implements Serializable{
 
@@ -104,7 +110,7 @@ public class UserData implements Serializable{
         this.phoneNumber = phoneNumber;
     }
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     public Set<TicketRecord> getTickets() {
         return tickets;
     }

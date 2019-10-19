@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import mbeans.UserManagedBean;
+import repository.UserRepository;
 
 /**
  *
@@ -22,20 +23,36 @@ import mbeans.UserManagedBean;
  */
 @Named(value = "userController")
 @SessionScoped
-public class UserController implements Serializable{
+public class UserController implements Serializable {
+
     static @ManagedProperty(value = "#{museumApplication}")
     MuseumApplication museumApplication;
 
     static @ManagedProperty(value = "#{userManagedBean}")
     UserManagedBean userManagedBean;
-    
+
     public UserController() {
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
         museumApplication = (MuseumApplication) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext, null, "museumApplication");
         userManagedBean = (UserManagedBean) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext, null, "userManagedBean");
-    }   
-    
+    }
+
     public UserData getUser() {
         return userManagedBean.getCurrentLoggedInUser();
+    }
+
+    public boolean checkUserHasBooking() {
+        if (userManagedBean.getCurrentLoggedInUser() == null) {
+            return false;
+        }
+        int userId = userManagedBean.getCurrentLoggedInUser().getUserId();
+        int exhibitionId = Integer.valueOf(FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap()
+                .get("exhibitionId"));
+        if (userManagedBean.fetchTicketRecord(userId, exhibitionId) != null) {
+            return true;
+        }
+        return false;
     }
 }

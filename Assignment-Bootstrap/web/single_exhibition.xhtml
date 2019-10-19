@@ -9,7 +9,8 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
     <head>
         <meta charset="utf-8" />
         <title>Artifacts Unearthed</title>
@@ -54,16 +55,28 @@ and open the template in the editor.
         </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand p-0" href="index.html"><img src="img/logo.png" /></a>
+                <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand p-0" href="index.xhtml"><img src="img/logo.png" /></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            <h:form styleClass="form-inline my-2 my-lg-0">
+                <h:inputText styleClass="form-control mr-sm-2" p:placeholder="Search for..." value="#{searchController.searchQuery}"/>
+                <h:commandButton styleClass="btn btn-secondary my-2 my-sm-0" value="Search" action="#{searchController.getSearchResults()}" />
+            </h:form>
+            <a href="#" class="text-white ml-3"><u>Advanced Search</u></a>
+
             <div class="collapse navbar-collapse" id="navbarColor02">
-                                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="btn btn-primary nav-link" href="index.xhtml">Home <span class="sr-only">(current)</span></a>
+                        <h:link outcome="museum_landing" styleClass="btn btn-primary nav-link">
+                            Home
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="index.xhtml">Museums</a>
                     </li>
                     <li class="nav-item">
                         <a class="btn btn-primary nav-link" href="#">About</a>
@@ -170,10 +183,10 @@ and open the template in the editor.
                                 <h:outputText value="#{exhibitionController.selectedExhibition.exhibitionTicket.ticketPrice}">
                                     <f:convertNumber type="currency" currencySymbol="$" locale="en_US" />
                                 </h:outputText>
-                                <c:if test="#{exhibitionController.checkUserHasBooking() eq true}">
+                                <c:if test="#{userController.checkUserHasBooking() eq true}">
                                     <h:link outcome="user/view_booking" styleClass="btn btn-outline-primary ml-3" value="View Booking" />
                                 </c:if>
-                                <c:if test="#{exhibitionController.checkUserHasBooking() eq false}">
+                                <c:if test="#{userController.checkUserHasBooking() eq false}">
                                     <h:link outcome="user/booking" styleClass="btn btn-outline-primary ml-3" value="Book now!" />
                                 </c:if>
                             </td>
@@ -188,5 +201,18 @@ and open the template in the editor.
         <script src="js/jquery.min.js"></script>
         <script src="js/popper.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+
+        <script>
+            $(function () {
+                $.ajax({
+                    url: "http://localhost:8080/Assignment-Bootstrap/webresources/getBooking/#{userManagedBean.currentLoggedInUser.userId}/#{exhibitionController.selectedExhibitionId}",
+                    method: "GET",
+                    success: function (json) {
+                        console.log(json);
+                    }
+                })
+            })
+        </script>
+
     </body>
 </html>

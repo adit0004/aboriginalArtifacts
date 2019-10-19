@@ -5,6 +5,8 @@
  */
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +34,18 @@ import javax.persistence.Transient;
 
 @NamedQueries ({
     @NamedQuery (name = Museum.GET_ALL_QUERY_NAME, query = "Select m from Museum m"),
-    @NamedQuery (name = Museum.GET_EXHIBITIONS_FOR_MUSEUM_QUERY, query = "Select m.museumExhibitions from Museum m")
+    @NamedQuery (name = Museum.GET_EXHIBITIONS_FOR_MUSEUM_QUERY, query = "Select m.museumExhibitions from Museum m"),
+    @NamedQuery (name = Museum.SEARCH_BY_NAME_ADDRESS, query = "SELECT m FROM Museum m WHERE m.museumName LIKE :museumName OR m.museumAddress.postcode LIKE :postcode OR m.museumAddress.state LIKE :state OR m.museumAddress.suburb LIKE :suburb")
 })
 
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="museumId")
 @Access(AccessType.PROPERTY)
 public class Museum implements Serializable {
     
     public static final String GET_ALL_QUERY_NAME = "Museum.getAll";
     public static final String GET_EXHIBITIONS_FOR_MUSEUM_QUERY = "Museum.getAllExhibitionsForMuseum";
-    
+    public static final String SEARCH_BY_NAME_ADDRESS = "Museum.getMuseumsByNameOrAddress";
     private int museumId;
     private String museumName;
     private Address museumAddress;
@@ -135,7 +139,7 @@ public class Museum implements Serializable {
         this.museumChiefCurator = museumChiefCurator;
     }
 
-    @OneToMany(mappedBy = "exhibitionMuseum", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "exhibitionMuseum", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     public List<Exhibition> getMuseumExhibitions() {
         return museumExhibitions;
     }

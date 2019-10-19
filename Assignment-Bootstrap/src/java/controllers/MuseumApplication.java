@@ -17,6 +17,7 @@ import javax.inject.Named;
 import mbeans.MuseumManagedBean;
 
 import entities.Collection;
+import entities.TicketRecord;
 import java.security.Principal;
 import java.util.Set;
 import javax.json.Json;
@@ -202,4 +203,7 @@ public class MuseumApplication {
         return "index";
     }
     
+    public TicketRecord getTicketRecordForUserExhibition(int userId, int exhibitionId) {
+        return userManagedBean.fetchTicketRecord(userId, exhibitionId);
+    }
 }

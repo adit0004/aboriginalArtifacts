@@ -5,6 +5,8 @@
  */
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -32,6 +34,7 @@ import javax.persistence.Temporal;
 })
 
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="exhibitionId")
 public class Exhibition implements Serializable{
     
     public static final String GET_ALL_QUERY_NAME = "Exhibition.getAll";

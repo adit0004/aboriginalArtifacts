@@ -1,7 +1,4 @@
-.nav-link{
-	text-transform: 
-}
-li..active{
+li.active{
 	outline-bottom: 4px solid #000;
 }
 .navbar-brand{

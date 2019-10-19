@@ -54,9 +54,6 @@ public class ExhibitionController{
         this.selectedExhibition = selectedExhibition;
     }
     
-    public boolean checkUserHasBooking() {
-        // Stub - TODO
-        return true;
-    }
+
     
 }

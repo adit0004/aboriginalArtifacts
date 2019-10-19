@@ -5,6 +5,8 @@
  */
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  * This is the base class for Artifact. An artifact is any piece in any museum, under any collection
@@ -21,8 +25,14 @@ import javax.persistence.ManyToOne;
  * @author Aditya
  */
 
+@NamedQueries ({
+    @NamedQuery(name = Artifact.SEARCH_BY_NAME_DESC, query = "SELECT a FROM Artifact a WHERE a.artifactName LIKE :artifactName OR a.artifactDescription LIKE :artifactDescription")
+})
+
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="artifactId")
 public class Artifact implements Serializable {
+    public static final String SEARCH_BY_NAME_DESC = "Artifact.getArtifactByNameOrDescription";
     // Auto generated
     private int artifactId;
     private String artifactName;

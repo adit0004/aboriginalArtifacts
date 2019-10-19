@@ -5,6 +5,7 @@
  */
 package repository;
 
+import entities.TicketRecord;
 import entities.UserData;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -48,6 +49,18 @@ public class UserRepositoryImpl implements UserRepository {
         user.getTickets().size();
         entityManager.refresh(user);
         return user;
+    }
+
+    @Override
+    public TicketRecord getTicketById(int userId, int exhibitionId) throws Exception {
+        Query query = entityManager.createNamedQuery(TicketRecord.GET_BOOKING_DETAILS_QUERY);
+        query.setParameter("userId", userId);
+        query.setParameter("exhibitionId", exhibitionId);
+        TicketRecord record = (TicketRecord) query.getSingleResult();
+        record.getUser().getUserId();
+        record.getExhibition().getExhibitionId();
+        entityManager.refresh(record);
+        return record;
     }
     
     

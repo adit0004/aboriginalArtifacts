@@ -5,8 +5,13 @@
  */
 package mbeans;
 
+import entities.TicketRecord;
 import entities.UserData;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -18,14 +23,14 @@ import repository.UserRepository;
  *
  * @author Aditya
  */
-
 @ManagedBean(name = "userManagedBean", eager = true)
 @SessionScoped
 
 public class UserManagedBean implements Serializable {
+
     @EJB
     UserRepository userRepository;
-    
+
     // Only need this for the name in the navbar, don't need to access object all the time
     private String currentLoggedInUserName;
     private UserData currentLoggedInUser;
@@ -34,12 +39,12 @@ public class UserManagedBean implements Serializable {
         currentLoggedInUserName = null;
         currentLoggedInUser = null;
     }
-    
+
     public String getCurrentLoggedInUserName() {
-        if(currentLoggedInUserName != null && currentLoggedInUser == null) {
+        if (currentLoggedInUserName != null && currentLoggedInUser == null) {
             // Set user object here
             try {
-                currentLoggedInUser = userRepository.getUserByEmail(currentLoggedInUserName);                
+                currentLoggedInUser = userRepository.getUserByEmail(currentLoggedInUserName);
             } catch (Exception e) {
                 Logger.getLogger(UserManagedBean.class.getName()).log(Level.SEVERE, null, e);
             }
@@ -58,5 +63,49 @@ public class UserManagedBean implements Serializable {
     public void setCurrentLoggedInUser(UserData currentLoggedInUser) {
         this.currentLoggedInUser = currentLoggedInUser;
     }
-    
+
+    public TicketRecord fetchTicketRecord(int userId, int exhibitionId) {
+        try {
+            return userRepository.getTicketById(userId, exhibitionId);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public void updateUserDetails(UserData user) {
+        try {
+            userRepository.updateUser(user);
+        } catch (Exception e) {
+            Logger.getLogger(UserManagedBean.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    // Converts a string to SHA-256
+    // Reference: https://www.baeldung.com/sha-256-hashing-java, but customized to a single function 
+    // with the try-catch block contained within
+    private String getShaHash(String originalString) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedHash = digest.digest(originalString.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder();
+            for (int i = 0; i < encodedHash.length; i++) {
+                String hex = Integer.toHexString(0xff & encodedHash[i]);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            return "";
+        }
+    }
+
+    public boolean checkUserPassword(String checkPassword) {
+        // User's current password hash is already in currentLoggedInUser.getPassworD()
+        if (currentLoggedInUser.getPassword().equals(getShaHash(checkPassword)))
+            return true;
+        return false;
+    }
+
 }

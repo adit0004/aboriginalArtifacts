@@ -5,6 +5,7 @@
  */
 package mbeans;
 
+import entities.Artifact;
 import entities.Collection;
 import entities.Exhibition;
 import java.util.List;
@@ -102,5 +103,35 @@ public class MuseumManagedBean implements Serializable{
             Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, e);
         }
         return null;
+    }
+    
+    public List<Museum> searchMuseumByNameOrAddress(String searchQuery) {
+        // Stub
+        try {
+            return museumRepository.searchMuseumByNameOrAddress(searchQuery);
+        } catch(Exception e) {
+            Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
+    
+    public List<Collection> searchCollectionByNameDescriptionCurator(String searchQuery) {
+        // Stub
+        try {
+            return museumRepository.searchCollectionByNameDescriptionCurator(searchQuery);
+        } catch(Exception e) {
+            Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
+    
+    public List<Artifact> searchArtifactByNameOrDescription(String searchQuery) {
+        // Stub
+        try {
+            return museumRepository.searchArtifactByNameOrDescription(searchQuery);
+        } catch(Exception e) {
+            Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
     }
 }

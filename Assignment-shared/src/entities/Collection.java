@@ -5,6 +5,8 @@
  */
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Column;
@@ -27,13 +29,16 @@ import javax.persistence.OneToMany;
 
 @NamedQueries ({
     @NamedQuery (name = Collection.GET_COLLECTION_FOR_MUSEUM, query = "Select c from Collection c WHERE c.collectionMuseum.museumId = :museumId"),
-    @NamedQuery (name = Collection.GET_CATEGORY_LIST_FOR_MUSEUM, query = "SELECT c.collectionCategory FROM Collection c WHERE c.collectionMuseum.museumId = :museumId ORDER BY c.collectionCategory asc")
+    @NamedQuery (name = Collection.GET_CATEGORY_LIST_FOR_MUSEUM, query = "SELECT c.collectionCategory FROM Collection c WHERE c.collectionMuseum.museumId = :museumId ORDER BY c.collectionCategory asc"),
+    @NamedQuery (name = Collection.SEARCH_BY_NAME_DESC_CURATOR, query = "SELECT c FROM Collection c WHERE c.collectionName LIKE :collectionName OR c.collectionDescription LIKE :collectionDescription OR c.collectionCurator LIKE :collectionCurator")
 })
 
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="collectionID")
 public class Collection implements Serializable {
     public static final String GET_COLLECTION_FOR_MUSEUM = "Collection.getCollectionForMuseum";
     public static final String GET_CATEGORY_LIST_FOR_MUSEUM = "Collection.getCategoriesForMuseumCollection";
+    public static final String SEARCH_BY_NAME_DESC_CURATOR = "Collection.getSearchResultsByNameDescriptionOrCurator";
     private int collectionID;
     private String collectionName;
     private String collectionDescription;

@@ -76,4 +76,7 @@ public interface MuseumRepository {
     public List<String> getCollectionCategoriesForMuseum(int museumId) throws Exception;
     public Collection getCollectionById(int collectionId) throws Exception;
     public Exhibition getExhibitionById(int exhibitionId) throws Exception;
+    public List<Museum> searchMuseumByNameOrAddress(String searchQuery) throws Exception;
+    public List<Collection> searchCollectionByNameDescriptionCurator(String searchQuery) throws Exception;
+    public List<Artifact> searchArtifactByNameOrDescription(String searchQuery) throws Exception;
 }

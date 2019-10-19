@@ -48,7 +48,7 @@ INSERT INTO FIT5042.ARTIFACT (ARTIFACT_ID, ARTIFACT_CATEGORY, ARTIFACT_DESCRIPTI
 	VALUES (5, 'Art', 'This design depicts sacred women (healers) moving around the bush in groups, singing scared songs, collecting different types of medicinal herbs and leaves. Some women are digging for the medicinal roots with their digging stick. They use these medicinal plants to heal the wounded.', '1976', 'img/artifacts/5.jpg', 'Sacred Woman’s Song', 3);
 INSERT INTO FIT5042.ARTIFACT (ARTIFACT_ID, ARTIFACT_CATEGORY, ARTIFACT_DESCRIPTION, ARTIFACT_ESTIMATED_TIME_PERIOD, ARTIFACT_IMAGE_PATH, ARTIFACT_NAME, COLLECTION_ID) 
 	VALUES (6, 'Art', 'This is the ancient story of the Milky Way and the Seven Sisters (Pleiades). This Dreaming was inherited by Gabriella from her mother, handed down to her from her paternal grandmother, Long Rose, given to Gabriella by her father.', '1930', 'img/artifacts/6.jpg', 'Milky Way and the Seven Sisters', 3);
-INSERT INTO FIT5042.ARTIFACT (ARTIFACT_ID, ARTIFACT_CATEGORY, ARTIFACT_DESCRIPTION, ARTIFACT_ESTIMATED_TIME_PERIOD, ARTIFACT_IMAGE_PATH, ARTIFACT_NAME, COLLECTION_ID) 
+INSERT INTO FIT5042.ARTIFACT (ARTIFACT_DESCRIPTION, ARTIFACT_CATEGORY, ARTIFACT_DESCRIPTION, ARTIFACT_ESTIMATED_TIME_PERIOD, ARTIFACT_IMAGE_PATH, ARTIFACT_NAME, COLLECTION_ID) 
 	VALUES (7, 'Art', 'Bush Onion Story', '1850', 'img/artifacts/7.jpg', 'Bush Onion Story', 3);
 INSERT INTO FIT5042.ARTIFACT (ARTIFACT_ID, ARTIFACT_CATEGORY, ARTIFACT_DESCRIPTION, ARTIFACT_ESTIMATED_TIME_PERIOD, ARTIFACT_IMAGE_PATH, ARTIFACT_NAME, COLLECTION_ID) 
 	VALUES (8, 'Art', 'Just as the regional styles vary greatly across the country, so do the painting techniques and methods. Within the dot painting traditions of Central Australia there are many variations in the artists applications of this technique. Some artists use fine sticks or points to make delicate dots that they build up in layers. Some artists use the handle of the brush to make hard dots, while others use the brush itself in a vertical dapping movement to make larger spreading dot marks.', '2007', 'img/artifacts/8.jpg', 'Walangkura Napanangka', 3);
@@ -61,8 +61,8 @@ INSERT INTO FIT5042.USERDATA (USER_ID, EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, P
 INSERT INTO FIT5042.USERDATA (USER_ID, EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, PHONE_NUMBER, USER_TYPE) 
 	VALUES (2, 'hhay0003@student.monash.edu', 'Hussain', 'Hayat', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', '0412123123', 'user');
 
-INSERT INTO FIT5042.TICKETRECORD (BOOKING_ID, BOOKINGDATE, USER_TICKETS, EXHIBITION_EXHIBITION_ID) 
-	VALUES (1, '2019-10-08', 1, 1);
+INSERT INTO FIT5042.TICKETRECORD (BOOKING_ID, BOOKINGDATE, QUANTITY, USER_TICKETS, EXHIBITION_EXHIBITION_ID, USERDETAILS_USER_ID) 
+	VALUES (1, '2019-10-08', 3, 1, 1, NULL);
 
 INSERT INTO FIT5042.USERDATA_TICKETRECORD (USERDATA_USER_ID, TICKETS_BOOKING_ID) 
 	VALUES (1, 1);

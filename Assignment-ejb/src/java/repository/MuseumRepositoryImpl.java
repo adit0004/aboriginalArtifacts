@@ -110,6 +110,37 @@ public class MuseumRepositoryImpl implements MuseumRepository {
         entityManager.refresh(exhibition);
         return exhibition;
     }
+
+    @Override
+    public List<Museum> searchMuseumByNameOrAddress(String searchQuery) throws Exception {
+        Query query = entityManager.createNamedQuery(Museum.SEARCH_BY_NAME_ADDRESS);
+        query.setParameter("museumName", "%" + searchQuery + "%");
+        query.setParameter("postcode", "%" + searchQuery + "%");
+        query.setParameter("state", "%" + searchQuery + "%");
+        query.setParameter("suburb", "%" + searchQuery + "%");
+        List<Museum> returnList = query.getResultList();
+        return returnList;
+    }
+
+    @Override
+    public List<Collection> searchCollectionByNameDescriptionCurator(String searchQuery) throws Exception {
+        Query query = entityManager.createNamedQuery(Collection.SEARCH_BY_NAME_DESC_CURATOR);
+        query.setParameter("collectionName", "%" + searchQuery + "%");
+        query.setParameter("collectionDescription", "%" + searchQuery + "%");
+        query.setParameter("collectionCurator", "%" + searchQuery + "%");
+        List<Collection> returnList = query.getResultList();
+        return returnList;
+    }
+
+    @Override
+    public List<Artifact> searchArtifactByNameOrDescription(String searchQuery) throws Exception {
+        Query query = entityManager.createNamedQuery(Artifact.SEARCH_BY_NAME_DESC);
+        query.setParameter("artifactName", "%" + searchQuery + "%");
+        query.setParameter("artifactDescription", "%" + searchQuery + "%");
+        List<Artifact> returnList = query.getResultList();
+        return returnList;
+    }
+    
     
     
 }
