@@ -135,7 +135,7 @@ public class ProfileController {
         
         // 2. Check if new password passes regexp *AND* be more than 8 characters
         
-        if (!newPassword.matches("(?:[A-Z])+(?:[a-z])+(?:[0-9]+)(?:[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\{\\}\\[\\]\\\\\\?\\.\\>\\<\\,\\'\\\"\\:\\;\\+\\_\\-\\=])+") || !(newPassword.length() > 8)){
+        if (!newPassword.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!-])(?=\\S+$).{8,}$") || !(newPassword.length() > 8)){
             FacesContext facesContext = FacesContext.getCurrentInstance();
             FacesMessage facesMessage = new FacesMessage("The new password must be at least 8 characters, contain 1 lowercase letter (a-z), 1 uppercase letter (A-Z), 1 number (0-9), and one special character (!@#$%^&*(){}[]?.><,'\":;+_-=\\)");
             facesMessage.setSeverity(FacesMessage.SEVERITY_ERROR);
@@ -152,7 +152,13 @@ public class ProfileController {
             flag = true;
         }
         
+        if (!flag) {
+            // One of the validations failed, do not update password
+            return "/user/profile";
+        }
+        
         // 4. Update password (entityManager.merge)
+        userManagedBean.updatePassword(newPassword);
         return "/user/profile?passwordSuccess=true";
     }
     

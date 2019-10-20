@@ -7,6 +7,7 @@ package repository;
 
 import entities.TicketRecord;
 import entities.UserData;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -57,12 +58,17 @@ public class UserRepositoryImpl implements UserRepository {
         query.setParameter("userId", userId);
         query.setParameter("exhibitionId", exhibitionId);
         TicketRecord record = (TicketRecord) query.getSingleResult();
-        record.getUser().getUserId();
+        record.getUserDetails().getUserId();
         record.getExhibition().getExhibitionId();
         entityManager.refresh(record);
         return record;
     }
-    
-    
-    
+
+    @Override
+    public List<TicketRecord> getUserBookings(UserData user) throws Exception {
+        Query query = entityManager.createNamedQuery(TicketRecord.GET_ALL_BOOKINGS_FOR_USER);
+        query.setParameter("userId", user.getUserId());
+        List<TicketRecord> ticketRecords = query.getResultList();
+        return ticketRecords;
+    }
 }

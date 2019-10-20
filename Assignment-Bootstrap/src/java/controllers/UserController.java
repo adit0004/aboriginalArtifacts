@@ -6,8 +6,10 @@
 package controllers;
 
 import static controllers.MuseumController.museumApplication;
+import entities.TicketRecord;
 import entities.UserData;
 import java.io.Serializable;
+import java.util.List;
 import javax.el.ELContext;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
@@ -54,5 +56,9 @@ public class UserController implements Serializable {
             return true;
         }
         return false;
+    }
+    
+    public List<TicketRecord> getUserBookings() {
+        return userManagedBean.getUserBookings();
     }
 }

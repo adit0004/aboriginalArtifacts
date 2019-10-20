@@ -110,7 +110,7 @@ public class UserData implements Serializable{
         this.phoneNumber = phoneNumber;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "userDetails")
     public Set<TicketRecord> getTickets() {
         return tickets;
     }

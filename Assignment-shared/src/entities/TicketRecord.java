@@ -23,12 +23,14 @@ import javax.persistence.Temporal;
  * @author Aditya
  */
 @NamedQueries ({
-    @NamedQuery(name = TicketRecord.GET_BOOKING_DETAILS_QUERY, query = "SELECT t FROM TicketRecord t JOIN FETCH t.user u JOIN FETCH t.exhibition e WHERE t.user.userId = :userId AND t.exhibition.exhibitionId = :exhibitionId")
+    @NamedQuery(name = TicketRecord.GET_BOOKING_DETAILS_QUERY, query = "SELECT t FROM TicketRecord t JOIN FETCH t.userDetails u JOIN FETCH t.exhibition e WHERE u.userId = :userId AND e.exhibitionId = :exhibitionId"),
+    @NamedQuery(name = TicketRecord.GET_ALL_BOOKINGS_FOR_USER, query = "SELECT t FROM TicketRecord t JOIN FETCH t.userDetails u JOIN FETCH t.exhibition e WHERE u.userId = :userId")
 })
 @Entity
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="bookingId")
 public class TicketRecord implements Serializable {
     public static final String GET_BOOKING_DETAILS_QUERY = "TicketRecord.getBookingDetailsQuery";
+    public static final String GET_ALL_BOOKINGS_FOR_USER = "TicketRecord.getAllBookingsForUser";
     private int bookingId;
     private Exhibition exhibition;
     private Date bookingDate;
@@ -77,18 +79,17 @@ public class TicketRecord implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_tickets", nullable = false)
-    public UserData getUser() {
+    public UserData getUserDetails() {
         return userDetails;
     }
 
-    public void setUser(UserData user) {
-        this.userDetails = user;
+    public void setUserDetails(UserData userDetails) {
+        this.userDetails = userDetails;
     }
-
+    
     public int getQuantity() {
         return quantity;
     }
-
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }

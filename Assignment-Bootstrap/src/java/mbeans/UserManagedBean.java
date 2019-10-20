@@ -107,5 +107,19 @@ public class UserManagedBean implements Serializable {
             return true;
         return false;
     }
+    
+    public void updatePassword(String newPassword) {
+        currentLoggedInUser.setPassword(getShaHash(newPassword));
+        updateUserDetails(currentLoggedInUser);
+    }
+    
+    public List<TicketRecord> getUserBookings() {
+        try {
+            return userRepository.getUserBookings(currentLoggedInUser);
+        } catch (Exception e) {
+            Logger.getLogger(UserManagedBean.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
+    }
 
 }
