@@ -5,17 +5,6 @@ INSERT INTO FIT5042.MUSEUM (MUSEUM_ID, COLLECTION_DESCRIPTION, LEARN_MORE_BODY, 
 INSERT INTO FIT5042.MUSEUM (MUSEUM_ID, COLLECTION_DESCRIPTION, LEARN_MORE_BODY, LEARN_MORE_HEADING, LEARN_MORE_LEADING, LEARN_MORE_TITLE, MUSEUM_CHIEF_CURATOR, MUSEUM_CONTACT_NUMBER, MUSEUM_IMAGE_PATH, MUSEUM_NAME, POSTCODE, "STATE", STREET_ADDRESS, STREET_NUMBER, SUBURB) 
 	VALUES (3, NULL, NULL, NULL, NULL, NULL, 'Dr. Eden Scarfe', '0298827128', 'img/moc.jpg', 'Museum of Culture', '2101', 'NSW', 'Queen Street', '92', 'North Narrabeen');
 
-INSERT INTO FIT5042.EXHIBITION (EXHIBITION_ID, EXHIBITION_DESCRIPTION, EXHIBITION_END_DATE, EXHIBITION_NAME, EXHIBITION_START_DATE, IMAGE_PATH, TICKET_DESCRIPTION, TICKET_NAME, TICKET_PRICE, COLLECTION_ID, MUSEUM_ID) 
-	VALUES (1, 'See how the aboriginals practiced the art of war!', '2019-12-31', 'Fighting', '2019-09-22', 'img/exhibitions/1/shield.jpg', 'Entry to the fighting section. Includes a tour of the museum.', 'Standard', 15.0, 1, 1);
-INSERT INTO FIT5042.EXHIBITION (EXHIBITION_ID, EXHIBITION_DESCRIPTION, EXHIBITION_END_DATE, EXHIBITION_NAME, EXHIBITION_START_DATE, IMAGE_PATH, TICKET_DESCRIPTION, TICKET_NAME, TICKET_PRICE, COLLECTION_ID, MUSEUM_ID) 
-	VALUES (2, 'Before there were butchers, if you wanted meat, you had to hunt it!', '2019-12-31', 'Hunting', '2019-09-22', 'img/exhibitions/1/boomerang.jpg', NULL, 'Standard', 15.0, 1, 1);
-INSERT INTO FIT5042.EXHIBITION (EXHIBITION_ID, EXHIBITION_DESCRIPTION, EXHIBITION_END_DATE, EXHIBITION_NAME, EXHIBITION_START_DATE, IMAGE_PATH, TICKET_DESCRIPTION, TICKET_NAME, TICKET_PRICE, COLLECTION_ID, MUSEUM_ID) 
-	VALUES (3, 'Amazing art from the natives', '2019-12-31', 'Painting', '2019-09-22', 'img/exhibitions/1/snakes.jpg', 'Entry to the art gallery. Includes a tour of the museum and one souvenier.', 'Gold', 25.0, 2, 1);
-INSERT INTO FIT5042.EXHIBITION (EXHIBITION_ID, EXHIBITION_DESCRIPTION, EXHIBITION_END_DATE, EXHIBITION_NAME, EXHIBITION_START_DATE, IMAGE_PATH, TICKET_DESCRIPTION, TICKET_NAME, TICKET_PRICE, COLLECTION_ID, MUSEUM_ID) 
-	VALUES (4, 'Growing food crops and rearing animals', '2019-12-31', 'Farming', '2019-09-22', 'img/exhibitions/1/bullroarer.jpg', NULL, 'Standard', 15.0, 2, 1);
-INSERT INTO FIT5042.EXHIBITION (EXHIBITION_ID, EXHIBITION_DESCRIPTION, EXHIBITION_END_DATE, EXHIBITION_NAME, EXHIBITION_START_DATE, IMAGE_PATH, TICKET_DESCRIPTION, TICKET_NAME, TICKET_PRICE, COLLECTION_ID, MUSEUM_ID) 
-	VALUES (5, 'Collecting leaves and crop', '2019-12-31', 'Gathering', '2019-09-22', 'img/exhibitions/1/basket.jpg', NULL, 'Standard', 15.0, 3, 1);
-
 INSERT INTO FIT5042.COLLECTION (COLLECTION_ID, COLLECTION_CATEGORY, COLLECTION_CURATOR, COLLECTION_DESCRIPTION, COLLECTION_IMAGE_PATH, COLLECTION_NAME, MUSEUM_ID) 
 	VALUES (1, 'Tools', 'Dr. Isabelle Cunningham', 'The aboriginals use a variety of tools, find out more about them here!', 'img/collections/1/tools.jpg', 'Aboriginal Tools', 1);
 INSERT INTO FIT5042.COLLECTION (COLLECTION_ID, COLLECTION_CATEGORY, COLLECTION_CURATOR, COLLECTION_DESCRIPTION, COLLECTION_IMAGE_PATH, COLLECTION_NAME, MUSEUM_ID) 
@@ -35,6 +24,16 @@ INSERT INTO FIT5042.COLLECTION (COLLECTION_ID, COLLECTION_CATEGORY, COLLECTION_C
 INSERT INTO FIT5042.COLLECTION (COLLECTION_ID, COLLECTION_CATEGORY, COLLECTION_CURATOR, COLLECTION_DESCRIPTION, COLLECTION_IMAGE_PATH, COLLECTION_NAME, MUSEUM_ID) 
 	VALUES (9, 'Texts', 'Dr. Jacob Bentham', 'The ancient, sacred texts of the people. Very few copies survive today!', 'img/collections/3/writings.jpg', 'Writings on parchment', 3);
 
+INSERT INTO FIT5042.EXHIBITION (EXHIBITION_ID, EXHIBITION_DESCRIPTION, EXHIBITION_END_DATE, EXHIBITION_NAME, EXHIBITION_START_DATE, IMAGE_PATH, TICKET_DESCRIPTION, TICKET_NAME, TICKET_PRICE, COLLECTION_ID, MUSEUM_ID) 
+	VALUES (1, 'See how the aboriginals practiced the art of war!', '2019-12-31', 'Fighting', '2019-09-22', 'img/exhibitions/1/shield.jpg', 'Entry to the fighting section. Includes a tour of the museum.', 'Standard', 15.0, 1, 1);
+INSERT INTO FIT5042.EXHIBITION (EXHIBITION_ID, EXHIBITION_DESCRIPTION, EXHIBITION_END_DATE, EXHIBITION_NAME, EXHIBITION_START_DATE, IMAGE_PATH, TICKET_DESCRIPTION, TICKET_NAME, TICKET_PRICE, COLLECTION_ID, MUSEUM_ID) 
+	VALUES (2, 'Before there were butchers, if you wanted meat, you had to hunt it!', '2019-12-31', 'Hunting', '2019-09-22', 'img/exhibitions/1/boomerang.jpg', NULL, 'Standard', 15.0, 1, 1);
+INSERT INTO FIT5042.EXHIBITION (EXHIBITION_ID, EXHIBITION_DESCRIPTION, EXHIBITION_END_DATE, EXHIBITION_NAME, EXHIBITION_START_DATE, IMAGE_PATH, TICKET_DESCRIPTION, TICKET_NAME, TICKET_PRICE, COLLECTION_ID, MUSEUM_ID) 
+	VALUES (3, 'Amazing art from the natives', '2019-12-31', 'Painting', '2019-09-22', 'img/exhibitions/1/snakes.jpg', 'Entry to the art gallery. Includes a tour of the museum and one souvenier.', 'Gold', 25.0, 2, 1);
+INSERT INTO FIT5042.EXHIBITION (EXHIBITION_ID, EXHIBITION_DESCRIPTION, EXHIBITION_END_DATE, EXHIBITION_NAME, EXHIBITION_START_DATE, IMAGE_PATH, TICKET_DESCRIPTION, TICKET_NAME, TICKET_PRICE, COLLECTION_ID, MUSEUM_ID) 
+	VALUES (4, 'Growing food crops and rearing animals', '2019-12-31', 'Farming', '2019-09-22', 'img/exhibitions/1/bullroarer.jpg', NULL, 'Standard', 15.0, 2, 1);
+INSERT INTO FIT5042.EXHIBITION (EXHIBITION_ID, EXHIBITION_DESCRIPTION, EXHIBITION_END_DATE, EXHIBITION_NAME, EXHIBITION_START_DATE, IMAGE_PATH, TICKET_DESCRIPTION, TICKET_NAME, TICKET_PRICE, COLLECTION_ID, MUSEUM_ID) 
+	VALUES (5, 'Collecting leaves and crop', '2019-12-31', 'Gathering', '2019-09-22', 'img/exhibitions/1/basket.jpg', NULL, 'Standard', 15.0, 3, 1);
 
 INSERT INTO FIT5042.ARTIFACT (ARTIFACT_ID, ARTIFACT_CATEGORY, ARTIFACT_DESCRIPTION, ARTIFACT_ESTIMATED_TIME_PERIOD, ARTIFACT_IMAGE_PATH, ARTIFACT_NAME, COLLECTION_ID) 
 	VALUES (1, 'Art', 'Indigenous art is sometimes pigeonholed as something totally different to the European-Australian style of painting, but these dual Sydney galleries seek to bridge that gap. With two inner-city locations at the Sofitel Wentworth and 1 Martin Place, the Wentworth Galleries pride themselves on displaying the best Australian artists regardless of genre or reputation, hanging contemporary Indigenous artworks alongside modern Western pieces.', '2012', 'img/artifacts/1.jpg', 'Traditional Aboriginal artwork', 3);
@@ -48,21 +47,17 @@ INSERT INTO FIT5042.ARTIFACT (ARTIFACT_ID, ARTIFACT_CATEGORY, ARTIFACT_DESCRIPTI
 	VALUES (5, 'Art', 'This design depicts sacred women (healers) moving around the bush in groups, singing scared songs, collecting different types of medicinal herbs and leaves. Some women are digging for the medicinal roots with their digging stick. They use these medicinal plants to heal the wounded.', '1976', 'img/artifacts/5.jpg', 'Sacred Woman’s Song', 3);
 INSERT INTO FIT5042.ARTIFACT (ARTIFACT_ID, ARTIFACT_CATEGORY, ARTIFACT_DESCRIPTION, ARTIFACT_ESTIMATED_TIME_PERIOD, ARTIFACT_IMAGE_PATH, ARTIFACT_NAME, COLLECTION_ID) 
 	VALUES (6, 'Art', 'This is the ancient story of the Milky Way and the Seven Sisters (Pleiades). This Dreaming was inherited by Gabriella from her mother, handed down to her from her paternal grandmother, Long Rose, given to Gabriella by her father.', '1930', 'img/artifacts/6.jpg', 'Milky Way and the Seven Sisters', 3);
-INSERT INTO FIT5042.ARTIFACT (ARTIFACT_DESCRIPTION, ARTIFACT_CATEGORY, ARTIFACT_DESCRIPTION, ARTIFACT_ESTIMATED_TIME_PERIOD, ARTIFACT_IMAGE_PATH, ARTIFACT_NAME, COLLECTION_ID) 
+INSERT INTO FIT5042.ARTIFACT (ARTIFACT_ID, ARTIFACT_CATEGORY, ARTIFACT_DESCRIPTION, ARTIFACT_ESTIMATED_TIME_PERIOD, ARTIFACT_IMAGE_PATH, ARTIFACT_NAME, COLLECTION_ID) 
 	VALUES (7, 'Art', 'Bush Onion Story', '1850', 'img/artifacts/7.jpg', 'Bush Onion Story', 3);
 INSERT INTO FIT5042.ARTIFACT (ARTIFACT_ID, ARTIFACT_CATEGORY, ARTIFACT_DESCRIPTION, ARTIFACT_ESTIMATED_TIME_PERIOD, ARTIFACT_IMAGE_PATH, ARTIFACT_NAME, COLLECTION_ID) 
 	VALUES (8, 'Art', 'Just as the regional styles vary greatly across the country, so do the painting techniques and methods. Within the dot painting traditions of Central Australia there are many variations in the artists applications of this technique. Some artists use fine sticks or points to make delicate dots that they build up in layers. Some artists use the handle of the brush to make hard dots, while others use the brush itself in a vertical dapping movement to make larger spreading dot marks.', '2007', 'img/artifacts/8.jpg', 'Walangkura Napanangka', 3);
 INSERT INTO FIT5042.ARTIFACT (ARTIFACT_ID, ARTIFACT_CATEGORY, ARTIFACT_DESCRIPTION, ARTIFACT_ESTIMATED_TIME_PERIOD, ARTIFACT_IMAGE_PATH, ARTIFACT_NAME, COLLECTION_ID) 
 	VALUES (9, 'Art', 'Long, long ago the crocodile used to walk the lands and did not swim. He was a ferocious animal that would sneak up on people that were camping or walking and take them for his meal and then disappear back into the bush. When the wife of a great hunter was taken by Yurtuyurtu the hunter swore to hunt and kill every last crocodile he could find. The hunter was the fastest, strongest and bravest of the hunters and after only a few weeks he had killed many crocodiles.  While out hunting one day he saw some very large crocodile tracks and started to track his prey and when he finally came upon Yurtuyurtu he raised his spear and was about to throw when Yurtuyurtu turned and spoke to the hunter. “Why do you hunt my family and kill them all” the crocodile asked and the hunter said back because it was your family that killed my loving wife and now I will kill you the last of your kind and again the hunter raised his spear.', '2018', 'img/artifacts/9.jpg', 'Yurtuyurtu', 3);
 
-
 INSERT INTO FIT5042.USERDATA (USER_ID, EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, PHONE_NUMBER, USER_TYPE) 
-	VALUES (1, 'adit0004@student.monash.edu', 'Aditya', 'Kumar', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '0450982071', 'admin');
+	VALUES (1, 'adit0004@student.monash.edu', 'Aditya', 'Kumar', 'a1ccf67d0ed763bff6b5e82fd5220f1bf69d622511bd4094c2a51f31b89d5afd', '0450982071', 'admin');
 INSERT INTO FIT5042.USERDATA (USER_ID, EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, PHONE_NUMBER, USER_TYPE) 
 	VALUES (2, 'hhay0003@student.monash.edu', 'Hussain', 'Hayat', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', '0412123123', 'user');
 
-INSERT INTO FIT5042.TICKETRECORD (BOOKING_ID, BOOKINGDATE, QUANTITY, USER_TICKETS, EXHIBITION_EXHIBITION_ID, USERDETAILS_USER_ID) 
-	VALUES (1, '2019-10-08', 3, 1, 1, NULL);
-
-INSERT INTO FIT5042.USERDATA_TICKETRECORD (USERDATA_USER_ID, TICKETS_BOOKING_ID) 
-	VALUES (1, 1);
+INSERT INTO FIT5042.TICKETRECORD (BOOKING_ID, BOOKINGDATE, QUANTITY, USER_TICKETS, EXHIBITION_EXHIBITION_ID) 
+	VALUES (1, '2019-10-08', 3, 1, 1);
