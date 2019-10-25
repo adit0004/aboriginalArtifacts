@@ -23,29 +23,35 @@ import javax.persistence.Temporal;
  * @author Aditya
  */
 @NamedQueries ({
-    @NamedQuery(name = TicketRecord.GET_BOOKING_DETAILS_QUERY, query = "SELECT t FROM TicketRecord t JOIN FETCH t.userDetails u JOIN FETCH t.exhibition e WHERE u.userId = :userId AND e.exhibitionId = :exhibitionId"),
-    @NamedQuery(name = TicketRecord.GET_ALL_BOOKINGS_FOR_USER, query = "SELECT t FROM TicketRecord t JOIN FETCH t.userDetails u JOIN FETCH t.exhibition e WHERE u.userId = :userId")
+    @NamedQuery(name = TicketRecord.GET_BOOKING_DETAILS_QUERY, query = "SELECT t FROM TicketRecord t JOIN FETCH t.userDetails u JOIN FETCH t.exhibition e WHERE u.userId = :userId AND e.exhibitionId = :exhibitionId AND t.bookingDate > CURRENT_DATE"),
+    @NamedQuery(name = TicketRecord.GET_ALL_BOOKINGS_FOR_USER, query = "SELECT t FROM TicketRecord t JOIN FETCH t.userDetails u JOIN FETCH t.exhibition e WHERE u.userId = :userId"),
+    @NamedQuery(name = TicketRecord.GET_ALL_BOOKINGS, query = "SELECT t FROM TicketRecord t ORDER BY t.bookingId desc")
 })
 @Entity
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="bookingId")
 public class TicketRecord implements Serializable {
     public static final String GET_BOOKING_DETAILS_QUERY = "TicketRecord.getBookingDetailsQuery";
     public static final String GET_ALL_BOOKINGS_FOR_USER = "TicketRecord.getAllBookingsForUser";
+    public static final String GET_ALL_BOOKINGS = "TicketRecord.getAllBookings";
     private int bookingId;
     private Exhibition exhibition;
     private Date bookingDate;
+    private Date orderDate;
     private int quantity;
-    private UserData userDetails;
+    private UserData userDetails; 
+    private boolean pickedUp;
 
     public TicketRecord() {
     }
 
-    public TicketRecord(int bookingId, Exhibition exhibition, Date bookingDate, UserData user, int quantity) {
+    public TicketRecord(int bookingId, Exhibition exhibition, Date bookingDate, Date orderDate, UserData user, int quantity, boolean pickedUp) {
         this.bookingId = bookingId;
         this.exhibition = exhibition;
         this.bookingDate = bookingDate;
         this.userDetails = user;
         this.quantity = quantity;
+        this.orderDate = orderDate;
+        this.pickedUp = pickedUp; 
     }
 
     @Id
@@ -69,6 +75,7 @@ public class TicketRecord implements Serializable {
     }
     
     @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "booking_date")
     public Date getBookingDate() {
         return bookingDate;
     }
@@ -93,9 +100,30 @@ public class TicketRecord implements Serializable {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name="order_date")
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    @Column(name = "picked_up")
+    public boolean getPickedUp() {
+        return pickedUp;
+    }
+
+    public void setPickedUp(boolean pickedUp) {
+        this.pickedUp = pickedUp;
+    }
+    
+    
     
     @Override
     public String toString() {
-        return "TicketRecord{" + "bookingId=" + bookingId + ", exhibition=" + exhibition + ", bookingDate=" + bookingDate + ", quantity=" + quantity + "}";
+        return "TicketRecord{" + "bookingId=" + bookingId + ", exhibition=" + exhibition + ", bookingDate=" + bookingDate + ", orderdate= " + orderDate + ", quantity=" + quantity + ", pickedUp = " + pickedUp + "}";
     }    
 }

@@ -48,6 +48,7 @@ public class SearchController {
     }
     
     public String getSearchResults() {
+        System.out.println("REQUEST CONTEXT " + FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath());
         // Assign temp variables so we only call the named queries once, as named queries are an expensive operation
         List<Museum> tempMuseumList = museumManagedBean.searchMuseumByNameOrAddress(searchQuery);
         List<Collection> tempCollectionList = museumManagedBean.searchCollectionByNameDescriptionCurator(searchQuery);
@@ -61,7 +62,7 @@ public class SearchController {
         if(tempArtifactList == null || tempArtifactList.isEmpty())
             artifactResults = null;
         else artifactResults = tempArtifactList;
-        return "search_results";
+        return "/search_results";
     }
 
     public List<Museum> getMuseumResults() {

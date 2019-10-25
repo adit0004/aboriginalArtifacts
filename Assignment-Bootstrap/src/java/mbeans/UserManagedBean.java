@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import repository.UserRepository;
 
 /**
@@ -41,7 +42,8 @@ public class UserManagedBean implements Serializable {
     }
 
     public String getCurrentLoggedInUserName() {
-        if (currentLoggedInUserName != null && currentLoggedInUser == null) {
+        setCurrentLoggedInUserName(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
+        if (currentLoggedInUserName != null) {
             // Set user object here
             try {
                 currentLoggedInUser = userRepository.getUserByEmail(currentLoggedInUserName);
@@ -122,4 +124,20 @@ public class UserManagedBean implements Serializable {
         return null;
     }
 
+    public TicketRecord getBookingById(int bookingId) {
+        try {
+            return userRepository.getBooking(bookingId);
+        } catch (Exception e) {
+            Logger.getLogger(UserManagedBean.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
+    }
+    
+    public void deleteBooking(int bookingId) {
+        try {
+            userRepository.deleteBooking(bookingId);
+        } catch (Exception ex) {
+            Logger.getLogger(UserManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

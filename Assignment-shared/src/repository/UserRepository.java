@@ -22,4 +22,7 @@ public interface UserRepository {
     public UserData getUserByEmail(String userEmail) throws Exception;
     public TicketRecord getTicketById(int userId, int exhibitionId) throws Exception;
     public List<TicketRecord> getUserBookings(UserData user) throws Exception;
+    public TicketRecord getBooking(int bookingId) throws Exception;
+    public void addBookingForUser(TicketRecord ticketRecord) throws Exception;
+    public void deleteBooking(int ticketId) throws Exception;
 }

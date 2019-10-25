@@ -3,9 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Study/Sem3/FIT5042/Assignment/aboriginalArtifacts/Assignment-Bootstrap/src/java/controllers/ProfileController.java</file>
-            <file>file:/C:/Study/Sem3/FIT5042/Assignment/aboriginalArtifacts/Assignment-Bootstrap/src/java/mbeans/UserManagedBean.java</file>
+            <file>file:/C:/Study/Sem3/FIT5042/Assignment/aboriginalArtifacts/Assignment-Bootstrap/src/java/controllers/BookingController.java</file>
+            <file>file:/C:/Study/Sem3/FIT5042/Assignment/aboriginalArtifacts/Assignment-Bootstrap/web/user/booking.xhtml</file>
+            <file>file:/C:/Study/Sem3/FIT5042/Assignment/aboriginalArtifacts/Assignment-Bootstrap/web/user/view_booking.xhtml</file>
+            <file>file:/C:/Study/Sem3/FIT5042/Assignment/aboriginalArtifacts/Assignment-Bootstrap/web/search_results.xhtml</file>
+            <file>file:/C:/Study/Sem3/FIT5042/Assignment/aboriginalArtifacts/Assignment-Bootstrap/web/user/bookings.xhtml</file>
             <file>file:/C:/Study/Sem3/FIT5042/Assignment/aboriginalArtifacts/Assignment-Bootstrap/web/user/profile.xhtml</file>
+            <file>file:/C:/Study/Sem3/FIT5042/Assignment/aboriginalArtifacts/Assignment-Bootstrap/src/java/controllers/SearchController.java</file>
         </group>
     </open-files>
 </project-private>

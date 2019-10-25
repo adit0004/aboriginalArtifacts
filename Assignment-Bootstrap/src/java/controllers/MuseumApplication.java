@@ -139,6 +139,7 @@ public class MuseumApplication {
     
     public boolean isUserLoggedIn() {
         userManagedBean.setCurrentLoggedInUserName(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
+        System.out.println(userManagedBean.getCurrentLoggedInUserName());
         if(userManagedBean.getCurrentLoggedInUserName() == null)
             return false;
         return true;
@@ -200,7 +201,14 @@ public class MuseumApplication {
         // Also set currently logged in user to null
         userManagedBean.setCurrentLoggedInUser(null);
         userManagedBean.setCurrentLoggedInUserName(null);
-        return "index";
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        return "/index?faces-redirect=true";
+    }
+    
+    public String getUserRoles() {
+        if (FacesContext.getCurrentInstance().getExternalContext().isUserInRole("admin"))
+            return "admin";
+        else return "user";
     }
     
     public TicketRecord getTicketRecordForUserExhibition(int userId, int exhibitionId) {

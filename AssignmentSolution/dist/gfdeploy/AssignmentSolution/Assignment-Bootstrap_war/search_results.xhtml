@@ -16,8 +16,8 @@ and open the template in the editor.
         <title>Artifacts Unearthed</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <link rel="stylesheet" href="css/bootstrap.css" media="screen" />
-        <link rel="stylesheet" href="css/custom.css" />
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/faces/css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/faces/css/custom.css" />
         <style>
             .image{
                 position: relative;
@@ -56,7 +56,7 @@ and open the template in the editor.
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand p-0" href="index.xhtml"><img src="img/logo.png" /></a>
+            <a class="navbar-brand p-0" href="index.xhtml"><img src="#{facesContext.externalContext.requestContextPath}/faces/img/logo.png" /></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -131,7 +131,7 @@ and open the template in the editor.
                 <ui:repeat value="#{searchController.museumResults}" var="museum" varStatus="status">
                     <div class="row mt-2">
                         <div class="col-3">
-                            <img src="#{museum.museumImagePath}" style="width:100%"/>
+                            <img src="#{facesContext.externalContext.requestContextPath}/faces/#{museum.museumImagePath}" style="width:100%"/>
                         </div>
                         <div class="col-9">
                             <h:link outcome="museum_landing">
@@ -162,7 +162,7 @@ and open the template in the editor.
                 <ui:repeat value="#{searchController.collectionResults}" var="collection" varStatus="status">
                     <div class="row mt-2">
                         <div class="col-3">
-                            <img src="#{collection.collectionImagePath}" style="width:100%"/>
+                            <img src="#{facesContext.externalContext.requestContextPath}/faces/#{collection.collectionImagePath}" style="width:100%"/>
                         </div>
                         <div class="col-9">
                             <h4>#{collection.collectionName}</h4>
@@ -197,7 +197,7 @@ and open the template in the editor.
                 <ui:repeat value="#{searchController.artifactResults}" var="artifactList" varStatus="status">
                     <div class="row mt-2">
                         <div class="col-3">
-                            <img src="#{artifactList.artifactImagePath}" style="width:100%"/>
+                            <img src="#{facesContext.externalContext.requestContextPath}/faces/#{artifactList.artifactImagePath}" style="width:100%"/>
                         </div>
                         <div class="col-9">
                             <h4>#{artifactList.artifactName}</h4>
@@ -220,8 +220,8 @@ and open the template in the editor.
         <footer class="bg-secondary text-center p-3 mt-5 text-white">
             Museum of Aboriginal Artifacts. Licensed under Creative Commons. All attributions provided in the about page. 
         </footer>
-        <script src="js/jquery.min.js"></script>
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+        <script src="#{facesContext.externalContext.requestContextPath}/faces/js/jquery.min.js"></script>
+        <script src="#{facesContext.externalContext.requestContextPath}/faces/js/popper.min.js"></script>
+        <script src="#{facesContext.externalContext.requestContextPath}/faces/js/bootstrap.min.js"></script>
     </body>
 </html>

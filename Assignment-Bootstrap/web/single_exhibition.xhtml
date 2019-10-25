@@ -18,6 +18,7 @@ and open the template in the editor.
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <link rel="stylesheet" href="css/bootstrap.css" media="screen" />
         <link rel="stylesheet" href="css/custom.css" />
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/bootstrap-datepicker3.css"/>
         <style>
             .image{
                 position: relative;
@@ -48,14 +49,14 @@ and open the template in the editor.
             .modal-body img{
                 width:100%;
             }
-            tr>td:first-child{
+            .table tr>td:first-child{
                 background-color:#9c0f2c!important;
                 color:white!important;
             }
         </style>
     </head>
     <body>
-                <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <a class="navbar-brand p-0" href="index.xhtml"><img src="img/logo.png" /></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -187,7 +188,7 @@ and open the template in the editor.
                                     <h:link outcome="user/view_booking" styleClass="btn btn-outline-primary ml-3" value="View Booking" />
                                 </c:if>
                                 <c:if test="#{userController.checkUserHasBooking() eq false}">
-                                    <h:link outcome="user/booking" styleClass="btn btn-outline-primary ml-3" value="Book now!" />
+                                    <button type="button" class="btn btn-outline-primary ml-3" data-toggle="modal" data-target="#newBookingModal">Book now!</button>
                                 </c:if>
                             </td>
                         </tr>
@@ -198,20 +199,92 @@ and open the template in the editor.
         <footer class="bg-secondary text-center p-3 mt-5 text-white">
             Museum of Aboriginal Artifacts. Licensed under Creative Commons. All attributions provided in the about page. 
         </footer>
+        <!-- Modal to show the new booking form -->
+        <div class="modal fade" id="newBookingModal" tabindex="-1" role="dialog" aria-labelledby="newBookingModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newBookingModalLabel">Booking tickets for: #{exhibitionController.selectedExhibition.exhibitionName}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Before we book you a spot, we need some details:</p>
+                        <hr />
+                        <form id="newBookingForm">
+                            <div class="row">
+                                <div class="col-3">When?</div>
+                                <div class="col-9">
+                                    <input type="text" class="form-control" id="datepicker" />
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-3">How many?</div>
+                                <div class="col-9">
+                                    <input type="number" class="form-control" id="qty" min="1" value="1"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="saveBtn">Book now!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="js/jquery.min.js"></script>
         <script src="js/popper.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="#{facesContext.externalContext.requestContextPath}/js/bootstrap-datepicker.min.js"></script>
 
         <script>
             $(function () {
                 $.ajax({
-                    url: "http://localhost:8080/Assignment-Bootstrap/webresources/getBooking/#{userManagedBean.currentLoggedInUser.userId}/#{exhibitionController.selectedExhibitionId}",
+                    url: "http://localhost:8080/Assignment-Bootstrap/webresources/booking/getBooking/#{userManagedBean.currentLoggedInUser.userId}/#{exhibitionController.selectedExhibitionId}",
                     method: "GET",
                     success: function (json) {
                         console.log(json);
                     }
                 })
+                var date = new Date()
+                date.setDate(date.getDate() + 1)
+                var obj = {'year': date.getFullYear(), 'month': date.getMonth(), 'day': date.getDate()};
+                $('#datepicker').datepicker({
+                    format: 'dd/mm/yyyy',
+                    defaultViewDate: obj,
+                    startDate: '+1d'
+                });
+                $("#datepicker").datepicker('setDate', date)
+                $('#datepicker').datepicker({
+                    format: 'dd/mm/yyyy',
+                    defaultViewDate: "today",
+                    startDate: '+1d'
+                });
+
+                $("#saveBtn").on('click', function (e) {
+                    e.preventDefault();
+                    var dateToday = new Date();
+                    var bookingDate = $("#datepicker").datepicker('getDate')
+                    var obj = {"exhibitionId": "#{exhibitionController.selectedExhibitionId}", "bookingDate": bookingDate.getFullYear() + "-" + (bookingDate.getMonth() + 1) + "-" + bookingDate.getDate(), "orderDate": dateToday.getFullYear() + "-" + (dateToday.getMonth() + 1) + "-" + dateToday.getDate(), "userId": "#{userManagedBean.currentLoggedInUser.userId}", "quantity": $("#qty").val()}
+                    $.ajax({
+                        url: "http://localhost:8080/Assignment-Bootstrap/webresources/booking/newBooking",
+                        method: "POST",
+                        dataType: "json",
+                        headers: {"Content-Type": "application/json", "Accept": "text/plain"},
+                        data: JSON.stringify(obj),
+                        complete:function(resp) {
+                            console.log(resp)
+                            if(resp.responseText == "Ok") {
+                                console.log('here')
+                                location.reload(true)
+                            }
+                        }
+                    })
+                })
             })
+
         </script>
 
     </body>

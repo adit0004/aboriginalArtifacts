@@ -5,10 +5,12 @@
  */
 package controllers;
 
+import static controllers.BookingController.userManagedBean;
 import static controllers.MuseumController.museumApplication;
 import entities.TicketRecord;
 import entities.UserData;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.el.ELContext;
 import javax.enterprise.context.RequestScoped;
@@ -39,11 +41,17 @@ public class UserController implements Serializable {
         userManagedBean = (UserManagedBean) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext, null, "userManagedBean");
     }
 
+    public void reinitManagedBean() {
+        ELContext elContext = FacesContext.getCurrentInstance().getELContext();
+        userManagedBean = (UserManagedBean) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext, null, "userManagedBean");
+    }
+    
     public UserData getUser() {
         return userManagedBean.getCurrentLoggedInUser();
     }
 
     public boolean checkUserHasBooking() {
+        reinitManagedBean();
         if (userManagedBean.getCurrentLoggedInUser() == null) {
             return false;
         }
@@ -52,13 +60,24 @@ public class UserController implements Serializable {
                 .getExternalContext()
                 .getRequestParameterMap()
                 .get("exhibitionId"));
-        if (userManagedBean.fetchTicketRecord(userId, exhibitionId) != null) {
+        TicketRecord records = (TicketRecord) userManagedBean.fetchTicketRecord(userId, exhibitionId);
+        if (records != null) {
             return true;
         }
         return false;
     }
     
-    public List<TicketRecord> getUserBookings() {
+    public List<TicketRecord> getUserBookings(){
+        reinitManagedBean();
+        System.out.println(userManagedBean.toString());
         return userManagedBean.getUserBookings();
+    }
+    
+    
+    public boolean getBookingEditable(int bookingId) {
+        TicketRecord record = userManagedBean.getBookingById(bookingId);
+        if (record.getPickedUp() || record.getBookingDate().before(new Date()))
+            return false;
+        return true;
     }
 }

@@ -13,6 +13,9 @@
         <link rel="stylesheet" href="css/bootstrap.css" media="screen" />
         <link rel="stylesheet" href="css/custom.css" />
         <style>
+            html {
+                scroll-behavior: smooth;
+            }
             .image{
                 position: relative;
             }
@@ -99,13 +102,13 @@
                 <div class="col-12 image">
                     <img src="img/index-banner.jpg" style="float:right;max-width:70%;" />
                     <h2 class="ml-5 bg-primary p-5" id="welcomeBox"><span class="text-white">Welcome to the <br />#{museumController.selectedMuseum.museumName}</span></h2>
-                    <a href="#!" class="ml-5 btn btn-lg btn-outline-primary px-5">Take the tour</a>
+                    <a href="#collectionsRow" class="ml-5 btn btn-lg btn-outline-primary px-5">Take the tour</a>
                 </div>
             </div>
         </div>
         <div class="container">
             <div class="orange-line bg-secondary my-5"></div>
-            <div class="row">
+            <div class="row" id="collectionsRow">
                 <div class="col-12 text-center">
                     <h1>Collections</h1>
                     <p class="lead text-primary">#{museumController.selectedMuseum.collectionDescription}</p>
@@ -121,7 +124,7 @@
                         <p class="text-secondary small lead" style="font-weight:900" id="categoryLabel">Category</p>
                         <h3 id="nameLabel">Name of thing</h3>
                         <p class="text-white" id="descriptionLabel">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean suscipit auctor erat, vel porta est iaculis nec. Phasellus volutpat turpis est, vitae blandit velit ullamcorper vitae. Etiam quis facilisis diam. Mauris fringilla vitae arcu nec consequat. Vivamus convallis suscipit magna. Integer ullamcorper enim sed aliquet ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce ultricies, erat in sagittis fermentum, odio dui tincidunt purus, eu accumsan neque massa id libero. Praesent quis rutrum tellus.</p>
-
+                        <a href="#!" class="btn btn-secondary" id="viewLink">View &rarr;</a>
                     </div>
                 </div>
                 <div class="col-4 p-0 fixed-height" id="imageBounding">
@@ -139,50 +142,60 @@
                 <div class="col-12 mt-5">
                     <div class="row">
                         <div class="col-4 px-1">
-                            <a href="#!">
+                            <h:link outcome="single_exhibition">
+                                <f:param name="exhibitionId" value="#{museumApplication.exhibitionsForMuseum.get(0).getExhibitionId()}" />
+                                <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
                                 <div class="img-container">
                                     <img src="#{museumApplication.exhibitionsForMuseum.get(0).getImagePath()}"/>
                                     <div class="overlay">
                                         <span><h2>#{museumApplication.exhibitionsForMuseum.get(0).getExhibitionName()}</h2></span>
                                     </div>
                                 </div>
-                            </a>
-                            <a href="#!">
+                            </h:link>
+                            <h:link outcome="single_exhibition">
+                                <f:param name="exhibitionId" value="#{museumApplication.exhibitionsForMuseum.get(1).getExhibitionId()}" />
+                                <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
                                 <div class="img-container mt-2">
                                     <img src="#{museumApplication.exhibitionsForMuseum.get(1).getImagePath()}"/>
                                     <div class="overlay">
                                         <span><h2>#{museumApplication.exhibitionsForMuseum.get(1).getExhibitionName()}</h2></span>
                                     </div>
                                 </div>
-                            </a>
+                            </h:link>
                         </div>
                         <div class="col-4 px-1">
-                            <a href="#!">
+                            <h:link outcome="single_exhibition">
+                                <f:param name="exhibitionId" value="#{museumApplication.exhibitionsForMuseum.get(2).getExhibitionId()}" />
+                                <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
                                 <div class="img-container">
                                     <img src="#{museumApplication.exhibitionsForMuseum.get(2).getImagePath()}" />
                                     <div class="overlay">
                                         <span><h2>#{museumApplication.exhibitionsForMuseum.get(2).getExhibitionName()}</h2></span>
                                     </div>
                                 </div>
-                            </a>
+                            </h:link>
                         </div>
                         <div class="col-4 px-1">
-                            <a href="#!">
+                            <h:link outcome="single_exhibition">
+                                <f:param name="exhibitionId" value="#{museumApplication.exhibitionsForMuseum.get(3).getExhibitionId()}" />
+                                <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
                                 <div class="img-container">
                                     <img src="#{museumApplication.exhibitionsForMuseum.get(3).getImagePath()}" />
                                     <div class="overlay">
                                         <span><h2>#{museumApplication.exhibitionsForMuseum.get(3).getExhibitionName()}</h2></span>
                                     </div>
                                 </div>
-                            </a>
-                            <a href="#!">
+                            </h:link>
+                            <h:link outcome="single_exhibition">
+                                <f:param name="exhibitionId" value="#{museumApplication.exhibitionsForMuseum.get(4).getExhibitionId()}" />
+                                <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
                                 <div class="img-container mt-2">
                                     <img src="#{museumApplication.exhibitionsForMuseum.get(4).getImagePath()}" />
                                     <div class="overlay">
                                         <span><h2>#{museumApplication.exhibitionsForMuseum.get(4).getExhibitionName()}</h2></span>
                                     </div>
                                 </div>
-                            </a>
+                            </h:link>
                         </div>
                     </div>
                 </div>
@@ -223,12 +236,13 @@
                 var currentCollection = 0;
 
                 var collections = #{museumApplication.getCollectionsForMuseum()}
+                console.log(collections);
 
                 $("#categoryLabel").html(collections[0].category);
                 $("#nameLabel").html(collections[0].name);
                 $("#descriptionLabel").html(collections[0].description);
                 $("#categoryImage").attr('src', collections[0].image);
-
+                $("#viewLink").attr('href',"single_collection.xhtml?collectionId="+collections[0].id)
                 $("#backButton").on('click', function () {
 
                     $("#categoryLabel").fadeOut();
@@ -245,6 +259,7 @@
                         $("#nameLabel").html(collections[currentCollection].name);
                         $("#descriptionLabel").html(collections[currentCollection].description);
                         $("#categoryImage").attr('src', collections[currentCollection].image);
+                        $("#viewLink").attr('href',"single_collection.xhtml?collectionId="+collections[currentCollection].id)
                         $("#categoryLabel").fadeIn();
                         $("#nameLabel").fadeIn();
                         $("#descriptionLabel").fadeIn();
@@ -270,6 +285,7 @@
                         $("#nameLabel").html(collections[currentCollection].name);
                         $("#descriptionLabel").html(collections[currentCollection].description);
                         $("#categoryImage").attr('src', collections[currentCollection].image);
+                        $("#viewLink").attr('href',"single_collection.xhtml?collectionId="+collections[currentCollection].id)
                         $("#categoryLabel").fadeIn();
                         $("#nameLabel").fadeIn();
                         $("#descriptionLabel").fadeIn();

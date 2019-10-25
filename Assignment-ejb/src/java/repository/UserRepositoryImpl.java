@@ -57,11 +57,15 @@ public class UserRepositoryImpl implements UserRepository {
         Query query = entityManager.createNamedQuery(TicketRecord.GET_BOOKING_DETAILS_QUERY);
         query.setParameter("userId", userId);
         query.setParameter("exhibitionId", exhibitionId);
-        TicketRecord record = (TicketRecord) query.getSingleResult();
-        record.getUserDetails().getUserId();
-        record.getExhibition().getExhibitionId();
-        entityManager.refresh(record);
-        return record;
+        try{
+            TicketRecord record = (TicketRecord) query.getSingleResult();
+            record.getUserDetails().getUserId();
+            record.getExhibition().getExhibitionId();
+            entityManager.refresh(record);
+            return record;
+        } catch(Exception e) {
+            return null;
+        }
     }
 
     @Override
@@ -70,5 +74,23 @@ public class UserRepositoryImpl implements UserRepository {
         query.setParameter("userId", user.getUserId());
         List<TicketRecord> ticketRecords = query.getResultList();
         return ticketRecords;
+    }
+
+    @Override
+    public TicketRecord getBooking(int bookingId) throws Exception {
+        return entityManager.find(TicketRecord.class, bookingId);
+    }
+
+    @Override
+    public void addBookingForUser(TicketRecord ticketRecord) throws Exception {
+        List<TicketRecord> records = entityManager.createNamedQuery(TicketRecord.GET_ALL_BOOKINGS).getResultList();
+        ticketRecord.setBookingId(records.get(0).getBookingId() + 1);
+        entityManager.persist(ticketRecord);
+    }
+
+    @Override
+    public void deleteBooking(int ticketId) throws Exception {
+        TicketRecord ticket = entityManager.find(TicketRecord.class, ticketId);
+        entityManager.remove(ticket);
     }
 }
