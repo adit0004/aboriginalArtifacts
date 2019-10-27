@@ -28,7 +28,7 @@ public class Ticket implements Serializable {
         ticketPrice = 0.0;
         ticketDescription = null;
     }
-    public Ticket(int ticketId, String ticketName, double ticketPrice, String ticketDescription) {
+    public Ticket(String ticketName, double ticketPrice, String ticketDescription) {
         this.ticketName = ticketName;
         this.ticketPrice = ticketPrice;
         this.ticketDescription = ticketDescription;

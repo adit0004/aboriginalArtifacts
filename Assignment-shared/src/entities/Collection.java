@@ -28,6 +28,7 @@ import javax.persistence.OneToMany;
 
 
 @NamedQueries ({
+    @NamedQuery (name = Collection.GET_ALL, query = "Select c FROM Collection c"),
     @NamedQuery (name = Collection.GET_COLLECTION_FOR_MUSEUM, query = "Select c from Collection c WHERE c.collectionMuseum.museumId = :museumId"),
     @NamedQuery (name = Collection.GET_CATEGORY_LIST_FOR_MUSEUM, query = "SELECT c.collectionCategory FROM Collection c WHERE c.collectionMuseum.museumId = :museumId ORDER BY c.collectionCategory asc"),
     @NamedQuery (name = Collection.SEARCH_BY_NAME_DESC_CURATOR, query = "SELECT c FROM Collection c WHERE c.collectionName LIKE :collectionName OR c.collectionDescription LIKE :collectionDescription OR c.collectionCurator LIKE :collectionCurator")
@@ -36,6 +37,7 @@ import javax.persistence.OneToMany;
 @Entity
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="collectionID")
 public class Collection implements Serializable {
+    public static final String GET_ALL = "Collection.getAll";
     public static final String GET_COLLECTION_FOR_MUSEUM = "Collection.getCollectionForMuseum";
     public static final String GET_CATEGORY_LIST_FOR_MUSEUM = "Collection.getCategoriesForMuseumCollection";
     public static final String SEARCH_BY_NAME_DESC_CURATOR = "Collection.getSearchResultsByNameDescriptionOrCurator";

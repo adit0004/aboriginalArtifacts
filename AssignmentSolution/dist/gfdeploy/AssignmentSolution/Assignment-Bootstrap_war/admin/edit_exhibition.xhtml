@@ -1,0 +1,294 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <head>
+        <meta charset="utf-8" />
+        <title>Artifacts Unearthed</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="../css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" href="../css/custom.css" />
+        <!-- Font awesome -->
+        <link rel="stylesheet" href="../css/all.css" />
+        <!-- Datepicker -->
+        <link rel="stylesheet" href="../css/bootstrap-datepicker3.css"/>
+        <style>
+            .image{
+                position: relative;
+            }
+            .image>h2{
+                position:absolute;
+                top:100px;
+            }
+            .image>a{
+                position:absolute;
+                top:300px;
+            }
+            .with-bg>img{
+                max-width: 100%;
+            }
+            .splash-container{
+                overflow: hidden;
+            }
+            .splash-container img {
+                margin-left:-50%;
+                max-height: 400px!important;
+            }
+            .card-img-top {
+                width: 100%;
+                height: 15vw;
+                object-fit: cover;
+            }
+            .modal-body img{
+                width:100%;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand p-0" href="../index.xhtml"><img src="../img/logo.png" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <a href="#" class="text-white ml-3"><u>Advanced Search</u></a>
+
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <h:link outcome="/museum_landing" styleClass="btn btn-primary nav-link">
+                            Home
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="../index.xhtml">Museums</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="/collections" styleClass="btn btn-primary nav-link" value="Collections">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="/exhibitions" styleClass="btn btn-primary nav-link" value="Exhibitions">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">Contact</a>
+                    </li>
+                    <c:if test="#{museumApplication.userLoggedIn eq true}">
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#{museumApplication.userManagedBean.currentLoggedInUser.firstName} #{museumApplication.userManagedBean.currentLoggedInUser.lastName} </a>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="static">
+                                <h:form>
+                                    <h:commandLink value="Logout" action="#{museumApplication.logout()}" styleClass="dropdown-item" />
+                                </h:form>
+                            </div>
+                        </li>
+                    </c:if>
+                    <c:if test="#{museumApplication.userLoggedIn eq false}">
+                        <li class="nav-item">
+                            <a class="btn btn-light nav-link text-dark py-2 px-3 my-2" href="login_direct.xhtml">Login / Sign-up</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <h1>Editing Exhibition</h1>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-md-4 order-md-last">
+                    <img src="#{facesContext.externalContext.requestContextPath}/#{exhibitionController.selectedExhibition.imagePath}" style="max-width:100%;"/>
+                    <h:form enctype="multipart/form-data">
+                        <div class="custom-file">
+                            <h:inputFile styleClass="custom-file-input" id="customFile" value="#{adminController.file}"/>
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
+                        <h:commandLink action="#{adminController.saveFile()}" styleClass="btn btn-primary">
+                            <f:param name="exhibitionId" value="#{adminController.selectedExhibitionId}" />
+                            Save
+                        </h:commandLink>
+                    </h:form>
+                </div>
+                <div class="col-12 col-md-8 order-md-first">
+                    <h:form id="updateForm">
+                        <table class="table table-bordered">
+                            <thead class="bg-primary text-white">
+                                <tr>
+                                    <th colspan="2">Exhibition details</th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td>Exhibition Name</td>
+                                <td>
+                                    <h:inputText value="#{adminController.selectedExhibition.exhibitionName}" styleClass="form-control" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Exhibition Description</td>
+                                <td>
+                                    <h:inputTextarea value="#{adminController.selectedExhibition.exhibitionDescription}" styleClass="form-control" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Collection</td>
+                                <td>
+                                    <select id="collectionSelect" class="form-control">
+                                        <ui:repeat value="#{adminController.allCollections}" var="collection" varStatus="status">
+                                            <c:if test="#{collection.collectionID ne adminController.selectedExhibition.exhibitionCollection.collectionID}">
+                                                <option value="#{collection.collectionID}">#{collection.collectionName}</option>
+                                            </c:if>
+                                            <c:if test="#{collection.collectionID eq adminController.selectedExhibition.exhibitionCollection.collectionID}">
+                                                <option value="#{collection.collectionID}" selected="selected">#{collection.collectionName}</option>
+                                            </c:if>
+                                        </ui:repeat>
+                                    </select>
+                                    <!-- Need to manually make this work using jquery instead of primefaces because primefaces imports jquery v1.11 -->
+                                    <h:inputHidden value="#{adminController.updatedCollectionId}" id="collectionId" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Exhibition Starts</td>
+                                <td>
+                                    <input type="text" class="form-control" id="datepicker" />
+                                    <h:inputHidden value="#{adminController.updatedStartDate}" id="startDate"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Exhibition Ends</td>
+                                <td>
+                                    <input type="text" class="form-control" id="datepicker2" />
+                                    <h:inputHidden value="#{adminController.updatedEndDate}" id="endDate"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Venue</td>
+                                <td>
+                                    <select id="museumSelect" class="form-control">
+                                        <ui:repeat value="#{adminController.allMuseums}" var="museum" varStatus="status">
+                                            <c:if test="#{museum.museumId ne adminController.selectedExhibition.exhibitionMuseum.museumId}">
+                                                <option value="#{museum.museumId}">#{museum.museumName}</option>
+                                            </c:if>
+                                            <c:if test="#{museum.museumId eq adminController.selectedExhibition.exhibitionMuseum.museumId}">
+                                                <option value="#{museum.museumId}" selected="selected">#{museum.museumName}</option>
+                                            </c:if>
+                                        </ui:repeat>
+                                    </select>
+                                    <h:inputHidden value="#{adminController.updatedMuseumId}" id="museumId" />
+                                </td>
+                            </tr>
+                            <thead class="bg-primary text-white">
+                                <tr>
+                                    <th colspan="2">Ticket details</th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td>Ticket type</td>
+                                <td>
+                                    <h:inputText styleClass="form-control" value="#{adminController.selectedExhibition.exhibitionTicket.ticketName}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Ticket details</td>
+                                <td>
+                                    <h:inputText styleClass="form-control" value="#{adminController.selectedExhibition.exhibitionTicket.ticketDescription}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Ticket price (AUD)</td>
+                                <td>
+                                    <h:inputText styleClass="form-control" value="#{adminController.selectedExhibition.exhibitionTicket.ticketPrice}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <h:commandLink action="#{adminController.updateExhibition()}" styleClass="btn btn-primary">
+                                        <f:param name="exhibitionId" value="#{adminController.selectedExhibitionId}" />
+                                        Save <i class="fas fa-save"/>
+                                    </h:commandLink>
+                                    <h:link outcome="/admin/dash" styleClass="btn btn-danger ml-2">
+                                        Cancel <i class="fas fa-times"/>
+                                    </h:link>
+                                </td>
+                            </tr>
+                        </table>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-secondary text-center p-3 mt-5 text-white">
+            Museum of Aboriginal Artifacts. Licensed under Creative Commons. All attributions provided in the about page. 
+        </footer>
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/popper.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="#{facesContext.externalContext.requestContextPath}/js/bootstrap-datepicker.min.js"></script>
+
+        <script>
+            $(function () {
+                $("#" + $.escapeSelector("updateForm:eId")).val(#{exhibitionController.selectedExhibitionId})
+                $("#" + $.escapeSelector("updateForm:collectionId")).val(#{exhibitionController.selectedExhibition.exhibitionCollection.collectionID});
+                $("#" + $.escapeSelector("updateForm:museumId")).val(#{exhibitionController.selectedExhibition.exhibitionMuseum.museumId});
+
+                var date = new Date(#{exhibitionController.selectedExhibition.exhibitionStartDate.time})
+                var obj = {'year': date.getFullYear(), 'month': date.getMonth(), 'day': date.getDate()};
+                console.log(obj);
+                $('#datepicker').datepicker({
+                    format: 'dd/mm/yyyy',
+                    defaultViewDate: obj
+                });
+
+                $("#datepicker").datepicker('setDate', date);
+
+                var date = $("#datepicker").datepicker('getDate');
+                var dateStr = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                $("#" + $.escapeSelector("updateForm:startDate")).val(dateStr);
+
+
+                date = new Date(#{exhibitionController.selectedExhibition.exhibitionEndDate.time})
+                obj = {'year': date.getFullYear(), 'month': date.getMonth(), 'day': date.getDate()};
+                console.log(obj);
+                $('#datepicker2').datepicker({
+                    format: 'dd/mm/yyyy',
+                    defaultViewDate: obj
+                });
+                $("#datepicker2").datepicker('setDate', date);
+
+                var date = $("#datepicker2").datepicker('getDate');
+                var dateStr = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                $("#" + $.escapeSelector("updateForm:endDate")).val(dateStr);
+
+                $("#collectionSelect").on('change', function () {
+                    $("#" + $.escapeSelector("updateForm:collectionId")).val($("#collectionSelect:selected").val());
+                })
+                $("#datepicker").on('change', function () {
+                    var date = $("#datepicker").datepicker('getDate');
+                    var dateStr = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                    $("#" + $.escapeSelector("updateForm:startDate")).val(dateStr);
+                })
+                $("#datepicker2").on('change', function () {
+                    var date = $("#datepicker2").datepicker('getDate');
+                    var dateStr = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                    $("#" + $.escapeSelector("updateForm:endDate")).val(dateStr);
+                })
+                $("#museumSelect").on('change', function () {
+                    $("#" + $.escapeSelector("updateForm:museumId")).val($("#museumSelect:selected").val());
+                })
+            });
+        </script>
+
+    </body>
+</html>

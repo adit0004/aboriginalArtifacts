@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <head>
+        <meta charset="utf-8" />
+        <title>Artifacts Unearthed</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="../css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" href="../css/custom.css" />
+        <!-- Font awesome -->
+        <link rel="stylesheet" href="../css/all.css" />
+        <!-- Datepicker -->
+        <link rel="stylesheet" href="../css/bootstrap-datepicker3.css"/>
+        <style>
+            .image{
+                position: relative;
+            }
+            .image>h2{
+                position:absolute;
+                top:100px;
+            }
+            .image>a{
+                position:absolute;
+                top:300px;
+            }
+            .with-bg>img{
+                max-width: 100%;
+            }
+            .splash-container{
+                overflow: hidden;
+            }
+            .splash-container img {
+                margin-left:-50%;
+                max-height: 400px!important;
+            }
+            .card-img-top {
+                width: 100%;
+                height: 15vw;
+                object-fit: cover;
+            }
+            .modal-body img{
+                width:100%;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Authenticate if this is the correct user who owns this booking -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand p-0" href="../index.xhtml"><img src="../img/logo.png" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <h:form styleClass="form-inline my-2 my-lg-0">
+                <h:inputText styleClass="form-control mr-sm-2" p:placeholder="Search for..." value="#{searchController.searchQuery}"/>
+                <h:commandButton styleClass="btn btn-secondary my-2 my-sm-0" value="Search" action="#{searchController.getSearchResults()}" />
+            </h:form>
+            <a href="#" class="text-white ml-3"><u>Advanced Search</u></a>
+
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <h:link outcome="/museum_landing" styleClass="btn btn-primary nav-link">
+                            Home
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="../index.xhtml">Museums</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="/collections" styleClass="btn btn-primary nav-link" value="Collections">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="/exhibitions" styleClass="btn btn-primary nav-link" value="Exhibitions">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">Contact</a>
+                    </li>
+                    <c:if test="#{museumApplication.userLoggedIn eq true}">
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#{museumApplication.userManagedBean.currentLoggedInUser.firstName} #{museumApplication.userManagedBean.currentLoggedInUser.lastName} </a>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="static">
+                                <h:link outcome="profile" value="My Profile" styleClass="dropdown-item" />
+                                <h:link outcome="bookings" value="View Bookings" styleClass="dropdown-item"/>
+                                <div class="dropdown-divider"></div>
+                                <h:form>
+                                    <h:commandLink value="Logout" action="#{museumApplication.logout()}" styleClass="dropdown-item" />
+                                </h:form>
+                            </div>
+                        </li>
+                    </c:if>
+                    <c:if test="#{museumApplication.userLoggedIn eq false}">
+                        <li class="nav-item">
+                            <a class="btn btn-light nav-link text-dark py-2 px-3 my-2" href="login_direct.xhtml">Login / Sign-up</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <h:form onsubmit="return addMoreDetails()" id="bookingForm">
+                <div class="row mt-3">
+                    <div class="col-12 text-center">
+                        <h1>Booking Details</h1>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <strong>Booking ID: </strong>
+                    </div>
+                    <div class="col-8">
+                        #{adminController.currentBooking.bookingId}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <strong>Order date:</strong>
+                    </div>
+                    <div class="col-8">
+                        <h:outputText value="#{adminController.currentBooking.orderDate}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <strong>Booking date:</strong>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="datepicker" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <strong>Quantity:</strong>
+                    </div>
+                    <div class="col-8">
+                        <button class="btn btn-primary mr-2" id="subtract">-</button>
+                        <span id="bookingqty">#{adminController.currentBooking.quantity}</span>
+                        <button class="btn btn-primary ml-2" id="add">+</button>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <strong>Order total:</strong>
+                    </div>
+                    <div class="col-8">
+                        <h:outputText value="#{adminController.currentBooking.quantity * adminController.currentBooking.exhibition.exhibitionTicket.ticketPrice}" id="orderprice">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                        </h:outputText>
+                    </div>
+                </div>
+                
+                <h:inputHidden value="#{adminController.bookingId}" id="bId" />
+                <h:inputHidden value="#{adminController.bookingQty}" id="qty"/>
+                <h:inputHidden value="#{adminController.updatedDate}" id="date"/>
+                
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h:commandLink action="#{adminController.updateBooking()}" styleClass="btn btn-primary">
+                            Save
+                        </h:commandLink>
+                        <h:link outcome="/admin/bookings" class="btn btn-secondary ml-3">Close</h:link>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+        <footer class="bg-secondary text-center p-3 mt-5 text-white">
+            Museum of Aboriginal Artifacts. Licensed under Creative Commons. All attributions provided in the about page. 
+        </footer>
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/popper.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/bootstrap-datepicker.min.js"></script>
+        <script>
+                $(function () {
+                    $("#"+$.escapeSelector("bookingForm:bId")).val(#{adminController.currentBooking.bookingId});
+                    var date = new Date(#{adminController.currentBooking.bookingDate.time})
+                    var obj = {'year': date.getFullYear(), 'month': date.getMonth(), 'day': date.getDate()};
+                    $('#datepicker').datepicker({
+                        format: 'dd/mm/yyyy',
+                        defaultViewDate: obj,
+                        startDate: '+1d'
+                    });
+                    $("#datepicker").datepicker('setDate', date)
+                    console.log(obj)
+                    $("#subtract").on('click', function (e) {
+                        e.preventDefault();
+                        if ($("#bookingqty").html() != '0') {
+                            $("#bookingqty").html(parseInt($("#bookingqty").html()) - 1)
+                            var newTotal = (parseInt($("#bookingqty").html())) * #{adminController.currentBooking.exhibition.exhibitionTicket.ticketPrice}
+                            var total = '$' + newTotal.toFixed(2);
+                            $("#" + $.escapeSelector("bookingForm:orderprice")).html(total);
+                            console.log(total);
+                        }
+                    })
+                    $("#add").on('click', function (e) {
+                        e.preventDefault();
+                        $("#bookingqty").html(parseInt($("#bookingqty").html()) + 1)
+                        var newTotal = (parseInt($("#bookingqty").html())) * #{adminController.currentBooking.exhibition.exhibitionTicket.ticketPrice}
+                        var total = '$' + newTotal.toFixed(2);
+                        $("#" + $.escapeSelector("bookingForm:orderprice")).html(total);
+                        // UPDATE TOTAL
+                    })
+                    $("#updateBookingForm").on('submit', function (e) {
+                        // Don't let the form submit
+                        e.preventDefault();
+                    })
+                })
+                function addMoreDetails() {
+                    // Get the values in the datepicker and the quantity span
+                    var bookingDate = $("#datepicker").datepicker('getDate')
+                    var dateStr = bookingDate.getFullYear() + "-" + (bookingDate.getMonth() + 1) + "-" + bookingDate.getDate();
+                    var bookingId = #{adminController.currentBooking.bookingId};
+                    
+                    console.log(dateStr, bookingId);
+                    
+                    $("#"+$.escapeSelector("bookingForm:date")).val(dateStr);
+                    $("#"+$.escapeSelector("bookingForm:qty")).val($("#bookingqty").html());
+                    
+                    console.log(dateStr);
+                    console.log($("#bookingqty").html());
+                    
+                    return true;
+                }
+        </script>
+    </body>
+</html>
+

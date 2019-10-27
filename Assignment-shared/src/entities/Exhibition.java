@@ -28,7 +28,7 @@ import javax.persistence.Temporal;
  */
 
 @NamedQueries ({
-    @NamedQuery (name = Exhibition.GET_ALL_QUERY_NAME, query = "Select e from Exhibition e"),
+    @NamedQuery (name = Exhibition.GET_ALL_QUERY_NAME, query = "Select e from Exhibition e ORDER BY e.exhibitionId desc"),
     @NamedQuery (name = Exhibition.GET_EXHIBITIONS_FOR_MUSEUM, query = "Select e from Exhibition e WHERE e.exhibitionMuseum.museumId = :museumId"),
     @NamedQuery (name = Exhibition.GET_FILTERED_EXHIBITIONS, query = "SELECT e FROM Exhibition e WHERE e.exhibitionMuseum.museumId = :museumId AND e.exhibitionCollection.collectionCategory = :category")
 })

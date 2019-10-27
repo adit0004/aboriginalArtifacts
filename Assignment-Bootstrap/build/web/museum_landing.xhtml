@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <head>
         <meta charset="utf-8" />
         <title>Artifacts Unearthed</title>
@@ -57,6 +58,12 @@
                     <li class="nav-item active">
                         <a class="btn btn-primary nav-link" href="#!">Home <span class="sr-only">(current)</span></a>
                     </li>
+
+                    <c:if test="#{museumApplication.isUserAdmin() eq true}">
+                        <li class="nav-item">
+                            <h:link outcome="/admin/dash" styleClass="btn btn-primary nav-link" value="Dashboard" />
+                        </li>
+                    </c:if>
                     <li class="nav-item">
                         <a class="btn btn-primary nav-link" href="index.xhtml">Museums</a>
                     </li>
@@ -76,13 +83,23 @@
                     <li class="nav-item">
                         <a class="btn btn-primary nav-link" href="#">Contact</a>
                     </li>
-                    <c:if test="#{museumApplication.userLoggedIn eq true}">
+                    <c:if test="#{museumApplication.userLoggedIn eq true and museumApplication.userAdmin eq false}">
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#{museumApplication.userManagedBean.currentLoggedInUser.firstName} #{museumApplication.userManagedBean.currentLoggedInUser.lastName} </a>
                             <div class="dropdown-menu dropdown-menu-right" x-placement="static">
                                 <h:link outcome="user/profile" value="My Profile" styleClass="dropdown-item" />
                                 <h:link outcome="user/bookings" value="View Bookings" styleClass="dropdown-item"/>
                                 <div class="dropdown-divider"></div>
+                                <h:form>
+                                    <h:commandLink value="Logout" action="#{museumApplication.logout()}" styleClass="dropdown-item" />
+                                </h:form>
+                            </div>
+                        </li>
+                    </c:if>
+                    <c:if test="#{museumApplication.userLoggedIn eq true and museumApplication.userAdmin eq true}">
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#{museumApplication.userManagedBean.currentLoggedInUser.firstName} #{museumApplication.userManagedBean.currentLoggedInUser.lastName} </a>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="static">
                                 <h:form>
                                     <h:commandLink value="Logout" action="#{museumApplication.logout()}" styleClass="dropdown-item" />
                                 </h:form>
@@ -141,62 +158,20 @@
                 </div>
                 <div class="col-12 mt-5">
                     <div class="row">
-                        <div class="col-4 px-1">
-                            <h:link outcome="single_exhibition">
-                                <f:param name="exhibitionId" value="#{museumApplication.exhibitionsForMuseum.get(0).getExhibitionId()}" />
-                                <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
-                                <div class="img-container">
-                                    <img src="#{museumApplication.exhibitionsForMuseum.get(0).getImagePath()}"/>
-                                    <div class="overlay">
-                                        <span><h2>#{museumApplication.exhibitionsForMuseum.get(0).getExhibitionName()}</h2></span>
+                        <ui:repeat value="#{museumApplication.exhibitionsForMuseum}" var ="exhibition" varStatus="status">
+                            <div class="col-4 px-1 mt-2">
+                                <h:link outcome="single_exhibition">
+                                    <f:param name="exhibitionId" value="#{exhibition.exhibitionId}" />
+                                    <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                                    <div class="img-container">
+                                        <img src="#{exhibition.imagePath}"/>
+                                        <div class="overlay">
+                                            <span><h2>#{exhibition.exhibitionName}</h2></span>
+                                        </div>
                                     </div>
-                                </div>
-                            </h:link>
-                            <h:link outcome="single_exhibition">
-                                <f:param name="exhibitionId" value="#{museumApplication.exhibitionsForMuseum.get(1).getExhibitionId()}" />
-                                <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
-                                <div class="img-container mt-2">
-                                    <img src="#{museumApplication.exhibitionsForMuseum.get(1).getImagePath()}"/>
-                                    <div class="overlay">
-                                        <span><h2>#{museumApplication.exhibitionsForMuseum.get(1).getExhibitionName()}</h2></span>
-                                    </div>
-                                </div>
-                            </h:link>
-                        </div>
-                        <div class="col-4 px-1">
-                            <h:link outcome="single_exhibition">
-                                <f:param name="exhibitionId" value="#{museumApplication.exhibitionsForMuseum.get(2).getExhibitionId()}" />
-                                <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
-                                <div class="img-container">
-                                    <img src="#{museumApplication.exhibitionsForMuseum.get(2).getImagePath()}" />
-                                    <div class="overlay">
-                                        <span><h2>#{museumApplication.exhibitionsForMuseum.get(2).getExhibitionName()}</h2></span>
-                                    </div>
-                                </div>
-                            </h:link>
-                        </div>
-                        <div class="col-4 px-1">
-                            <h:link outcome="single_exhibition">
-                                <f:param name="exhibitionId" value="#{museumApplication.exhibitionsForMuseum.get(3).getExhibitionId()}" />
-                                <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
-                                <div class="img-container">
-                                    <img src="#{museumApplication.exhibitionsForMuseum.get(3).getImagePath()}" />
-                                    <div class="overlay">
-                                        <span><h2>#{museumApplication.exhibitionsForMuseum.get(3).getExhibitionName()}</h2></span>
-                                    </div>
-                                </div>
-                            </h:link>
-                            <h:link outcome="single_exhibition">
-                                <f:param name="exhibitionId" value="#{museumApplication.exhibitionsForMuseum.get(4).getExhibitionId()}" />
-                                <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
-                                <div class="img-container mt-2">
-                                    <img src="#{museumApplication.exhibitionsForMuseum.get(4).getImagePath()}" />
-                                    <div class="overlay">
-                                        <span><h2>#{museumApplication.exhibitionsForMuseum.get(4).getExhibitionName()}</h2></span>
-                                    </div>
-                                </div>
-                            </h:link>
-                        </div>
+                                </h:link>
+                            </div>
+                        </ui:repeat>
                     </div>
                 </div>
             </div>
@@ -242,7 +217,7 @@
                 $("#nameLabel").html(collections[0].name);
                 $("#descriptionLabel").html(collections[0].description);
                 $("#categoryImage").attr('src', collections[0].image);
-                $("#viewLink").attr('href',"single_collection.xhtml?collectionId="+collections[0].id)
+                $("#viewLink").attr('href', "single_collection.xhtml?collectionId=" + collections[0].id)
                 $("#backButton").on('click', function () {
 
                     $("#categoryLabel").fadeOut();
@@ -259,7 +234,7 @@
                         $("#nameLabel").html(collections[currentCollection].name);
                         $("#descriptionLabel").html(collections[currentCollection].description);
                         $("#categoryImage").attr('src', collections[currentCollection].image);
-                        $("#viewLink").attr('href',"single_collection.xhtml?collectionId="+collections[currentCollection].id)
+                        $("#viewLink").attr('href', "single_collection.xhtml?collectionId=" + collections[currentCollection].id)
                         $("#categoryLabel").fadeIn();
                         $("#nameLabel").fadeIn();
                         $("#descriptionLabel").fadeIn();
@@ -285,7 +260,7 @@
                         $("#nameLabel").html(collections[currentCollection].name);
                         $("#descriptionLabel").html(collections[currentCollection].description);
                         $("#categoryImage").attr('src', collections[currentCollection].image);
-                        $("#viewLink").attr('href',"single_collection.xhtml?collectionId="+collections[currentCollection].id)
+                        $("#viewLink").attr('href', "single_collection.xhtml?collectionId=" + collections[currentCollection].id)
                         $("#categoryLabel").fadeIn();
                         $("#nameLabel").fadeIn();
                         $("#descriptionLabel").fadeIn();

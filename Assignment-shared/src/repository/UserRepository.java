@@ -25,4 +25,5 @@ public interface UserRepository {
     public TicketRecord getBooking(int bookingId) throws Exception;
     public void addBookingForUser(TicketRecord ticketRecord) throws Exception;
     public void deleteBooking(int ticketId) throws Exception;
+    public void updateBooking(TicketRecord booking) throws Exception;
 }

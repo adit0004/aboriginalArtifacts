@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import repository.MuseumRepository;
 import entities.Museum;
+import entities.TicketRecord;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Set;
@@ -55,10 +56,10 @@ public class MuseumManagedBean implements Serializable{
         return null;
     }
     
-        public ArrayList<Exhibition> getAllExhibitions() {
+        public List<Exhibition> getAllExhibitions() {
         try {
             List<Exhibition> exhibition = museumRepository.getAllExhibitions();
-            return (ArrayList<Exhibition>) exhibition;
+            return exhibition;
         } catch (Exception e) {
             Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -133,5 +134,47 @@ public class MuseumManagedBean implements Serializable{
             Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }
+    }
+    
+    public void deleteExhibition(int exhibitionId) {
+        try {
+            museumRepository.deleteExhibition(exhibitionId);
+        } catch (Exception ex) {
+            Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public List<Collection> getAllCollections() {
+        try {
+            return museumRepository.getAllCollections();
+        } catch (Exception ex) {
+            Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public void updateExhibition(Exhibition exhibition) {
+        try {
+            museumRepository.updateExhibition(exhibition);
+        } catch (Exception ex) {
+            Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void addExhibition(Exhibition exhibition) {
+        try {
+            museumRepository.addExhibition(exhibition);
+        } catch (Exception ex) {
+            Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public List<TicketRecord>  getAllBookings() {
+        try {
+            return museumRepository.getAllBookings();
+        } catch (Exception ex) {
+            Logger.getLogger(MuseumManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

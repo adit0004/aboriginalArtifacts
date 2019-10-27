@@ -19,6 +19,7 @@ import mbeans.MuseumManagedBean;
 import entities.Collection;
 import entities.TicketRecord;
 import java.security.Principal;
+import java.util.Date;
 import java.util.Set;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -151,19 +152,21 @@ public class MuseumApplication {
                 .getRequestParameterMap()
                 .get("museumId"));
         List<Exhibition> exhibitions = museumManagedBean.getExhibitionsForMuseum(selectedMuseumId);
-//        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-//        for (Exhibition temp : exhibitions) {
-//            JsonObject collectionObject = Json.createObjectBuilder()
-//                    .add("id", temp.getExhibitionId())
-//                    .add("name", temp.getExhibitionName())
-//                    .add("image", temp.getImagePath())
-//                    .build();
-//            arrayBuilder.add(collectionObject);
-//        }
-//        JsonArray collectionArray = arrayBuilder.build();
-//        String retStr = collectionArray.toString();
-//        return retStr;
         return exhibitions;
+    }
+
+    public List<Exhibition> getCurrentExhibitionsForMuseum(){
+        List<Exhibition> returnArray = new ArrayList<Exhibition>();
+        int selectedMuseumId = Integer.valueOf(FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap()
+                .get("museumId"));
+        List<Exhibition> exhibitions = museumManagedBean.getExhibitionsForMuseum(selectedMuseumId);
+        for (Exhibition exhibition: exhibitions) {
+            if (exhibition.getExhibitionStartDate().before(new Date()) && exhibition.getExhibitionEndDate().after(new Date()))
+                returnArray.add(exhibition);
+        }
+        return returnArray;
     }
 
     public MuseumManagedBean getMuseumManagedBean() {
@@ -205,10 +208,8 @@ public class MuseumApplication {
         return "/index?faces-redirect=true";
     }
     
-    public String getUserRoles() {
-        if (FacesContext.getCurrentInstance().getExternalContext().isUserInRole("admin"))
-            return "admin";
-        else return "user";
+    public boolean isUserAdmin() {
+        return FacesContext.getCurrentInstance().getExternalContext().isUserInRole("admin");
     }
     
     public TicketRecord getTicketRecordForUserExhibition(int userId, int exhibitionId) {

@@ -140,4 +140,12 @@ public class UserManagedBean implements Serializable {
             Logger.getLogger(UserManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void updateBooking(TicketRecord booking) {
+        try {
+            userRepository.updateBooking(booking);
+        } catch (Exception ex) {
+            Logger.getLogger(UserManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

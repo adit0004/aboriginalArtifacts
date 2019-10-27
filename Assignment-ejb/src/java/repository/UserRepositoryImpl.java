@@ -93,4 +93,9 @@ public class UserRepositoryImpl implements UserRepository {
         TicketRecord ticket = entityManager.find(TicketRecord.class, ticketId);
         entityManager.remove(ticket);
     }
+    
+    @Override
+    public void updateBooking(TicketRecord booking) {
+        entityManager.merge(booking);
+    }
 }

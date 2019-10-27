@@ -9,6 +9,7 @@ import entities.Artifact;
 import entities.Collection;
 import entities.Exhibition;
 import entities.Museum;
+import entities.TicketRecord;
 import java.util.List;
 import java.util.Set;
 import javax.ejb.Remote;
@@ -79,4 +80,8 @@ public interface MuseumRepository {
     public List<Museum> searchMuseumByNameOrAddress(String searchQuery) throws Exception;
     public List<Collection> searchCollectionByNameDescriptionCurator(String searchQuery) throws Exception;
     public List<Artifact> searchArtifactByNameOrDescription(String searchQuery) throws Exception;
+    public void deleteExhibition(int exhibitionId) throws Exception;
+    public List<Collection> getAllCollections() throws Exception;
+    public void updateExhibition(Exhibition exhibition) throws Exception;
+    public List<TicketRecord> getAllBookings() throws Exception;
 }

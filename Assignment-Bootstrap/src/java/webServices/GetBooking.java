@@ -23,6 +23,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import repository.MuseumRepository;
 import repository.UserRepository;
@@ -103,6 +104,7 @@ public class GetBooking {
         }
         return null;
     } 
+ 
     /**
      * PUT method for updating or creating an instance of GetBooking
      * @param content representation for the resource

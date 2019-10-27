@@ -110,55 +110,27 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-12 col-md-3">
-                    <h4>Filters</h4>
-                    <div class="list-group" id="list-tab" role="tablist">
-                        <h:link outcome="exhibitions" styleClass="list-group-item list-group-item-action" value="Current">
-                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
-                            <f:param name="display" value="current" />
-                        </h:link>
-
-                        <h:link outcome="exhibitions" styleClass="list-group-item list-group-item-action" value="Upcoming">
-                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
-                            <f:param name="display" value="upcoming" />
-                        </h:link>
-
-                        <h:link outcome="exhibitions" styleClass="list-group-item list-group-item-action" value="Past">
-                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
-                            <f:param name="display" value="past" />
-                        </h:link>
-
-                        <h:link outcome="exhibitions" styleClass="list-group-item list-group-item-action"  value="All">
-                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
-                            <f:param name="display" value="all" />
-                        </h:link>
+                <ui:repeat value="#{museumApplication.currentExhibitionsForMuseum}" var="exhibition" varStatus="status">
+                    <div class="card col-md-4">
+                        <img src="#{exhibition.imagePath}" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">#{exhibition.exhibitionName}</h5>
+                            <p class="card-text">#{exhibition.exhibitionDescription}</p>
+                            <hr />
+                            <h:outputText value="#{exhibition.exhibitionStartDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText> - 
+                            <h:outputText value="#{exhibition.exhibitionEndDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                            <h:link outcome="single_exhibition" value="Preview &rarr;" styleClass="btn btn-primary ml-2">
+                                <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                                <f:param name="exhibitionId" value="#{exhibition.exhibitionId}" />
+                            </h:link>
+                        </div>
                     </div>
-                </div>
-                <div class="col-12 col-md-9">
-                    <div class="row">
-                        <ui:repeat value="#{museumApplication.exhibitionsForMuseum}" var="exhibition" varStatus="status">
-                            <div class="card col-md-4">
-                                <img src="#{exhibition.imagePath}" class="card-img-top" />
-                                <div class="card-body">
-                                    <h5 class="card-title">#{exhibition.exhibitionName}</h5>
-                                    <p class="card-text">#{exhibition.exhibitionDescription}</p>
-                                    <hr />
-                                    <h:outputText value="#{exhibition.exhibitionStartDate}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                                    </h:outputText> - 
-                                    <h:outputText value="#{exhibition.exhibitionEndDate}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                                    </h:outputText>
-                                    <h:link outcome="single_exhibition" value="Preview &rarr;" styleClass="btn btn-primary">
-                                        <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
-                                        <f:param name="exhibitionId" value="#{exhibition.exhibitionId}" />
-                                    </h:link>
-                                </div>
-                            </div>
-                        </ui:repeat>
+                </ui:repeat>
 
-                    </div>
-                </div>
             </div>
         </div>
         <footer class="bg-secondary text-center p-3 mt-5 text-white">

@@ -1,0 +1,262 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <head>
+        <meta charset="utf-8" />
+        <title>Artifacts Unearthed</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="../css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" href="../css/custom.css" />
+        <!-- Font awesome -->
+        <link rel="stylesheet" href="../css/all.css" />
+        <style>
+            .image{
+                position: relative;
+            }
+            .image>h2{
+                position:absolute;
+                top:100px;
+            }
+            .image>a{
+                position:absolute;
+                top:300px;
+            }
+            .with-bg>img{
+                max-width: 100%;
+            }
+            .splash-container{
+                overflow: hidden;
+            }
+            .splash-container img {
+                margin-left:-50%;
+                max-height: 400px!important;
+            }
+            .card-img-top {
+                width: 100%;
+                height: 15vw;
+                object-fit: cover;
+            }
+            .modal-body img{
+                width:100%;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand p-0" href="../index.xhtml"><img src="../img/logo.png" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <a href="#" class="text-white ml-3"><u>Advanced Search</u></a>
+
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <h:link outcome="/museum_landing" styleClass="btn btn-primary nav-link">
+                            Home
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="../index.xhtml">Museums</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="/collections" styleClass="btn btn-primary nav-link" value="Collections">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="/exhibitions" styleClass="btn btn-primary nav-link" value="Exhibitions">
+                            <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                        </h:link>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link" href="#">Contact</a>
+                    </li>
+                    <c:if test="#{museumApplication.userLoggedIn eq true}">
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link text-primary btn btn-light py-2 my-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#{museumApplication.userManagedBean.currentLoggedInUser.firstName} #{museumApplication.userManagedBean.currentLoggedInUser.lastName} </a>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="static">
+                                <h:form>
+                                    <h:commandLink value="Logout" action="#{museumApplication.logout()}" styleClass="dropdown-item" />
+                                </h:form>
+                            </div>
+                        </li>
+                    </c:if>
+                    <c:if test="#{museumApplication.userLoggedIn eq false}">
+                        <li class="nav-item">
+                            <a class="btn btn-light nav-link text-dark py-2 px-3 my-2" href="login_direct.xhtml">Login / Sign-up</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-3">
+                    <div class="list-group">
+                        <h:link outcome="/admin/dash" styleClass="list-group-item list-group-item-action active">
+                            Exhibitions
+                        </h:link>
+                        
+                        <h:link outcome="/admin/bookings" styleClass="list-group-item list-group-item-action">
+                            Bookings
+                        </h:link>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>Exhibitions</h1>
+                        </div>
+                    </div>
+                    <div class="row"><div class="col-12"><div class="orange-line bg-secondary my-5"></div></div></div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Add New Exhibition</h3>
+                            <h:link outcome="/admin/new_exhibition" value="Add new exhibition" styleClass="btn btn-primary btn-lg"></h:link>
+                        </div>
+                    </div>
+                    <div class="row"><div class="col-12"><div class="orange-line bg-secondary my-5"></div></div></div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Currently Running</h3>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <ui:repeat value="#{adminController.currentExhibitions}" var="current" varStatus="status">
+                            <div class="card col-md-12">
+                                <div class="card-body">
+                                    <h5 class="card-title">#{current.exhibitionName}</h5>
+                                    <p class="card-text">#{current.exhibitionDescription}</p>
+                                    <hr />
+                                    <h:outputText value="#{current.exhibitionStartDate}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText> - 
+                                    <h:outputText value="#{current.exhibitionEndDate}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText><hr />
+                                    <h:link outcome="/single_exhibition" styleClass="btn btn-primary ml-2">
+                                        <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                                        <f:param name="exhibitionId" value="#{current.exhibitionId}" />
+                                        Preview <i class="fas fa-eye"></i>
+                                    </h:link>
+                                    <h:link outcome="/admin/edit_exhibition" styleClass="btn btn-secondary ml-2">
+                                        <f:param name="exhibitionId" value="#{current.exhibitionId}" />
+                                        Edit <i class="fas fa-edit"></i>
+                                    </h:link>
+
+                                    <h:form style="display:inline;">
+                                        <h:commandLink action="#{adminController.deleteExhibition(current.exhibitionId)}" onclick="if (!confirm('This will delete the current exhibition! This is a destructive action and is not reversible!\nContinue deleting?'))
+                                                    return false;" styleClass="btn btn-danger ml-2">
+                                            Delete <i class="fas fa-trash-alt"></i>
+                                        </h:commandLink>
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                    <div class="row"><div class="col-12"><div class="orange-line bg-secondary my-5"></div></div></div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Upcoming</h3>
+                        </div>
+                    </div>
+                    <div class="row mt-3">            
+                        <ui:repeat value="#{adminController.futureExhibitions}" var="future" varStatus="status">
+                            <div class="card col-md-12">
+                                <div class="card-body">
+                                    <h5 class="card-title">#{future.exhibitionName}</h5>
+                                    <p class="card-text">#{future.exhibitionDescription}</p>
+                                    <hr />
+                                    <h:outputText value="#{future.exhibitionStartDate}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText> - 
+                                    <h:outputText value="#{future.exhibitionEndDate}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText><hr />
+                                    <h:link outcome="/single_exhibition" styleClass="btn btn-primary ml-2">
+                                        <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                                        <f:param name="exhibitionId" value="#{future.exhibitionId}" />
+                                        Preview <i class="fas fa-eye"></i>
+                                    </h:link>
+                                    <h:link outcome="/admin/edit_exhibition" styleClass="btn btn-secondary ml-2">
+                                        <f:param name="exhibitionId" value="#{future.exhibitionId}" />
+                                        Edit <i class="fas fa-edit"></i>
+                                    </h:link>
+
+                                    <h:form style="display:inline;">
+                                        <h:commandLink action="#{adminController.deleteExhibition(future.exhibitionId)}" onclick="if (!confirm('This will delete the current exhibition! This is a destructive action and is not reversible!\nContinue deleting?'))
+                                                    return false;" styleClass="btn btn-danger ml-2">
+                                            Delete <i class="fas fa-trash-alt"></i>
+                                        </h:commandLink>
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                    <div class="row"><div class="col-12"><div class="orange-line bg-secondary my-5"></div></div></div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Past</h3>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <ui:repeat value="#{adminController.pastExhibitions}" var="past" varStatus="status">
+                            <div class="card col-md-12">
+                                <div class="card-body">
+                                    <h5 class="card-title">#{past.exhibitionName}</h5>
+                                    <p class="card-text">#{past.exhibitionDescription}</p>
+                                    <hr />
+                                    <h:outputText value="#{past.exhibitionStartDate}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText> - 
+                                    <h:outputText value="#{past.exhibitionEndDate}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText><hr />
+                                    <h:link outcome="/single_exhibition" styleClass="btn btn-primary ml-2">
+                                        <f:param name="museumId" value="#{museumController.selectedMuseumId}" />
+                                        <f:param name="exhibitionId" value="#{past.exhibitionId}" />
+                                        Preview <i class="fas fa-eye"></i>
+                                    </h:link>
+                                    <h:link outcome="/admin/edit_exhibition" styleClass="btn btn-secondary ml-2">
+                                        <f:param name="exhibitionId" value="#{past.exhibitionId}" />
+                                        Edit <i class="fas fa-edit"></i>
+                                    </h:link>
+
+                                    <h:form style="display:inline;">
+                                        <h:commandLink action="#{adminController.deleteExhibition(past.exhibitionId)}" onclick="if (!confirm('This will delete the current exhibition! This is a destructive action and is not reversible!\nContinue deleting?'))
+                                                    return false;" styleClass="btn btn-danger ml-2">
+                                            Delete <i class="fas fa-trash-alt"></i>
+                                        </h:commandLink>
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-secondary text-center p-3 mt-5 text-white">
+            Museum of Aboriginal Artifacts. Licensed under Creative Commons. All attributions provided in the about page. 
+        </footer>
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/popper.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+    </body>
+</html>

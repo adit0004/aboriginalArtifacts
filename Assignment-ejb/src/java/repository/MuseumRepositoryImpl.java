@@ -9,6 +9,7 @@ import entities.Artifact;
 import entities.Collection;
 import entities.Exhibition;
 import entities.Museum;
+import entities.TicketRecord;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -71,14 +72,16 @@ public class MuseumRepositoryImpl implements MuseumRepository {
     
     
 
-        @Override
-    public void addExhibition(Exhibition exhibition) {
+    @Override
+    public void addExhibition(Exhibition exhibition) throws Exception {
+        Exhibition exhibition1 = getAllExhibitions().get(0);
+        exhibition.setExhibitionId(exhibition1.getExhibitionId()+1);
         entityManager.persist(exhibition);
     }
 
     @Override
-    public ArrayList<Exhibition> getAllExhibitions() throws Exception {
-        return (ArrayList<Exhibition>) entityManager.createNamedQuery(Exhibition.GET_ALL_QUERY_NAME).getResultList();
+    public List<Exhibition> getAllExhibitions() throws Exception {
+        return entityManager.createNamedQuery(Exhibition.GET_ALL_QUERY_NAME).getResultList();
     }
 
     @Override
@@ -140,7 +143,27 @@ public class MuseumRepositoryImpl implements MuseumRepository {
         List<Artifact> returnList = query.getResultList();
         return returnList;
     }
-    
+
+    @Override
+    public void deleteExhibition(int exhibitionId) throws Exception {
+        Exhibition exhibition = entityManager.find(Exhibition.class, exhibitionId);
+        entityManager.remove(exhibition);
+    }
+
+    @Override
+    public List<Collection> getAllCollections() throws Exception {
+        return entityManager.createNamedQuery(Collection.GET_ALL).getResultList();
+    }
+
+    @Override
+    public void updateExhibition(Exhibition exhibition) throws Exception {
+        entityManager.merge(exhibition);
+    }
+
+    @Override
+    public List<TicketRecord> getAllBookings() throws Exception {
+        return entityManager.createNamedQuery(TicketRecord.GET_ALL_BOOKINGS).getResultList();
+    }
     
     
 }
